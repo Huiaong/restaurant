@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hjc.dao.RestaurantDao">
+
+    <select id="getCookByCondition" parameterType="CookBook" resultType="CookBook">
+        SELECT
+        tb_cook_book.cookId,
+        tb_cook_book.cookName,
+        tb_cook_book.cookFlavour,
+        tb_cook_book.cookRepertory,
+        tb_cook_book.cookPrice,
+        tb_cook_book.cookType
+        FROM
+        tb_cook_book
+        <where>
+            <if test="cookName != '' and cookName != null">
+                and tb_cook_book.cookName LIKE CONCAT('%',#{cookName},'%')
+            </if>
+            <if test="cookFlavour != '' and cookFlavour != null">
+                and tb_cook_book.cookFlavour LIKE CONCAT('%',#{cookFlavour},'%')
+            </if>
+            <if test="cookType != '' and cookType != null">
+                and tb_cook_book.cookType LIKE CONCAT('%',#{cookType},'%')
+            </if>
+        </where>
+    </select>
+
+    <select id="getCookFlavour" resultType="cookBook">
+        SELECT tb_cook_book.cookFlavour
+        FROM
+            tb_cook_book
+        GROUP BY
+            tb_cook_book.cookFlavour
+    </select>
+
+    <select id="getCookType" resultType="cookBook">
+        SELECT tb_cook_book.cookType
+        FROM
+            tb_cook_book
+        GROUP BY
+            tb_cook_book.cookType
+    </select>
+</mapper>
+    
