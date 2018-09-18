@@ -110,6 +110,12 @@
                 </div>
             </div>
         </div>
+
+        <div style="text-align: center;">
+            <a href="#" class="btn btn-default">添加新菜品</a>
+            <a href="#" class="btn btn-default">返回门店</a>
+        </div>
+
     </div>
 </div>
 <script type="text/javascript" src="../../static/jquery/jquery-3.2.1.min.js"></script>
