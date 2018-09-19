@@ -19,7 +19,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     public List<CookBook> getCookByCondition(CookBook cookBook) {
         if (cookBook.getCookName() != null && cookBook.getCookName().length() != 0 ||
-                cookBook.getCookFlavour() != null && cookBook.getCookFlavour().length() != 0 ||
+                cookBook.getCookFlavor() != null && cookBook.getCookFlavor().length() != 0 ||
                 cookBook.getCookType() != null && cookBook.getCookType().length() != 0) {
             return restaurantDao.getCookByCondition(cookBook);
         }
@@ -30,8 +30,8 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.getCookType();
     }
 
-    public List<CookBook> getCookFlavour() {
-        return restaurantDao.getCookFlavour();
+    public List<CookBook> getCookFlavor() {
+        return restaurantDao.getCookFlavor();
     }
 
 }

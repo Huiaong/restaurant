@@ -4,43 +4,48 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hjc.dao.RestaurantDao">
 
-    <select id="getCookByCondition" parameterType="CookBook" resultType="CookBook">
+    <resultMap type="cn.hjc.entity.CookBook" id="cookResultMap">
+        <id property="cookId" column="cook_id"/>
+        <result property="cookName" column="cook_name"/>
+        <result property="cookFlavor" column="cook_flavor"/>
+        <result property="cookRepertory" column="cook_repertory"/>
+        <result property="cookPrice" column="cook_price"/>
+        <result property="cookType" column="cook_type"/>
+    </resultMap>
+
+    <select id="getCookByCondition" parameterType="cookBook" resultType="CookBook" resultMap="cookResultMap">
         SELECT
-        tb_cook_book.cookId,
-        tb_cook_book.cookName,
-        tb_cook_book.cookFlavour,
-        tb_cook_book.cookRepertory,
-        tb_cook_book.cookPrice,
-        tb_cook_book.cookType
+        tb_cook_book.cook_id,
+        tb_cook_book.cook_name,
+        tb_cook_book.cook_flavor,
+        tb_cook_book.cook_repertory,
+        tb_cook_book.cook_price,
+        tb_cook_book.cook_type
         FROM
         tb_cook_book
         <where>
             <if test="cookName != '' and cookName != null">
-                and tb_cook_book.cookName LIKE CONCAT('%',#{cookName},'%')
+                and tb_cook_book.cook_name LIKE CONCAT('%',#{cookName},'%')
             </if>
-            <if test="cookFlavour != '' and cookFlavour != null">
-                and tb_cook_book.cookFlavour LIKE CONCAT('%',#{cookFlavour},'%')
+            <if test="cookFlavor != '' and cookFlavor != null">
+                and tb_cook_book.cook_flavor LIKE CONCAT('%',#{cookFlavor},'%')
             </if>
             <if test="cookType != '' and cookType != null">
-                and tb_cook_book.cookType LIKE CONCAT('%',#{cookType},'%')
+                and tb_cook_book.cook_type LIKE CONCAT('%',#{cookType},'%')
             </if>
         </where>
     </select>
 
-    <select id="getCookFlavour" resultType="cookBook">
-        SELECT tb_cook_book.cookFlavour
-        FROM
-            tb_cook_book
-        GROUP BY
-            tb_cook_book.cookFlavour
+    <select id="getCookFlavor" resultType="cookBook" resultMap="cookResultMap">
+        SELECT tb_cook_book.cook_flavor
+        FROM tb_cook_book
+        GROUP BY tb_cook_book.cook_flavor
     </select>
 
-    <select id="getCookType" resultType="cookBook">
-        SELECT tb_cook_book.cookType
-        FROM
-            tb_cook_book
-        GROUP BY
-            tb_cook_book.cookType
+    <select id="getCookType" resultType="cookBook" resultMap="cookResultMap">
+        SELECT tb_cook_book.cook_type
+        FROM tb_cook_book
+        GROUP BY tb_cook_book.cook_type
     </select>
 </mapper>
     

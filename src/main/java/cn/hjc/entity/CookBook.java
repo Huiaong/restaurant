@@ -4,7 +4,7 @@ public class CookBook {
 
     private int cookId;
     private String cookName;
-    private String cookFlavour;
+    private String cookFlavor;
     private int cookRepertory;
     private int cookPrice;
     private String cookType;
@@ -25,12 +25,12 @@ public class CookBook {
         this.cookName = cookName;
     }
 
-    public String getCookFlavour() {
-        return cookFlavour;
+    public String getCookFlavor() {
+        return cookFlavor;
     }
 
-    public void setCookFlavour(String cookFlavour) {
-        this.cookFlavour = cookFlavour;
+    public void setCookFlavor(String cookFlavor) {
+        this.cookFlavor = cookFlavor;
     }
 
     public int getCookRepertory() {
@@ -62,7 +62,7 @@ public class CookBook {
         return "CookBook{" +
                 "cookId=" + cookId +
                 ", cookName='" + cookName + '\'' +
-                ", cookFlavour='" + cookFlavour + '\'' +
+                ", cookFlavor='" + cookFlavor + '\'' +
                 ", cookRepertory=" + cookRepertory +
                 ", cookPrice=" + cookPrice +
                 ", cookType='" + cookType + '\'' +

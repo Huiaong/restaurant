@@ -10,7 +10,7 @@ public interface RestaurantService {
 
     List<CookBook> getCookByCondition(CookBook cookBook);
 
-    List<CookBook> getCookType();
+    List<CookBook> getCookFlavor();
 
-    List<CookBook> getCookFlavour();
+    List<CookBook> getCookType();
 }

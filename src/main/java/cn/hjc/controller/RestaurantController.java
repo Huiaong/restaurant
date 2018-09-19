@@ -18,14 +18,17 @@ public class RestaurantController {
     @RequestMapping(value = "list")
     public String list(Model model, CookBook cookBook) {
 
-        List<CookBook> cookBooks = null;
-        List<CookBook> cookFlavour = restaurantService.getCookFlavour();
-        List<CookBook> cookType = restaurantService.getCookType();
+        List<CookBook> bookList = null;
+        List<CookBook> flavorList = restaurantService.getCookFlavor();
+        List<CookBook> typeList = restaurantService.getCookType();
 
-        cookBooks = restaurantService.getCookByCondition(cookBook);
-        model.addAttribute("cookType", cookType);
-        model.addAttribute("cookFlavour", cookFlavour);
-        model.addAttribute("cookBooks", cookBooks);
+        System.out.println(flavorList);
+        System.out.println(typeList);
+
+        bookList = restaurantService.getCookByCondition(cookBook);
+        model.addAttribute("typeList", typeList);
+        model.addAttribute("flavorList", flavorList);
+        model.addAttribute("bookList", bookList);
         return "restaurant";
     }
 

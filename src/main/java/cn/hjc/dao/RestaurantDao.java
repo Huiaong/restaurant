@@ -9,7 +9,7 @@ public interface RestaurantDao {
 
     List<CookBook> getCookByCondition(CookBook cookBook);
 
-    List<CookBook> getCookFlavour();
+    List<CookBook> getCookFlavor();
 
     List<CookBook> getCookType();
 }

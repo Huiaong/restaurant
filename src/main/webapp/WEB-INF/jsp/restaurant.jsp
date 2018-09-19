@@ -17,7 +17,7 @@
 <head>
     <title>神奇餐厅</title>
 
-    <link href="../../static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=basePath%>static/bootstrap/bootstrap.min.css" rel="stylesheet">
 </head>
 <body>
 <div id="wrapper">
@@ -52,11 +52,11 @@
                         <input id="cookName" class="form-control" name="cookName" type="text"/>
                     </div>
                     <div class="form-group">
-                        <label for="cookFlavour">口味</label>
-                        <select class="form-control" id="cookFlavour" name="cookFlavour">
+                        <label for="cookFlavor">口味</label>
+                        <select class="form-control" id="cookFlavor" name="cookFlavor">
                             <option></option>
-                            <c:forEach items="${cookFlavour}" var="typeitem">
-                                <option>${typeitem.cookFlavour}</option>
+                            <c:forEach items="${flavorList}" var="flavorItem">
+                                <option>${flavorItem.cookFlavor}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -64,8 +64,8 @@
                         <label for="cookType">菜系</label>
                         <select id="cookType" class="form-control" name="cookType">
                             <option></option>
-                            <c:forEach items="${cookType}" var="typeitem">
-                                <option>${typeitem.cookType}</option>
+                            <c:forEach items="${typeList}" var="typeItem">
+                                <option>${typeItem.cookType}</option>
                             </c:forEach>
                         </select>
                     </div>
@@ -91,16 +91,17 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${cookBooks}" var="row">
+                        <c:forEach items="${bookList}" var="bookItem">
                             <tr>
                                 <td></td>
-                                <td>${row.cookName}</td>
-                                <td>${row.cookFlavour}</td>
-                                <td>${row.cookRepertory}</td>
-                                <td>${row.cookPrice}</td>
-                                <td>${row.cookType}</td>
+                                <td>${bookItem.cookName}</td>
+                                <td>${bookItem.cookFlavor}</td>
+                                <td>${bookItem.cookRepertory}</td>
+                                <td>${bookItem.cookPrice}</td>
+                                <td>${bookItem.cookType}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-xs">修改</a>
+                                    <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+                                       data-target="#cookEditDialog">修改</a>
                                     <a href="#" class="btn btn-danger btn-xs">删除</a>
                                 </td>
                             </tr>
@@ -110,30 +111,101 @@
                 </div>
             </div>
         </div>
-
-        <div style="text-align: center;">
-            <a href="#" class="btn btn-default">添加新菜品</a>
-            <a href="#" class="btn btn-default">返回门店</a>
+        <div class="modal fade" id="cookEditDialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myModalLabel">修改菜品信息</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="edit_cook_form">
+                            <input type="hidden" id="edit_cook_id" name="cookId"/>
+                            <div class="form-group">
+                                <label for="edit_cookName" style="float:left;padding:7px 15px 0 27px;">菜名</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookName" placeholder="菜名"
+                                           name="cookName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookFlavor" style="float:left;padding:7px 15px 0 27px;">口味</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookFlavor" placeholder="口味"
+                                           name="cookFlavor">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookRepertory" style="float:left;padding:7px 15px 0 27px;">库存</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookRepertory" placeholder="库存"
+                                           name="cookRepertory">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookPrice" style="float:left;padding:7px 15px 0 27px;">价格</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookPrice" placeholder="价格"
+                                           name="cookPrice">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookType" style="float:left;padding:7px 15px 0 27px;">菜系</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookType" placeholder="菜系"
+                                           name="cookType">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" onclick="updateCook()">保存修改</button>
+                    </div>
+                </div>
+            </div>
         </div>
-
     </div>
 </div>
-<script type="text/javascript" src="../../static/jquery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="../../static/bootstrap/bootstrap.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>static/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="<%=basePath%>static/bootstrap/bootstrap.min.js"></script>
 
 <script type="text/javascript">
-    $(function () {
-        var btn_delete = $('#btn_delete');
-        var btn_update = $('#btn_update');
-        var form = $('#du_Form');
-        btn_delete.click(function deleteAction() {
-            form.attr("action", "delete.action");
-        });
+    var curPath = window.document.location.href;
+    var pathName = window.document.location.pathname;
+    var basePath;
+    basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
 
-        btn_update.click(function updateAction() {
-            form.attr("action", "update.action");
+    function editCook(id) {
+        $.ajax({
+            type: "GET",
+            url: basePath + "editCook.action",
+            data: {"id": id},
+            success: function (date) {
+                $("#edit_cook_id").val(date.cookId);
+                $("#edit_cookName").attr("placeholder", date.cookName);
+                $("#edit_cookFlavor").attr("placeholder", date.cookFlavor);
+                $("#edit_cookRepertory").attr("placeholder", date.cookRepertory);
+                $("#edit_cookPrice").attr("placeholder", date.cookPrice);
+                $("#edit_cookType").attr("placeholder", date.cookType);
+            }
+        })
+    }
+
+    function updateCook() {
+        alert($("#edit_cook_form").serialize());
+        $.post(basePath + "update.action", $("#edit_cook_form").serialize(), function (data) {
+            if (data > "0") {
+                alert("客户信息更新成功！");
+            } else {
+                alert("客户信息更新失败！");
+            }
+            window.location.reload();
         });
-    });
+    }
 </script>
 </body>
 </html>
