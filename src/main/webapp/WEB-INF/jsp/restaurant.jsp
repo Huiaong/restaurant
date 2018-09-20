@@ -254,7 +254,13 @@
         $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
             saveCook();
         });
-        $("#myModalLabel").val("新增菜品");
+        $("#myModalLabel").text("新增菜品");
+        $("#edit_cook_id").val("");
+        $("#edit_cookName").val("");
+        $("#edit_cookFlavor").val("");
+        $("#edit_cookRepertory").val("");
+        $("#edit_cookPrice").val("");
+        $("#edit_cookType").val("");
     }
 
     function saveCook() {
