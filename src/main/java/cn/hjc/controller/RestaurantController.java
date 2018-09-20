@@ -50,7 +50,7 @@ public class RestaurantController {
 
     @RequestMapping(value = "update")
     @ResponseBody
-    public Long update(String cookId,String cookName,String cookFlavor,String cookRepertory,String cookPrice,String cookType) {
+    public Long update(String cookId, String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
         CookBook cookBook = new CookBook();
         cookBook.setCookId(Integer.valueOf(cookId));
         cookBook.setCookName(cookName);
@@ -63,8 +63,9 @@ public class RestaurantController {
     }
 
     @RequestMapping(value = "delete")
-    public String delete() {
-
-        return "delete";
+    @ResponseBody
+    public Long delete(Integer cookId) {
+        Long aLong = restaurantService.deleteCookById(cookId);
+        return aLong;
     }
 }

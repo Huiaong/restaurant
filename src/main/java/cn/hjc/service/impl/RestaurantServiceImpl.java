@@ -45,6 +45,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         return aLong;
     }
 
+    @Override
+    public Long deleteCookById(Integer integer) {
+        Long aLong = restaurantDao.deleteCookById(integer);
+        return aLong;
+    }
+
     public List<CookBook> getCookFlavor() {
         List<CookBook> cook = restaurantDao.getCookFlavor();
         return cook;

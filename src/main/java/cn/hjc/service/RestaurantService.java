@@ -17,4 +17,6 @@ public interface RestaurantService {
     CookBook  getCookById(Integer integer);
 
     Long updateCook(CookBook cookBook);
+
+    Long deleteCookById(Integer integer);
 }

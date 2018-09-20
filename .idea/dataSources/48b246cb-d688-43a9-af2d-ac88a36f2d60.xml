@@ -1132,43 +1132,38 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="284" parent="281" name="cook_flavor_code">
+    <column id="284" parent="281" name="cook_flavor">
       <Position>3</Position>
-      <DataType>int(3)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="285" parent="281" name="cook_flavor">
-      <Position>4</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="286" parent="281" name="cook_repertory">
-      <Position>5</Position>
+    <column id="285" parent="281" name="cook_repertory">
+      <Position>4</Position>
       <DataType>int(4)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="287" parent="281" name="cook_price">
-      <Position>6</Position>
+    <column id="286" parent="281" name="cook_price">
+      <Position>5</Position>
       <DataType>decimal(4)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="288" parent="281" name="cook_type_code">
-      <Position>7</Position>
-      <DataType>int(3)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="289" parent="281" name="cook_type">
-      <Position>8</Position>
+    <column id="287" parent="281" name="cook_type">
+      <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="290" parent="281" name="PRIMARY">
+    <column id="288" parent="281" name="cook_enable_status">
+      <Position>7</Position>
+      <DataType>int(11)|0s</DataType>
+      <NotNull>1</NotNull>
+      <DefaultExpression>&apos;1&apos;</DefaultExpression>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="289" parent="281" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>cook_id</ColNames>
       <Primary>1</Primary>

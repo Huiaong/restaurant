@@ -102,7 +102,7 @@
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
                                        data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
-                                    <a href="#" class="btn btn-danger btn-xs">删除</a>
+                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteCook(${bookItem.cookId})">删除</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -187,10 +187,10 @@
             success: function (date) {
                 $("#edit_cook_id").val(date.cookId);
                 $("#edit_cookName").val(date.cookName);
-                $("#edit_cookFlavor").val( date.cookFlavor);
-                $("#edit_cookRepertory").val( date.cookRepertory);
-                $("#edit_cookPrice").val( date.cookPrice);
-                $("#edit_cookType").val( date.cookType);
+                $("#edit_cookFlavor").val(date.cookFlavor);
+                $("#edit_cookRepertory").val(date.cookRepertory);
+                $("#edit_cookPrice").val(date.cookPrice);
+                $("#edit_cookType").val(date.cookType);
             }
         })
     }
@@ -222,6 +222,23 @@
         });
     }
 
+    function deleteCook(id) {
+        if (confirm('确实要删除该菜品吗?')) {
+            $.ajax({
+                type:"post",
+                url:basePath+"delete.action",
+                data:{"cookId":id},
+                success:function (data) {
+                    if (data > "0") {
+                        alert("菜品信息删除成功！");
+                    } else {
+                        alert("菜品信息删除失败！");
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+    }
 
 </script>
 </body>

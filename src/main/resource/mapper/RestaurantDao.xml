@@ -24,6 +24,7 @@
         FROM
         tb_cook_book
         <where>
+            tb_cook_book.cook_enable_status > 0
             <if test="cookName != '' and cookName != null">
                 and tb_cook_book.cook_name LIKE CONCAT('%',#{cookName},'%')
             </if>
@@ -39,12 +40,14 @@
     <select id="getCookFlavor" resultType="cookBook" resultMap="cookResultMap">
         SELECT tb_cook_book.cook_flavor
         FROM tb_cook_book
+        WHERE cook_enable_status > 0
         GROUP BY tb_cook_book.cook_flavor
     </select>
 
     <select id="getCookType" resultType="cookBook" resultMap="cookResultMap">
         SELECT tb_cook_book.cook_type
         FROM tb_cook_book
+        WHERE cook_enable_status > 0
         GROUP BY tb_cook_book.cook_type
     </select>
 
@@ -56,7 +59,8 @@
                tb_cook_book.cook_price,
                tb_cook_book.cook_type
         FROM tb_cook_book
-        where cook_id = #{cookId}
+        where cook_enable_status > 0
+          and cook_id = #{cookId}
     </select>
 
     <update id="updateCook" parameterType="CookBook">
@@ -79,6 +83,13 @@
                 cook_type = #{cookType},
             </if>
         </set>
+        WHERE `cook_id` = #{cookId};
+    </update>
+
+    <update id="deleteCookById" parameterType="Integer">
+        UPDATE
+                `restaurant`.`tb_cook_book`
+        SET cook_enable_status = 0
         WHERE `cook_id` = #{cookId};
     </update>
 </mapper>
