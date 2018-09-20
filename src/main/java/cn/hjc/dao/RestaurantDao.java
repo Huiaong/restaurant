@@ -12,4 +12,8 @@ public interface RestaurantDao {
     List<CookBook> getCookFlavor();
 
     List<CookBook> getCookType();
+
+    CookBook getCookById(Integer integer);
+
+    Long updateCook(CookBook cookBook);
 }

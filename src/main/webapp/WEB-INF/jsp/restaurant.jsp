@@ -101,7 +101,7 @@
                                 <td>${bookItem.cookType}</td>
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
-                                       data-target="#cookEditDialog">修改</a>
+                                       data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
                                     <a href="#" class="btn btn-danger btn-xs">删除</a>
                                 </td>
                             </tr>
@@ -186,26 +186,43 @@
             data: {"id": id},
             success: function (date) {
                 $("#edit_cook_id").val(date.cookId);
-                $("#edit_cookName").attr("placeholder", date.cookName);
-                $("#edit_cookFlavor").attr("placeholder", date.cookFlavor);
-                $("#edit_cookRepertory").attr("placeholder", date.cookRepertory);
-                $("#edit_cookPrice").attr("placeholder", date.cookPrice);
-                $("#edit_cookType").attr("placeholder", date.cookType);
+                $("#edit_cookName").val(date.cookName);
+                $("#edit_cookFlavor").val( date.cookFlavor);
+                $("#edit_cookRepertory").val( date.cookRepertory);
+                $("#edit_cookPrice").val( date.cookPrice);
+                $("#edit_cookType").val( date.cookType);
             }
         })
     }
 
     function updateCook() {
-        alert($("#edit_cook_form").serialize());
-        $.post(basePath + "update.action", $("#edit_cook_form").serialize(), function (data) {
-            if (data > "0") {
-                alert("客户信息更新成功！");
-            } else {
-                alert("客户信息更新失败！");
+
+        $.ajax({
+            type: "post",
+            url: basePath + "update.action",
+            data: {
+                "cookId": $("#edit_cook_id").val(),
+                "cookName": $("#edit_cookName").val(),
+                "cookFlavor": $("#edit_cookFlavor").val(),
+                "cookRepertory": $("#edit_cookRepertory").val(),
+                "cookPrice": $("#edit_cookPrice").val(),
+                "cookType": $("#edit_cookType").val()
+            },
+            success: function (data) {
+                if (data > 0) {
+                    alert("菜品信息更新成功！");
+                } else {
+                    alert("菜品信息更新失败！");
+                }
+                window.location.reload();
+            },
+            error: function () {
+                alert("菜品信息更新失败! ");
             }
-            window.location.reload();
         });
     }
+
+
 </script>
 </body>
 </html>

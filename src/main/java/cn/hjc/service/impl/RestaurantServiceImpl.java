@@ -21,17 +21,33 @@ public class RestaurantServiceImpl implements RestaurantService {
         if (cookBook.getCookName() != null && cookBook.getCookName().length() != 0 ||
                 cookBook.getCookFlavor() != null && cookBook.getCookFlavor().length() != 0 ||
                 cookBook.getCookType() != null && cookBook.getCookType().length() != 0) {
-            return restaurantDao.getCookByCondition(cookBook);
+
+            List<CookBook> cookByCondition = restaurantDao.getCookByCondition(cookBook);
+            return cookByCondition;
         }
         return null;
     }
 
     public List<CookBook> getCookType() {
-        return restaurantDao.getCookType();
+        List<CookBook> cook = restaurantDao.getCookType();
+        return cook;
+    }
+
+    @Override
+    public CookBook getCookById(Integer integer) {
+        CookBook cook = restaurantDao.getCookById(integer);
+        return cook;
+    }
+
+    @Override
+    public Long updateCook(CookBook cookBook) {
+        Long aLong = restaurantDao.updateCook(cookBook);
+        return aLong;
     }
 
     public List<CookBook> getCookFlavor() {
-        return restaurantDao.getCookFlavor();
+        List<CookBook> cook = restaurantDao.getCookFlavor();
+        return cook;
     }
 
 }

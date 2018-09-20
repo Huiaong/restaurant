@@ -47,5 +47,39 @@
         FROM tb_cook_book
         GROUP BY tb_cook_book.cook_type
     </select>
+
+    <select id="getCookById" resultType="CookBook" parameterType="Integer" resultMap="cookResultMap">
+        SELECT tb_cook_book.cook_id,
+               tb_cook_book.cook_name,
+               tb_cook_book.cook_flavor,
+               tb_cook_book.cook_repertory,
+               tb_cook_book.cook_price,
+               tb_cook_book.cook_type
+        FROM tb_cook_book
+        where cook_id = #{cookId}
+    </select>
+
+    <update id="updateCook" parameterType="CookBook">
+        UPDATE
+        `restaurant`.`tb_cook_book`
+        <set>
+            <if test="cookName != null and cookName != ''">
+                cook_name = #{cookName},
+            </if>
+            <if test="cookFlavor != null and cookFlavor != ''">
+                cook_flavor = #{cookFlavor},
+            </if>
+            <if test="cookRepertory != null and cookRepertory != ''">
+                cook_repertory = #{cookRepertory},
+            </if>
+            <if test="cookPrice != null and cookPrice != ''">
+                cook_price = #{cookPrice},
+            </if>
+            <if test="cookType != null and cookType != ''">
+                cook_type = #{cookType},
+            </if>
+        </set>
+        WHERE `cook_id` = #{cookId};
+    </update>
 </mapper>
     
