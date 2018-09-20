@@ -17,5 +17,7 @@ public interface RestaurantDao {
 
     Long updateCook(CookBook cookBook);
 
-    Long deleteCookById(Integer cookBookId);
+    Long soldOutCookById(Integer cookBookId);
+
+    Long saveCook(CookBook cookBook);
 }

@@ -62,10 +62,23 @@ public class RestaurantController {
         return aLong;
     }
 
-    @RequestMapping(value = "delete")
+    @RequestMapping(value = "soldOut")
     @ResponseBody
-    public Long delete(Integer cookId) {
-        Long aLong = restaurantService.deleteCookById(cookId);
+    public Long soldOut(Integer cookId) {
+        Long aLong = restaurantService.soldOutCookById(cookId);
+        return aLong;
+    }
+
+    @RequestMapping(value = "save")
+    @ResponseBody
+    public Long saveCookBook(String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
+        CookBook cookBook = new CookBook();
+        cookBook.setCookName(cookName);
+        cookBook.setCookFlavor(cookFlavor);
+        cookBook.setCookRepertory(Integer.valueOf(cookRepertory));
+        cookBook.setCookPrice(Integer.valueOf(cookPrice));
+        cookBook.setCookType(cookType);
+        Long aLong = restaurantService.saveCook(cookBook);
         return aLong;
     }
 }

@@ -46,8 +46,14 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public Long deleteCookById(Integer integer) {
-        Long aLong = restaurantDao.deleteCookById(integer);
+    public Long soldOutCookById(Integer integer) {
+        Long aLong = restaurantDao.soldOutCookById(integer);
+        return aLong;
+    }
+
+    @Override
+    public Long saveCook(CookBook cookBook) {
+        Long aLong = restaurantDao.saveCook(cookBook);
         return aLong;
     }
 

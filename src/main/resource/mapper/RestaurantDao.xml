@@ -73,10 +73,10 @@
             <if test="cookFlavor != null and cookFlavor != ''">
                 cook_flavor = #{cookFlavor},
             </if>
-            <if test="cookRepertory != null and cookRepertory != ''">
+            <if test="cookRepertory != ''">
                 cook_repertory = #{cookRepertory},
             </if>
-            <if test="cookPrice != null and cookPrice != ''">
+            <if test="and cookPrice != ''">
                 cook_price = #{cookPrice},
             </if>
             <if test="cookType != null and cookType != ''">
@@ -86,11 +86,47 @@
         WHERE `cook_id` = #{cookId};
     </update>
 
-    <update id="deleteCookById" parameterType="Integer">
+    <update id="soldOutCookById" parameterType="Integer">
         UPDATE
                 `restaurant`.`tb_cook_book`
         SET cook_enable_status = 0
         WHERE `cook_id` = #{cookId};
     </update>
+
+    <insert id="saveCook" parameterType="cookBook">
+        insert into tb_cook_book(
+        <if test="cookName !=null and cookName != ''">
+            cook_name,
+        </if>
+        <if test="cookFlavor !=null and cookFlavor != ''">
+            cook_flavor,
+        </if>
+        <if test="cookRepertory != ''">
+            cook_repertory,
+        </if>
+        <if test="cookPrice != ''">
+            cook_price,
+        </if>
+        <if test="cookType !=null and cookType != ''">
+            cook_type
+        </if>
+        )value (
+        <if test="cookName !=null and cookName != ''">
+            #{cookName},
+        </if>
+        <if test="cookFlavor !=null and cookFlavor != ''">
+            #{cookFlavor},
+        </if>
+        <if test="cookRepertory != ''">
+            #{cookRepertory},
+        </if>
+        <if test="cookPrice != ''">
+            #{cookPrice},
+        </if>
+        <if test="cookType !=null and cookType != ''">
+            #{cookType}
+        </if>
+        )
+    </insert>
 </mapper>
     

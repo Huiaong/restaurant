@@ -18,5 +18,7 @@ public interface RestaurantService {
 
     Long updateCook(CookBook cookBook);
 
-    Long deleteCookById(Integer integer);
+    Long soldOutCookById(Integer integer);
+
+    Long saveCook(CookBook cookBook);
 }

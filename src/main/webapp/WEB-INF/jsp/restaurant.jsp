@@ -37,7 +37,7 @@
         </div>
     </nav>
 
-    <div style="padding-left: 35px">
+    <div style="padding-left: 20px;">
         <div class="row">
             <div class="col-lg-12">
                 <h1 class="page-header">菜品管理</h1>
@@ -70,6 +70,12 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">查询</button>
+                    <div style="float:right;">
+                        <a href="#" class="btn btn-danger">批量下架</a>
+                        <a href="#" class="btn btn-success" data-toggle="modal"
+                           data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
+                        <a href="#" class="btn btn-default">重新上架</a>
+                    </div>
                 </form>
             </div>
         </div>
@@ -102,7 +108,7 @@
                                 <td>
                                     <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
                                        data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
-                                    <a href="#" class="btn btn-danger btn-xs" onclick="deleteCook(${bookItem.cookId})">删除</a>
+                                    <a href="#" class="btn btn-danger btn-xs" onclick="soldOutCook(${bookItem.cookId})">下架</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -119,7 +125,7 @@
                         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
-                        <h4 class="modal-title" id="myModalLabel">修改菜品信息</h4>
+                        <h4 class="modal-title" id="myModalLabel">修改菜品</h4>
                     </div>
                     <div class="modal-body">
                         <form class="form-horizontal" id="edit_cook_form">
@@ -163,7 +169,8 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" onclick="updateCook()">保存修改</button>
+                        <button type="button" class="btn btn-primary" id="btn_submit" onclick="updateCook()">保存修改
+                        </button>
                     </div>
                 </div>
             </div>
@@ -180,6 +187,9 @@
     basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
 
     function editCook(id) {
+        $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
+            updateCook();
+        });
         $.ajax({
             type: "GET",
             url: basePath + "editCook.action",
@@ -192,7 +202,7 @@
                 $("#edit_cookPrice").val(date.cookPrice);
                 $("#edit_cookType").val(date.cookType);
             }
-        })
+        });
     }
 
     function updateCook() {
@@ -222,22 +232,54 @@
         });
     }
 
-    function deleteCook(id) {
-        if (confirm('确实要删除该菜品吗?')) {
+    function soldOutCook(id) {
+        if (confirm('确实要下架该菜品吗?')) {
             $.ajax({
-                type:"post",
-                url:basePath+"delete.action",
-                data:{"cookId":id},
-                success:function (data) {
+                type: "post",
+                url: basePath + "soldOut.action",
+                data: {"cookId": id},
+                success: function (data) {
                     if (data > "0") {
-                        alert("菜品信息删除成功！");
+                        alert("菜品信息下架成功！");
                     } else {
-                        alert("菜品信息删除失败！");
+                        alert("菜品信息下架失败！");
                     }
                     window.location.reload();
                 }
             });
         }
+    }
+
+    function addCook() {
+        $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
+            saveCook();
+        });
+        $("#myModalLabel").val("新增菜品");
+    }
+
+    function saveCook() {
+        $.ajax({
+            type: "post",
+            url: basePath + "save.action",
+            data: {
+                "cookName": $("#edit_cookName").val(),
+                "cookFlavor": $("#edit_cookFlavor").val(),
+                "cookRepertory": $("#edit_cookRepertory").val(),
+                "cookPrice": $("#edit_cookPrice").val(),
+                "cookType": $("#edit_cookType").val()
+            },
+            success: function (data) {
+                if (data > 0) {
+                    alert("菜品信息新增成功！");
+                } else {
+                    alert("菜品信息新增失败！");
+                }
+                window.location.reload();
+            },
+            error: function () {
+                alert("菜品信息更新失败! ");
+            }
+        });
     }
 
 </script>
