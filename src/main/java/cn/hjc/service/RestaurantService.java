@@ -2,13 +2,15 @@ package cn.hjc.service;
 
 
 import cn.hjc.entity.CookBook;
+import cn.hjc.entity.CookConditions;
+import cn.hjc.entity.CookDates;
 
 import java.util.List;
 
 public interface RestaurantService {
 
 
-    List<CookBook> getCookByCondition(CookBook cookBook);
+    CookDates<CookBook> getCookByCondition(CookConditions cookConditions);
 
     List<CookBook> getCookFlavor();
 
@@ -21,4 +23,5 @@ public interface RestaurantService {
     Long soldOutCookById(Integer integer);
 
     Long saveCook(CookBook cookBook);
+
 }

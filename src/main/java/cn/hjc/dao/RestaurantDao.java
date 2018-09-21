@@ -2,12 +2,14 @@ package cn.hjc.dao;
 
 
 import cn.hjc.entity.CookBook;
+import cn.hjc.entity.CookConditions;
+import cn.hjc.entity.CookDates;
 
 import java.util.List;
 
 public interface RestaurantDao {
 
-    List<CookBook> getCookByCondition(CookBook cookBook);
+    List<CookBook> getCookByCondition(CookConditions cookConditions);
 
     List<CookBook> getCookFlavor();
 
@@ -20,4 +22,6 @@ public interface RestaurantDao {
     Long soldOutCookById(Integer cookBookId);
 
     Long saveCook(CookBook cookBook);
+
+    Integer getCookTotal(CookConditions cookConditions);
 }

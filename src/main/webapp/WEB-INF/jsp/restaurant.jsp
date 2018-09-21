@@ -97,7 +97,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${bookList}" var="bookItem">
+                        <c:forEach items="${cookDates.rows}" var="bookItem">
                             <tr>
                                 <td></td>
                                 <td>${bookItem.cookName}</td>
@@ -117,6 +117,30 @@
                 </div>
             </div>
         </div>
+        <c:if test="${cookDates.pageNum>0}">
+            <div class="col-md-12 text-center">
+                <nav aria-label="Page navigation">
+                    <ul class="pagination">
+                        <li>
+                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}" aria-label="Previous">
+                                <span aria-hidden="true">&laquo;</span>
+                            </a>
+                        </li>
+                        <c:forEach var="i" begin="1" end="${cookDates.pageNum}" step="1">
+                            <li>
+                                <a href="?page=${i}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}">${i}</a>
+                            </li>
+                        </c:forEach>
+                        <li>
+                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}" aria-label="Next">
+                                <span aria-hidden="true">&raquo;</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </c:if>
+
         <div class="modal fade" id="cookEditDialog" tabindex="-1" role="dialog"
              aria-labelledby="myModalLabel">
             <div class="modal-dialog" role="document">
