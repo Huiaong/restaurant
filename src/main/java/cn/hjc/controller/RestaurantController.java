@@ -65,9 +65,6 @@ public class RestaurantController {
     @RequestMapping(value = "update")
     @ResponseBody
     public Long update(CookBook cookBook) {
-        System.out.println("========================================");
-        System.out.println(cookBook);
-
         Long aLong = restaurantService.updateCook(cookBook);
         return aLong;
     }
@@ -82,8 +79,6 @@ public class RestaurantController {
     @RequestMapping(value = "save")
     @ResponseBody
     public Long saveCookBook(CookBook cookBook) {
-        System.out.println("==========================");
-        System.out.println(cookBook);
         Long aLong = restaurantService.saveCook(cookBook);
         return aLong;
     }

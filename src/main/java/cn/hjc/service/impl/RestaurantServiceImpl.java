@@ -96,7 +96,8 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Long editEnableStatus(Integer id) {
-        return restaurantDao.editEnableStatus(id);
+        Long aLong = restaurantDao.editEnableStatus(id);
+        return aLong;
     }
 
     public List<CookBook> getCookFlavor() {
