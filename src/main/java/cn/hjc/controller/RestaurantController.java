@@ -64,14 +64,10 @@ public class RestaurantController {
 
     @RequestMapping(value = "update")
     @ResponseBody
-    public Long update(String cookId, String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
-        CookBook cookBook = new CookBook();
-        cookBook.setCookId(Integer.valueOf(cookId));
-        cookBook.setCookName(cookName);
-        cookBook.setCookFlavor(cookFlavor);
-        cookBook.setCookRepertory(Integer.valueOf(cookRepertory));
-        cookBook.setCookPrice(Integer.valueOf(cookPrice));
-        cookBook.setCookType(cookType);
+    public Long update(CookBook cookBook) {
+        System.out.println("========================================");
+        System.out.println(cookBook);
+
         Long aLong = restaurantService.updateCook(cookBook);
         return aLong;
     }
@@ -85,14 +81,23 @@ public class RestaurantController {
 
     @RequestMapping(value = "save")
     @ResponseBody
-    public Long saveCookBook(String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
-        CookBook cookBook = new CookBook();
-        cookBook.setCookName(cookName);
-        cookBook.setCookFlavor(cookFlavor);
-        cookBook.setCookRepertory(Integer.valueOf(cookRepertory));
-        cookBook.setCookPrice(Integer.valueOf(cookPrice));
-        cookBook.setCookType(cookType);
+    public Long saveCookBook(CookBook cookBook) {
+        System.out.println("==========================");
+        System.out.println(cookBook);
         Long aLong = restaurantService.saveCook(cookBook);
         return aLong;
     }
+
+//    @RequestMapping(value = "save")
+//    @ResponseBody
+//    public Long saveCookBook(String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
+//        CookBook cookBook = new CookBook();
+//        cookBook.setCookName(cookName);
+//        cookBook.setCookFlavor(cookFlavor);
+//        cookBook.setCookRepertory(Integer.valueOf(cookRepertory));
+//        cookBook.setCookPrice(Integer.valueOf(cookPrice));
+//        cookBook.setCookType(cookType);
+//        Long aLong = restaurantService.saveCook(cookBook);
+//        return aLong;
+//    }
 }

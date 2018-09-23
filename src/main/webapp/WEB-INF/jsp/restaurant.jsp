@@ -311,14 +311,8 @@
         $.ajax({
             type: "post",
             url: basePath + "update.action",
-            data: {
-                "cookId": $("#edit_cook_id").val(),
-                "cookName": $("#edit_cookName").val(),
-                "cookFlavor": $("#edit_cookFlavor").val(),
-                "cookRepertory": $("#edit_cookRepertory").val(),
-                "cookPrice": $("#edit_cookPrice").val(),
-                "cookType": $("#edit_cookType").val()
-            },
+            data: $("#edit_cook_form").serialize(),
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (data) {
                 if (data > 0) {
                     alert("菜品信息更新成功！");
@@ -375,6 +369,7 @@
                 "cookPrice": $("#edit_cookPrice").val(),
                 "cookType": $("#edit_cookType").val()
             },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (data) {
                 if (data > 0) {
                     alert("菜品信息新增成功！");

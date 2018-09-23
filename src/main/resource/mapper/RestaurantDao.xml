@@ -118,7 +118,7 @@
             <if test="cookRepertory != ''">
                 cook_repertory = #{cookRepertory},
             </if>
-            <if test="and cookPrice != ''">
+            <if test="cookPrice != ''">
                 cook_price = #{cookPrice},
             </if>
             <if test="cookType != null and cookType != ''">
