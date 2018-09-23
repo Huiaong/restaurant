@@ -88,16 +88,4 @@ public class RestaurantController {
         return aLong;
     }
 
-//    @RequestMapping(value = "save")
-//    @ResponseBody
-//    public Long saveCookBook(String cookName, String cookFlavor, String cookRepertory, String cookPrice, String cookType) {
-//        CookBook cookBook = new CookBook();
-//        cookBook.setCookName(cookName);
-//        cookBook.setCookFlavor(cookFlavor);
-//        cookBook.setCookRepertory(Integer.valueOf(cookRepertory));
-//        cookBook.setCookPrice(Integer.valueOf(cookPrice));
-//        cookBook.setCookType(cookType);
-//        Long aLong = restaurantService.saveCook(cookBook);
-//        return aLong;
-//    }
 }
