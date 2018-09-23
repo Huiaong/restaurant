@@ -24,4 +24,7 @@ public interface RestaurantService {
 
     Long saveCook(CookBook cookBook);
 
+    CookDates<CookBook> getPutAwayCook(CookConditions cookConditions);
+
+    Long editEnableStatus(Integer id);
 }

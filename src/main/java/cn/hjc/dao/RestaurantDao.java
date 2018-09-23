@@ -6,6 +6,7 @@ import cn.hjc.entity.CookConditions;
 import cn.hjc.entity.CookDates;
 
 import java.util.List;
+import java.util.concurrent.locks.Condition;
 
 public interface RestaurantDao {
 
@@ -24,4 +25,10 @@ public interface RestaurantDao {
     Long saveCook(CookBook cookBook);
 
     Integer getCookTotal(CookConditions cookConditions);
+
+    Integer getPutAwayTotal();
+
+    List<CookBook> getPutAwayCook(CookConditions cookConditions);
+
+    Long editEnableStatus(Integer id);
 }

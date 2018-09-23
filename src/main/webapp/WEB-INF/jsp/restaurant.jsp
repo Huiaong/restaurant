@@ -69,14 +69,15 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary">查询</button>
+                    <button type="submit" class="btn btn-primary" onclick="selectbtn()">查询</button>
                     <div style="float:right;">
-                        <a href="#" class="btn btn-danger">批量下架</a>
+                        <%--<a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>--%>
                         <a href="#" class="btn btn-success" data-toggle="modal"
                            data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
-                        <a href="#" class="btn btn-default">重新上架</a>
+                        <a href="#" class="btn btn-default" onclick="putAwaybtn();">重新上架</a>
                     </div>
                 </form>
+                <form id="form-putAway" action="putAway.action" method="post"></form>
             </div>
         </div>
 
@@ -84,10 +85,10 @@
             <div class="col-md-12">
                 <div class="panel panel-default">
                     <div class="panel-heading">菜品列表</div>
-                    <table class="table table-bordered table-striped table-condensed">
+                    <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
-                            <td><strong>#</strong></td>
+                            <td name="checkAllBoxTd"><strong>#</strong></td>
                             <td><strong>菜名</strong></td>
                             <td><strong>口味</strong></td>
                             <td><strong>库存</strong></td>
@@ -99,16 +100,19 @@
                         <tbody>
                         <c:forEach items="${cookDates.rows}" var="bookItem">
                             <tr>
-                                <td></td>
+                                <td name="checkBoxTd"></td>
                                 <td>${bookItem.cookName}</td>
                                 <td>${bookItem.cookFlavor}</td>
                                 <td>${bookItem.cookRepertory}</td>
                                 <td>${bookItem.cookPrice}</td>
                                 <td>${bookItem.cookType}</td>
                                 <td>
-                                    <a href="#" class="btn btn-primary btn-xs" data-toggle="modal"
+                                    <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
                                        data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
-                                    <a href="#" class="btn btn-danger btn-xs" onclick="soldOutCook(${bookItem.cookId})">下架</a>
+                                    <a href="#" id="btn-soldOut" class="btn btn-danger btn-xs"
+                                       onclick="soldOutCook(${bookItem.cookId})">下架</a>
+                                    <a href="#" id="btn-putAway" class="btn btn-info btn-xs"
+                                       onclick="putAwayCook(${bookItem.cookId})">上架</a>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -122,7 +126,8 @@
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li>
-                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}" aria-label="Previous">
+                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}"
+                               aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
@@ -132,7 +137,8 @@
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}" aria-label="Next">
+                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}"
+                               aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
                         </li>
@@ -209,6 +215,77 @@
     var pathName = window.document.location.pathname;
     var basePath;
     basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
+
+    var btnEdit = $("#btn-edit");
+    var btnSoldOut = $("#btn-soldOut");
+    var btnPutAway = $("#btn-putAway");
+
+    // var flag = false;
+    // var addCheckAllBox = $("td[name = 'checkAllBoxTd' ]");
+    // var addCheckBoxs = $("td[name = 'checkBoxTd']");
+    // var checkAllBox = $("#checkAll");
+    // var checkBoxs = $("#check");
+    //
+    // addCheckAllBox.on("click",checkAllBox,function () {
+    //     console.log("checkAllBox被单击");
+    //     console.log(checkAllBox.is(':checked'));
+    //
+    //     checkBoxs.attr("checked","checked")
+    // });
+    //
+    //
+    // function batchSoldOut() {
+    //
+    //     if (flag == false) {
+    //         addCheckAllBox.html('&lt;input type="checkbox" id="checkAll">');
+    //         addCheckBoxs.prepend("&lt;input type='checkbox' id='check'>");
+    //         flag = true;
+    //     } else {
+    //         addCheckAllBox.html("&lt;strong>#&lt;/strong>");
+    //         addCheckBoxs.html("");
+    //         flag = false;
+    //     }
+    // }
+
+    function selectbtn() {
+
+        //表单提交后页面就刷新了，下面的代码没执行
+        //于是就有了查询页面出现上架按钮
+
+        // btnEdit.show();
+        // btnSoldOut.show();
+        // btnPutAway.hide();
+
+    }
+
+    function putAwaybtn() {
+        $("#form-putAway").submit();
+
+        //页面执行了submit就刷新了，下面的代码没执行
+        //于是就有了上架页面出现修改、下架按钮
+
+        // btnEdit.hide();
+        // btnSoldOut.hide();
+        // btnPutAway.show();
+    }
+
+    function putAwayCook(id) {
+        if (confirm('确实要重新上架该菜品吗?')) {
+            $.ajax({
+                type: "post",
+                url: basePath + "editEnableStatus.action",
+                data: {"id": id},
+                success: function (date) {
+                    if (date > 0) {
+                        alert("菜品上架成功")
+                    } else {
+                        alert("菜品上架失败")
+                    }
+                    window.location.reload();
+                }
+            });
+        }
+    }
 
     function editCook(id) {
         $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
@@ -311,7 +388,6 @@
             }
         });
     }
-
 </script>
 </body>
 </html>

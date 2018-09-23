@@ -22,12 +22,6 @@ public class RestaurantController {
     @RequestMapping(value = "list")
     public String list(Model model, CookConditions cookConditions) {
 
-        System.out.println("========================================");
-        System.out.println(cookConditions.getCookName());
-        System.out.println(cookConditions.getCookFlavor());
-        System.out.println(cookConditions.getCookType());
-        System.out.println(cookConditions.getPage());
-
         List<CookBook> flavorList = restaurantService.getCookFlavor();
         List<CookBook> typeList = restaurantService.getCookType();
 
@@ -37,11 +31,28 @@ public class RestaurantController {
         model.addAttribute("flavorList", flavorList);
         model.addAttribute("cookDates", cookDates);
 
-        model.addAttribute("cookConditions",cookConditions);
-        System.out.println("=====================================");
+        model.addAttribute("cookConditions", cookConditions);
         return "restaurant";
     }
 
+    @RequestMapping(value = "putAway")
+    public String putAway(Model model, CookConditions cookConditions) {
+        CookDates<CookBook> putAwayCook = restaurantService.getPutAwayCook(cookConditions);
+
+        List<CookBook> flavorList = restaurantService.getCookFlavor();
+        List<CookBook> typeList = restaurantService.getCookType();
+        model.addAttribute("typeList", typeList);
+        model.addAttribute("flavorList", flavorList);
+        model.addAttribute("cookDates", putAwayCook);
+        model.addAttribute("cookConditions", cookConditions);
+        return "restaurant";
+    }
+
+    @RequestMapping(value = "editEnableStatus")
+    @ResponseBody
+    public Long editEnableStatus(Integer id){
+        return restaurantService.editEnableStatus(id);
+    }
 
     @RequestMapping(value = "editCook")
     @ResponseBody

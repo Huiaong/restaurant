@@ -81,6 +81,30 @@
         </where>
     </select>
 
+    <select id="getPutAwayTotal" resultType="Integer">
+        SELECT COUNT(*)
+        FROM tb_cook_book
+        WHERE cook_enable_status = 0
+    </select>
+
+    <select id="getPutAwayCook" parameterType="cookConditions" resultType="CookBook" resultMap="cookResultMap">
+        SELECT tb_cook_book.cook_id,
+               tb_cook_book.cook_name,
+               tb_cook_book.cook_flavor,
+               tb_cook_book.cook_repertory,
+               tb_cook_book.cook_price,
+               tb_cook_book.cook_type
+        FROM tb_cook_book
+        WHERE cook_enable_status = 0
+        Limit #{start},#{rows}
+    </select>
+
+    <update id="editEnableStatus" parameterType="Integer">
+        UPDATE `restaurant`.`tb_cook_book`
+        SET `cook_enable_status` = 1
+        WHERE (`cook_id` = #{id});
+    </update>
+
     <update id="updateCook" parameterType="CookBook">
         UPDATE
         `restaurant`.`tb_cook_book`

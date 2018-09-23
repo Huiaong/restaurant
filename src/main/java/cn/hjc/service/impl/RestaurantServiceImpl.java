@@ -32,7 +32,7 @@ public class RestaurantServiceImpl implements RestaurantService {
 
             //查询总页数
             Integer pageNum = total / cookConditions.getRows();
-            if (total %  cookConditions.getRows() > 0) {
+            if (total % cookConditions.getRows() > 0) {
                 pageNum++;
             }
 
@@ -74,6 +74,29 @@ public class RestaurantServiceImpl implements RestaurantService {
     public Long saveCook(CookBook cookBook) {
         Long aLong = restaurantDao.saveCook(cookBook);
         return aLong;
+    }
+
+    @Override
+    public CookDates<CookBook> getPutAwayCook(CookConditions cookConditions) {
+        //计算分页查询从哪条记录开始
+        cookConditions.setStart((cookConditions.getPage() - 1) * cookConditions.getRows());
+
+        Integer total = restaurantDao.getPutAwayTotal();
+        //查询总页数
+        Integer pageNum = total / cookConditions.getRows();
+        if (total % cookConditions.getRows() > 0) {
+            pageNum++;
+        }
+
+        List<CookBook> putAwayCook = restaurantDao.getPutAwayCook(cookConditions);
+
+        CookDates<CookBook> cookDates = new CookDates<CookBook>(pageNum, putAwayCook);
+        return cookDates;
+    }
+
+    @Override
+    public Long editEnableStatus(Integer id) {
+        return restaurantDao.editEnableStatus(id);
     }
 
     public List<CookBook> getCookFlavor() {
