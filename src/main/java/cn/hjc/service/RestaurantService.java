@@ -4,6 +4,7 @@ package cn.hjc.service;
 import cn.hjc.entity.CookBook;
 import cn.hjc.entity.CookConditions;
 import cn.hjc.entity.CookDates;
+import cn.hjc.entity.User;
 
 import java.util.List;
 
@@ -27,4 +28,5 @@ public interface RestaurantService {
     CookDates<CookBook> getPutAwayCook(CookConditions cookConditions);
 
     Long editEnableStatus(Integer id);
+
 }

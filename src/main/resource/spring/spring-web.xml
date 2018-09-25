@@ -13,4 +13,13 @@
         <property name="prefix" value="/WEB-INF/jsp/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+    <mvc:interceptors>
+        <mvc:interceptor>
+            <mvc:mapping path="/**"/>
+            <mvc:exclude-mapping path="/list.action"/>
+            <mvc:exclude-mapping path="/login.action"/>
+            <bean id="handleInterceptor" class="cn.hjc.interceptor.RestaurantInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
 </beans>

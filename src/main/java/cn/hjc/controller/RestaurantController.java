@@ -4,7 +4,6 @@ import cn.hjc.entity.CookBook;
 import cn.hjc.entity.CookConditions;
 import cn.hjc.entity.CookDates;
 import cn.hjc.service.RestaurantService;
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,7 +49,7 @@ public class RestaurantController {
 
     @RequestMapping(value = "editEnableStatus")
     @ResponseBody
-    public Long editEnableStatus(Integer id){
+    public Long editEnableStatus(Integer id) {
         return restaurantService.editEnableStatus(id);
     }
 

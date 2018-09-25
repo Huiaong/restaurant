@@ -18,6 +18,7 @@
     <title>神奇餐厅</title>
 
     <link href="<%=basePath%>static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="<%=basePath%>static/css/iconfont.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="wrapper">
@@ -27,13 +28,23 @@
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">神奇餐厅后台端</a>
             </div>
-
-            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-                <ul class="nav navbar-nav">
-                    <li><a href="#">菜品管理</a></li>
-                    <li><a href="#">流水查询</a></li>
-                </ul>
-            </div><!-- /.container-fluid -->
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <c:if test="${user!=null}">
+                        <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="iconfont icon-user"></span></a>
+                        <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
+                            <li><a href="#">欢迎您${user.userName}</a></li>
+                            <li><a href="#">更改密码</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a></li>
+                        </ul>
+                    </c:if>
+                    <c:if test="${user==null}">
+                        <a id="btn_login" href="#" data-toggle="modal"
+                           data-target="#userLoginDialog"><span class="iconfont icon-user"></span></a>
+                    </c:if>
+                </li>
+            </ul>
         </div>
     </nav>
 
@@ -199,7 +210,45 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="btn_submit" onclick="updateCook()">保存修改
+                        <button type="button" class="btn btn-primary" id="btn_cook_submit" onclick="updateCook()">保存修改
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="userLoginDialog" tabindex="-1" role="dialog"
+             aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                        <h4 class="modal-title" id="myLoginLabel">登陆</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" id="user_login_form">
+                            <div class="form-group">
+                                <label for="edit_cookName" style="float:left;padding:7px 15px 0 27px;">账号</label>
+                                <div class="col-sm-10">
+                                    <input id="userName_input" type="text" class="form-control" id="edit_userName"
+                                           placeholder="账号"
+                                           name="userName">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookFlavor" style="float:left;padding:7px 15px 0 27px;">密码</label>
+                                <div class="col-sm-10">
+                                    <input type="password" class="form-control" id="edit_passWord" placeholder="密码"
+                                           name="passWord">
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
+                        <button type="button" class="btn btn-primary" id="btn_user_submit" onclick="userLogin()">登陆
                         </button>
                     </div>
                 </div>
@@ -215,10 +264,11 @@
     var pathName = window.document.location.pathname;
     var basePath;
     basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
-
-    var btnEdit = $("#btn-edit");
-    var btnSoldOut = $("#btn-soldOut");
-    var btnPutAway = $("#btn-putAway");
+    //var userName = $("#userName_input");
+    //var userNameTips = $("#userName_tips");
+    // var btnEdit = $("#btn-edit");
+    // var btnSoldOut = $("#btn-soldOut");
+    // var btnPutAway = $("#btn-putAway");
 
     // var flag = false;
     // var addCheckAllBox = $("td[name = 'checkAllBoxTd' ]");
@@ -247,26 +297,55 @@
     //     }
     // }
 
-    function selectbtn() {
+    // function selectbtn() {
 
-        //表单提交后页面就刷新了，下面的代码没执行
-        //于是就有了查询页面出现上架按钮
+    //表单提交后页面就刷新了，下面的代码没执行
+    //于是就有了查询页面出现上架按钮
 
-        // btnEdit.show();
-        // btnSoldOut.show();
-        // btnPutAway.hide();
+    // btnEdit.show();
+    // btnSoldOut.show();
+    // btnPutAway.hide();
 
+    // }
+
+    // function putAwaybtn() {
+    //     $("#form-putAway").submit();
+
+    //页面执行了submit就刷新了，下面的代码没执行
+    //于是就有了上架页面出现修改、下架按钮
+
+    // btnEdit.hide();
+    // btnSoldOut.hide();
+    // btnPutAway.show();
+    // }
+
+
+    function loginOutPut() {
+        $.ajax({
+            type:"get",
+            url:basePath + "loginOutPut.action",
+            success:function () {
+                window.location.reload();
+            }
+        });
     }
 
-    function putAwaybtn() {
-        $("#form-putAway").submit();
 
-        //页面执行了submit就刷新了，下面的代码没执行
-        //于是就有了上架页面出现修改、下架按钮
-
-        // btnEdit.hide();
-        // btnSoldOut.hide();
-        // btnPutAway.show();
+    function userLogin() {
+        $.ajax({
+            type: "post",
+            url: basePath + "login.action",
+            data: $("#user_login_form").serialize(),
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (date) {
+                if (date.msg == "loginSuccess") {
+                    alert("登陆成功");
+                } else {
+                    alert("登陆失败");
+                }
+                window.location.reload();
+            }
+        });
     }
 
     function putAwayCook(id) {
