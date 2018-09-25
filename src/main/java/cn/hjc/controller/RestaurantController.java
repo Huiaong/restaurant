@@ -18,6 +18,16 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    @RequestMapping(value = "backStageManagement")
+    public String bSManagement(Model model){
+        List<CookBook> flavorList = restaurantService.getCookFlavor();
+        List<CookBook> typeList = restaurantService.getCookType();
+        model.addAttribute("typeList", typeList);
+        model.addAttribute("flavorList", flavorList);
+
+        return "restaurant";
+    }
+
     @RequestMapping(value = "list")
     public String list(Model model, CookConditions cookConditions) {
 

@@ -31,12 +31,14 @@
             <ul class="nav navbar-nav navbar-right">
                 <li>
                     <c:if test="${user!=null}">
-                        <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true"><span class="iconfont icon-user"></span></a>
+                        <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                           aria-expanded="true"><span class="iconfont icon-user"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="#">欢迎您${user.userName}</a></li>
                             <li><a href="#">更改密码</a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a></li>
+                            <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a>
+                            </li>
                         </ul>
                     </c:if>
                     <c:if test="${user==null}">
@@ -308,23 +310,32 @@
 
     // }
 
-    // function putAwaybtn() {
-    //     $("#form-putAway").submit();
+    $(function () {
+        if (${user==null}) {
+            if (${msg != null}) {
+                alert("${msg}");
+                $("#btn_login").trigger("click");
+            }
+        }
+    });
 
-    //页面执行了submit就刷新了，下面的代码没执行
-    //于是就有了上架页面出现修改、下架按钮
+    function putAwaybtn() {
+        $("#form-putAway").submit();
 
-    // btnEdit.hide();
-    // btnSoldOut.hide();
-    // btnPutAway.show();
-    // }
+        //页面执行了submit就刷新了，下面的代码没执行
+        //于是就有了上架页面出现修改、下架按钮
+
+        // btnEdit.hide();
+        // btnSoldOut.hide();
+        // btnPutAway.show();
+    }
 
 
     function loginOutPut() {
         $.ajax({
-            type:"get",
-            url:basePath + "loginOutPut.action",
-            success:function () {
+            type: "get",
+            url: basePath + "loginOutPut.action",
+            success: function () {
                 window.location.reload();
             }
         });
