@@ -13,7 +13,6 @@ public class RestaurantInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        System.out.println(user);
         if (user != null){
             return true;
         }

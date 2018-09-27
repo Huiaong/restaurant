@@ -31,4 +31,6 @@ public interface RestaurantDao {
     List<CookBook> getPutAwayCook(CookConditions cookConditions);
 
     Long editEnableStatus(Integer id);
+
+    Long soldOutCookByName(String cookName);
 }

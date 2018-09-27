@@ -66,7 +66,6 @@ public class RestaurantController {
     @RequestMapping(value = "editCook")
     @ResponseBody
     public CookBook editCook(Integer id) {
-
         CookBook cookBook = restaurantService.getCookById(id);
         return cookBook;
     }
@@ -92,4 +91,10 @@ public class RestaurantController {
         return aLong;
     }
 
+    @RequestMapping(value = "batchSoldOut")
+    @ResponseBody
+    public Long batchSoldOut(String cookName){
+        Long aLong = restaurantService.soldOutCookByName(cookName);
+        return aLong;
+    }
 }

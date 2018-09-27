@@ -83,8 +83,8 @@
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="selectbtn()">查询</button>
-                    <div style="float:right;">
-                        <%--<a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>--%>
+                    <div id="btn_list" style="float:right;">
+                        <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
                         <a href="#" class="btn btn-success" data-toggle="modal"
                            data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
                         <a href="#" class="btn btn-default" onclick="putAwaybtn();">重新上架</a>
@@ -101,7 +101,7 @@
                     <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
-                            <td name="checkAllBoxTd"><strong>#</strong></td>
+                            <td><strong>#</strong></td>
                             <td><strong>菜名</strong></td>
                             <td><strong>口味</strong></td>
                             <td><strong>库存</strong></td>
@@ -111,9 +111,9 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${cookDates.rows}" var="bookItem">
+                        <c:forEach items="${cookDates.rows}" var="bookItem" varStatus="status">
                             <tr>
-                                <td name="checkBoxTd"></td>
+                                <td>${status.index+1}</td>
                                 <td>${bookItem.cookName}</td>
                                 <td>${bookItem.cookFlavor}</td>
                                 <td>${bookItem.cookRepertory}</td>
@@ -273,10 +273,10 @@
     // var btnPutAway = $("#btn-putAway");
 
     // var flag = false;
-    // var addCheckAllBox = $("td[name = 'checkAllBoxTd' ]");
-    // var addCheckBoxs = $("td[name = 'checkBoxTd']");
-    // var checkAllBox = $("#checkAll");
-    // var checkBoxs = $("#check");
+    var addCheckAllBox = $("#table_cookList thead tr");
+    var addCheckBoxs = $("#table_cookList tbody tr");
+    var checkAllBox = $("#checkAll");
+    var checkBoxs = $(".check");
     //
     // addCheckAllBox.on("click",checkAllBox,function () {
     //     console.log("checkAllBox被单击");
@@ -286,18 +286,7 @@
     // });
     //
     //
-    // function batchSoldOut() {
-    //
-    //     if (flag == false) {
-    //         addCheckAllBox.html('&lt;input type="checkbox" id="checkAll">');
-    //         addCheckBoxs.prepend("&lt;input type='checkbox' id='check'>");
-    //         flag = true;
-    //     } else {
-    //         addCheckAllBox.html("&lt;strong>#&lt;/strong>");
-    //         addCheckBoxs.html("");
-    //         flag = false;
-    //     }
-    // }
+
 
     // function selectbtn() {
 
@@ -317,7 +306,43 @@
                 $("#btn_login").trigger("click");
             }
         }
+        addCheckAllBox.on("click", checkAllBox, function () {
+            $(".check").prop("checked", $("#checkAll").prop("checked"));
+        });
+        addCheckBoxs.on("click", checkBoxs, function () {
+            var flag = $(".check:checked").length == $(".check").length;
+            $("#checkAll").prop("checked", flag);
+        });
     });
+
+    function batchSoldOut() {
+        if ($("#checkAll").length <= 0) {
+            $("#btn_list").prepend('<a href="#" class="btn btn-danger" onclick="SoldOut()">下架</a>')
+            addCheckAllBox.prepend('<td><input type="checkbox" id="checkAll"></td>');
+            addCheckBoxs.prepend("<td><input type='checkbox' class='check'></td>");
+        } else {
+            $("#btn_list a:first").remove();
+            addCheckAllBox.children("td:first").remove();
+            addCheckBoxs.children("td:first-child").remove();
+        }
+    }
+
+    function SoldOut() {
+        if (confirm("确定要下架商品吗")) {
+            $.each($(".check:checked"), function () {
+                var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                $.ajax({
+                    type: "post",
+                    url: basePath + "batchSoldOut.action",
+                    data: {
+                        "cookName":cookName
+                    },
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8"
+                });
+            });
+            window.location.reload();
+        }
+    }
 
     function putAwaybtn() {
         $("#form-putAway").submit();

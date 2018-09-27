@@ -135,6 +135,12 @@
         WHERE `cook_id` = #{cookId};
     </update>
 
+    <update id="soldOutCookByName" parameterType="String">
+        UPDATE tb_cook_book
+        SET cook_enable_status = 0
+        WHERE cook_name = #{cookName}
+    </update>
+
     <insert id="saveCook" parameterType="cookBook">
         insert into tb_cook_book(
         <if test="cookName !=null and cookName != ''">

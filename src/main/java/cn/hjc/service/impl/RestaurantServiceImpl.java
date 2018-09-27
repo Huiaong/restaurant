@@ -100,6 +100,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         return aLong;
     }
 
+    @Override
+    public Long soldOutCookByName(String cookName) {
+        return restaurantDao.soldOutCookByName(cookName);
+    }
+
     public List<CookBook> getCookFlavor() {
         List<CookBook> cook = restaurantDao.getCookFlavor();
         return cook;
