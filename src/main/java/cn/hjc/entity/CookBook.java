@@ -8,6 +8,15 @@ public class CookBook {
     private int cookRepertory;
     private int cookPrice;
     private String cookType;
+    private int cookEnableStatus;
+
+    public int getCookEnableStatus() {
+        return cookEnableStatus;
+    }
+
+    public void setCookEnableStatus(int cookEnableStatus) {
+        this.cookEnableStatus = cookEnableStatus;
+    }
 
     public int getCookId() {
         return cookId;

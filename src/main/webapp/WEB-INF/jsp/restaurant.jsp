@@ -84,6 +84,9 @@
                     </div>
                     <button type="submit" class="btn btn-primary" onclick="selectbtn()">查询</button>
                     <div id="btn_list" style="float:right;">
+                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:1==1}">
+                            <a href="#" class="btn btn-default" onclick="putAway()">上架</a>
+                        </c:if>
                         <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
                         <a href="#" class="btn btn-success" data-toggle="modal"
                            data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
@@ -101,6 +104,9 @@
                     <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
+                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:1==2}">
+                                <td><input type="checkbox" id="checkAll"></td>
+                            </c:if>
                             <td><strong>#</strong></td>
                             <td><strong>菜名</strong></td>
                             <td><strong>口味</strong></td>
@@ -113,6 +119,9 @@
                         <tbody>
                         <c:forEach items="${cookDates.rows}" var="bookItem" varStatus="status">
                             <tr>
+                                <c:if test="${bookItem.cookEnableStatus == 0}">
+                                    <td><input type="checkbox"  class="check"/></td>
+                                </c:if>
                                 <td>${status.index+1}</td>
                                 <td>${bookItem.cookName}</td>
                                 <td>${bookItem.cookFlavor}</td>
@@ -120,12 +129,16 @@
                                 <td>${bookItem.cookPrice}</td>
                                 <td>${bookItem.cookType}</td>
                                 <td>
-                                    <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
-                                       data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
-                                    <a href="#" id="btn-soldOut" class="btn btn-danger btn-xs"
-                                       onclick="soldOutCook(${bookItem.cookId})">下架</a>
-                                    <a href="#" id="btn-putAway" class="btn btn-info btn-xs"
-                                       onclick="putAwayCook(${bookItem.cookId})">上架</a>
+                                    <c:if test="${bookItem.cookEnableStatus > 0}">
+                                        <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
+                                           data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
+                                        <a href="#" id="btn-soldOut" class="btn btn-danger btn-xs"
+                                           onclick="soldOutCook(${bookItem.cookId})">下架</a>
+                                    </c:if>
+                                    <c:if test="${bookItem.cookEnableStatus == 0}">
+                                        <a href="#" id="btn-putAway" class="btn btn-info btn-xs"
+                                           onclick="putAwayCook(${bookItem.cookId})">上架</a>
+                                    </c:if>
                                 </td>
                             </tr>
                         </c:forEach>
@@ -264,40 +277,12 @@
 <script type="text/javascript">
     var curPath = window.document.location.href;
     var pathName = window.document.location.pathname;
-    var basePath;
-    basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
-    //var userName = $("#userName_input");
-    //var userNameTips = $("#userName_tips");
-    // var btnEdit = $("#btn-edit");
-    // var btnSoldOut = $("#btn-soldOut");
-    // var btnPutAway = $("#btn-putAway");
-
-    // var flag = false;
+    var basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
     var addCheckAllBox = $("#table_cookList thead tr");
     var addCheckBoxs = $("#table_cookList tbody tr");
     var checkAllBox = $("#checkAll");
     var checkBoxs = $(".check");
-    //
-    // addCheckAllBox.on("click",checkAllBox,function () {
-    //     console.log("checkAllBox被单击");
-    //     console.log(checkAllBox.is(':checked'));
-    //
-    //     checkBoxs.attr("checked","checked")
-    // });
-    //
-    //
 
-
-    // function selectbtn() {
-
-    //表单提交后页面就刷新了，下面的代码没执行
-    //于是就有了查询页面出现上架按钮
-
-    // btnEdit.show();
-    // btnSoldOut.show();
-    // btnPutAway.hide();
-
-    // }
 
     $(function () {
         if (${user==null}) {
@@ -335,27 +320,40 @@
                     type: "post",
                     url: basePath + "batchSoldOut.action",
                     data: {
-                        "cookName":cookName
+                        "cookName": cookName
                     },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8"
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                    success:function () {
+                        window.location.reload();
+                    }
                 });
             });
-            window.location.reload();
         }
     }
 
     function putAwaybtn() {
         $("#form-putAway").submit();
-
-        //页面执行了submit就刷新了，下面的代码没执行
-        //于是就有了上架页面出现修改、下架按钮
-
-        // btnEdit.hide();
-        // btnSoldOut.hide();
-        // btnPutAway.show();
     }
 
 
+    function putAway() {
+        if (confirm("确定要上架商品吗")) {
+            $.each($(".check:checked"), function () {
+                var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                $.ajax({
+                    type: "post",
+                    url: basePath + "batchPutAway.action",
+                    data: {
+                        "cookName": cookName
+                    },
+                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                    success:function () {
+                        window.location.reload();
+                    }
+                });
+            });
+        }
+    }
     function loginOutPut() {
         $.ajax({
             type: "get",

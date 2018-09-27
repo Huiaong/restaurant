@@ -97,4 +97,10 @@ public class RestaurantController {
         Long aLong = restaurantService.soldOutCookByName(cookName);
         return aLong;
     }
+
+    @RequestMapping(value = "batchPutAway")
+    @ResponseBody
+    public Long batchPutAway(String cookName){
+        return restaurantService.putAwayCookByName(cookName);
+    }
 }

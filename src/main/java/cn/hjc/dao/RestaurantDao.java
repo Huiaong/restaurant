@@ -33,4 +33,6 @@ public interface RestaurantDao {
     Long editEnableStatus(Integer id);
 
     Long soldOutCookByName(String cookName);
+
+    Long putAwayCookByName(String cookName);
 }

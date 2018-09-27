@@ -105,6 +105,11 @@ public class RestaurantServiceImpl implements RestaurantService {
         return restaurantDao.soldOutCookByName(cookName);
     }
 
+    @Override
+    public Long putAwayCookByName(String cookName) {
+        return restaurantDao.putAwayCookByName(cookName);
+    }
+
     public List<CookBook> getCookFlavor() {
         List<CookBook> cook = restaurantDao.getCookFlavor();
         return cook;

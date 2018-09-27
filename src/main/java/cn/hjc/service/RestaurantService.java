@@ -30,4 +30,6 @@ public interface RestaurantService {
     Long editEnableStatus(Integer id);
 
     Long soldOutCookByName(String cookName);
+
+    Long putAwayCookByName(String cookName);
 }

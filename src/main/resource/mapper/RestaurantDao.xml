@@ -11,6 +11,7 @@
         <result property="cookRepertory" column="cook_repertory"/>
         <result property="cookPrice" column="cook_price"/>
         <result property="cookType" column="cook_type"/>
+        <result property="cookEnableStatus" column="cook_enable_status"/>
     </resultMap>
 
     <select id="getCookByCondition" parameterType="cookConditions" resultType="CookBook" resultMap="cookResultMap">
@@ -20,7 +21,8 @@
         tb_cook_book.cook_flavor,
         tb_cook_book.cook_repertory,
         tb_cook_book.cook_price,
-        tb_cook_book.cook_type
+        tb_cook_book.cook_type,
+        tb_cook_book.cook_enable_status
         FROM
         tb_cook_book
         <where>
@@ -58,7 +60,8 @@
                tb_cook_book.cook_flavor,
                tb_cook_book.cook_repertory,
                tb_cook_book.cook_price,
-               tb_cook_book.cook_type
+               tb_cook_book.cook_type,
+               tb_cook_book.cook_enable_status
         FROM tb_cook_book
         where cook_enable_status > 0
           and cook_id = #{cookId}
@@ -93,7 +96,8 @@
                tb_cook_book.cook_flavor,
                tb_cook_book.cook_repertory,
                tb_cook_book.cook_price,
-               tb_cook_book.cook_type
+               tb_cook_book.cook_type,
+               tb_cook_book.cook_enable_status
         FROM tb_cook_book
         WHERE cook_enable_status = 0
         Limit #{start},#{rows}
@@ -138,6 +142,12 @@
     <update id="soldOutCookByName" parameterType="String">
         UPDATE tb_cook_book
         SET cook_enable_status = 0
+        WHERE cook_name = #{cookName}
+    </update>
+
+    <update id="putAwayCookByName" parameterType="String">
+        UPDATE tb_cook_book
+        SET cook_enable_status = 1
         WHERE cook_name = #{cookName}
     </update>
 
