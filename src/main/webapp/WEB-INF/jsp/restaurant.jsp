@@ -113,6 +113,7 @@
                             <td><strong>库存</strong></td>
                             <td><strong>价格</strong></td>
                             <td><strong>菜系</strong></td>
+                            <td><strong>图片</strong></td>
                             <td><strong>操作</strong></td>
                         </tr>
                         </thead>
@@ -128,6 +129,7 @@
                                 <td>${bookItem.cookRepertory}</td>
                                 <td>${bookItem.cookPrice}</td>
                                 <td>${bookItem.cookType}</td>
+                                <td>${bookItem.cookImgAddr}</td>
                                 <td>
                                     <c:if test="${bookItem.cookEnableStatus > 0}">
                                         <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
@@ -219,6 +221,13 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="edit_cookType" placeholder="菜系"
                                            name="cookType">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookImgAddr" style="float:left;padding:7px 15px 0 27px;">图片</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" id="edit_cookImgAddr" placeholder="请选择图片"
+                                           name="cookImgAddr">
                                 </div>
                             </div>
                         </form>
@@ -354,6 +363,7 @@
             });
         }
     }
+
     function loginOutPut() {
         $.ajax({
             type: "get",

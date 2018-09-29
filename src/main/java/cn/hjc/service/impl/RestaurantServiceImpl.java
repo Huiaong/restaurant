@@ -18,7 +18,11 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Autowired
     private RestaurantDao restaurantDao;
 
-
+    /**
+     * 根据条件查询菜品信息
+     * @param cookConditions
+     * @return
+     */
     public CookDates<CookBook> getCookByCondition(CookConditions cookConditions) {
         if (cookConditions.getCookName() != null && cookConditions.getCookName().length() != 0 ||
                 cookConditions.getCookFlavor() != null && cookConditions.getCookFlavor().length() != 0 ||
@@ -47,35 +51,73 @@ public class RestaurantServiceImpl implements RestaurantService {
         return null;
     }
 
+    /**
+     * 查询菜品口味
+     * @return
+     */
     public List<CookBook> getCookType() {
         List<CookBook> cook = restaurantDao.getCookType();
         return cook;
     }
 
+    /**
+     * 查询菜品菜系
+     * @return
+     */
+    public List<CookBook> getCookFlavor() {
+        List<CookBook> cook = restaurantDao.getCookFlavor();
+        return cook;
+    }
+
+    /**
+     * 根据id查询菜品
+     * @param integer
+     * @return
+     */
     @Override
     public CookBook getCookById(Integer integer) {
         CookBook cook = restaurantDao.getCookById(integer);
         return cook;
     }
 
+    /**
+     * 更新菜品信息
+     * @param cookBook
+     * @return
+     */
     @Override
     public Long updateCook(CookBook cookBook) {
         Long aLong = restaurantDao.updateCook(cookBook);
         return aLong;
     }
 
+    /**
+     * 根据id下架菜品
+     * @param integer
+     * @return
+     */
     @Override
     public Long soldOutCookById(Integer integer) {
         Long aLong = restaurantDao.soldOutCookById(integer);
         return aLong;
     }
 
+    /**
+     * 新增菜品
+     * @param cookBook
+     * @return
+     */
     @Override
     public Long saveCook(CookBook cookBook) {
         Long aLong = restaurantDao.saveCook(cookBook);
         return aLong;
     }
 
+    /**
+     * 根据条件查询可上架菜品
+     * @param cookConditions
+     * @return
+     */
     @Override
     public CookDates<CookBook> getPutAwayCook(CookConditions cookConditions) {
         //计算分页查询从哪条记录开始
@@ -94,25 +136,35 @@ public class RestaurantServiceImpl implements RestaurantService {
         return cookDates;
     }
 
+    /**
+     * 修改菜品上/下架情况
+     * @param id
+     * @return
+     */
     @Override
     public Long editEnableStatus(Integer id) {
         Long aLong = restaurantDao.editEnableStatus(id);
         return aLong;
     }
 
+    /**
+     * 根据菜名下架菜品
+     * @param cookName
+     * @return
+     */
     @Override
     public Long soldOutCookByName(String cookName) {
         return restaurantDao.soldOutCookByName(cookName);
     }
 
+    /**
+     * 根据菜名上架菜品
+     * @param cookName
+     * @return
+     */
     @Override
     public Long putAwayCookByName(String cookName) {
         return restaurantDao.putAwayCookByName(cookName);
-    }
-
-    public List<CookBook> getCookFlavor() {
-        List<CookBook> cook = restaurantDao.getCookFlavor();
-        return cook;
     }
 
 }

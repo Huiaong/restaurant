@@ -4,18 +4,25 @@ public class CookBook {
 
     private int cookId;
     private String cookName;
-    private String cookFlavor;
-    private int cookRepertory;
+    private String cookFlavor;      //菜品口味
+    private int cookRepertory;     //菜品库存
     private int cookPrice;
-    private String cookType;
-    private int cookEnableStatus;
+    private String cookType;        //菜品菜系
+    private String cookImgAddr;     //菜品样品图
+    private int cookEnableStatus;  //菜品上/下架情况
 
-    public int getCookEnableStatus() {
-        return cookEnableStatus;
-    }
-
-    public void setCookEnableStatus(int cookEnableStatus) {
-        this.cookEnableStatus = cookEnableStatus;
+    @Override
+    public String toString() {
+        return "CookBook{" +
+                "cookId=" + cookId +
+                ", cookName='" + cookName + '\'' +
+                ", cookFlavor='" + cookFlavor + '\'' +
+                ", cookRepertory=" + cookRepertory +
+                ", cookPrice=" + cookPrice +
+                ", cookType='" + cookType + '\'' +
+                ", cookImgAddr='" + cookImgAddr + '\'' +
+                ", cookEnableStatus=" + cookEnableStatus +
+                '}';
     }
 
     public int getCookId() {
@@ -66,15 +73,19 @@ public class CookBook {
         this.cookType = cookType;
     }
 
-    @Override
-    public String toString() {
-        return "CookBook{" +
-                "cookId=" + cookId +
-                ", cookName='" + cookName + '\'' +
-                ", cookFlavor='" + cookFlavor + '\'' +
-                ", cookRepertory=" + cookRepertory +
-                ", cookPrice=" + cookPrice +
-                ", cookType='" + cookType + '\'' +
-                '}';
+    public String getCookImgAddr() {
+        return cookImgAddr;
+    }
+
+    public void setCookImgAddr(String cookImgAddr) {
+        this.cookImgAddr = cookImgAddr;
+    }
+
+    public int getCookEnableStatus() {
+        return cookEnableStatus;
+    }
+
+    public void setCookEnableStatus(int cookEnableStatus) {
+        this.cookEnableStatus = cookEnableStatus;
     }
 }

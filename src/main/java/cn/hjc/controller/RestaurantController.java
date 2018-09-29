@@ -18,6 +18,11 @@ public class RestaurantController {
     @Autowired
     private RestaurantService restaurantService;
 
+    /**
+     * 菜品管理后台端入口
+     * @param model
+     * @return
+     */
     @RequestMapping(value = "backStageManagement")
     public String bSManagement(Model model){
         List<CookBook> flavorList = restaurantService.getCookFlavor();
@@ -28,6 +33,12 @@ public class RestaurantController {
         return "restaurant";
     }
 
+    /**
+     * 菜品管理主菜单
+     * @param model
+     * @param cookConditions
+     * @return
+     */
     @RequestMapping(value = "list")
     public String list(Model model, CookConditions cookConditions) {
 
@@ -44,6 +55,12 @@ public class RestaurantController {
         return "restaurant";
     }
 
+    /**
+     *
+     * @param model
+     * @param cookConditions
+     * @return
+     */
     @RequestMapping(value = "putAway")
     public String putAway(Model model, CookConditions cookConditions) {
         CookDates<CookBook> putAwayCook = restaurantService.getPutAwayCook(cookConditions);
@@ -57,12 +74,22 @@ public class RestaurantController {
         return "restaurant";
     }
 
+    /**
+     * 修改菜品上/下架情况
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "editEnableStatus")
     @ResponseBody
     public Long editEnableStatus(Integer id) {
         return restaurantService.editEnableStatus(id);
     }
 
+    /**
+     * 根据id查询编辑信息
+     * @param id
+     * @return
+     */
     @RequestMapping(value = "editCook")
     @ResponseBody
     public CookBook editCook(Integer id) {
@@ -70,6 +97,11 @@ public class RestaurantController {
         return cookBook;
     }
 
+    /**
+     * 更新菜品信息
+     * @param cookBook
+     * @return
+     */
     @RequestMapping(value = "update")
     @ResponseBody
     public Long update(CookBook cookBook) {
@@ -77,6 +109,11 @@ public class RestaurantController {
         return aLong;
     }
 
+    /**
+     * 根据id下架菜品
+     * @param cookId
+     * @return
+     */
     @RequestMapping(value = "soldOut")
     @ResponseBody
     public Long soldOut(Integer cookId) {
@@ -84,6 +121,11 @@ public class RestaurantController {
         return aLong;
     }
 
+    /**
+     * 新增菜品
+     * @param cookBook
+     * @return
+     */
     @RequestMapping(value = "save")
     @ResponseBody
     public Long saveCookBook(CookBook cookBook) {
@@ -91,6 +133,11 @@ public class RestaurantController {
         return aLong;
     }
 
+    /**
+     * 根据名称下架菜品
+     * @param cookName
+     * @return
+     */
     @RequestMapping(value = "batchSoldOut")
     @ResponseBody
     public Long batchSoldOut(String cookName){
@@ -98,6 +145,11 @@ public class RestaurantController {
         return aLong;
     }
 
+    /**
+     * 根据名称上架菜品
+     * @param cookName
+     * @return
+     */
     @RequestMapping(value = "batchPutAway")
     @ResponseBody
     public Long batchPutAway(String cookName){

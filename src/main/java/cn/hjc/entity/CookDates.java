@@ -4,8 +4,8 @@ import java.util.List;
 
 public class CookDates<T> {
 
-    private int pageNum;
-    private List<T> rows;
+    private int pageNum;    //当前页数
+    private List<T> rows;    //存放查询结果
 
     public CookDates() {
         super();
