@@ -11,7 +11,6 @@
         <result property="cookRepertory" column="cook_repertory"/>
         <result property="cookPrice" column="cook_price"/>
         <result property="cookType" column="cook_type"/>
-        <result property="cookImgAddr" column="cook_img_addr"/>
         <result property="cookEnableStatus" column="cook_enable_status"/>
     </resultMap>
 
@@ -24,7 +23,6 @@
         tb_cook_book.cook_repertory,
         tb_cook_book.cook_price,
         tb_cook_book.cook_type,
-        tb_cook_book.cook_img_addr,
         tb_cook_book.cook_enable_status
         FROM
         tb_cook_book

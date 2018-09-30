@@ -14,6 +14,15 @@
         <property name="suffix" value=".jsp"/>
     </bean>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <property name="maxUploadSize">
+            <value>104857600</value>
+        </property>
+        <property name="maxInMemorySize">
+            <value>4096</value>
+        </property>
+    </bean>
+
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/**"/>
@@ -22,4 +31,6 @@
             <bean id="handleInterceptor" class="cn.hjc.interceptor.RestaurantInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>
+
+
 </beans>

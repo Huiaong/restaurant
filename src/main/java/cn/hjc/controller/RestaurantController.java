@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.io.IOException;
 import java.util.List;
 
 @Controller
@@ -30,7 +31,7 @@ public class RestaurantController {
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
 
-        return "restaurant";
+        return "backStage";
     }
 
     /**
@@ -52,7 +53,7 @@ public class RestaurantController {
         model.addAttribute("cookDates", cookDates);
 
         model.addAttribute("cookConditions", cookConditions);
-        return "restaurant";
+        return "backStage";
     }
 
     /**
@@ -71,7 +72,7 @@ public class RestaurantController {
         model.addAttribute("flavorList", flavorList);
         model.addAttribute("cookDates", putAwayCook);
         model.addAttribute("cookConditions", cookConditions);
-        return "restaurant";
+        return "backStage";
     }
 
     /**
@@ -101,6 +102,7 @@ public class RestaurantController {
      * 更新菜品信息
      * @param cookBook
      * @return
+     * @throws IOException
      */
     @RequestMapping(value = "update")
     @ResponseBody
