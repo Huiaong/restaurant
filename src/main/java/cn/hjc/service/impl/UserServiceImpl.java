@@ -20,13 +20,9 @@ public class UserServiceImpl implements UserService {
     public Map<String,Object> login(User user, HttpServletRequest httpServletRequest) {
         User login = userDao.login(user);
         Map<String,Object> map = new HashMap<>();
-        System.out.println("==========================");
-        System.out.println(login);
         if (login == null) {
             map.put("msg","用户名或密码错误");
-            System.out.println("login=null");
         }else if (login != null){
-            System.out.println("login!=null");
             map.put("enableStatus",login.getEnableStatus());
             map.put("msg","loginSuccess");
             httpServletRequest.getSession().setAttribute("user",login);

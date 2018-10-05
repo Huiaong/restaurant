@@ -18,7 +18,7 @@
     <title>神奇餐厅</title>
 
     <link href="<%=basePath%>static/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="<%=basePath%>static/css/iconfont.css" rel="stylesheet" type="text/css"/>
+    <link href="<%=basePath%>static/iconfont/iconfont.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="wrapper">
@@ -93,7 +93,7 @@
                         <a href="#" class="btn btn-default" onclick="putAwaybtn();">重新上架</a>
                     </div>
                 </form>
-                <form id="form-putAway" action="putAway.action" method="post"></form>
+                <form id="form-putAway" action="<%=basePath%>BackStage/putAway.action" method="post"></form>
             </div>
         </div>
 
@@ -113,6 +113,7 @@
                             <td><strong>库存</strong></td>
                             <td><strong>价格</strong></td>
                             <td><strong>菜系</strong></td>
+                            <td><strong>介绍</strong></td>
                             <td><strong>操作</strong></td>
                         </tr>
                         </thead>
@@ -128,6 +129,7 @@
                                 <td>${bookItem.cookRepertory}</td>
                                 <td>${bookItem.cookPrice}</td>
                                 <td>${bookItem.cookType}</td>
+                                <td>${bookItem.cookDesc}</td>
                                 <td>
                                     <c:if test="${bookItem.cookEnableStatus > 0}">
                                         <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
@@ -219,6 +221,13 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" id="edit_cookType" placeholder="菜系"
                                            name="cookType">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit_cookDesc" style="float:left;padding:7px 15px 0 27px;">介绍</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="edit_cookDesc" placeholder="介绍"
+                                           name="cookDesc">
                                 </div>
                             </div>
                         </form>
@@ -318,7 +327,7 @@
                 var cookName = $(this).parents("tr").find("td:eq(2)").text();
                 $.ajax({
                     type: "post",
-                    url: basePath + "batchSoldOut.action",
+                    url: basePath + "BackStage/batchSoldOut.action",
                     data: {
                         "cookName": cookName
                     },
@@ -342,7 +351,7 @@
                 var cookName = $(this).parents("tr").find("td:eq(2)").text();
                 $.ajax({
                     type: "post",
-                    url: basePath + "batchPutAway.action",
+                    url: basePath + "BackStage/batchPutAway.action",
                     data: {
                         "cookName": cookName
                     },
@@ -358,18 +367,19 @@
     function loginOutPut() {
         $.ajax({
             type: "get",
-            url: basePath + "loginOutPut.action",
+            url: basePath + "user/loginOutPut.action",
             success: function () {
                 window.location.reload();
             }
         });
+        // window.location.reload();
     }
 
 
     function userLogin() {
         $.ajax({
             type: "post",
-            url: basePath + "login.action",
+            url: basePath + "user/login.action",
             data: $("#user_login_form").serialize(),
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {
@@ -387,7 +397,7 @@
         if (confirm('确实要重新上架该菜品吗?')) {
             $.ajax({
                 type: "post",
-                url: basePath + "editEnableStatus.action",
+                url: basePath + "BackStage/editEnableStatus.action",
                 data: {"id": id},
                 success: function (date) {
                     if (date > 0) {
@@ -407,7 +417,7 @@
         });
         $.ajax({
             type: "GET",
-            url: basePath + "editCook.action",
+            url: basePath + "BackStage/editCook.action",
             data: {"id": id},
             success: function (date) {
                 $("#edit_cook_id").val(date.cookId);
@@ -416,6 +426,7 @@
                 $("#edit_cookRepertory").val(date.cookRepertory);
                 $("#edit_cookPrice").val(date.cookPrice);
                 $("#edit_cookType").val(date.cookType);
+                $("#edit_cookDesc").val(date.cookDesc);
             }
         });
     }
@@ -424,7 +435,7 @@
 
         $.ajax({
             type: "post",
-            url: basePath + "update.action",
+            url: basePath + "BackStage/update.action",
             data: $("#edit_cook_form").serialize(),
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (data) {
@@ -445,7 +456,7 @@
         if (confirm('确实要下架该菜品吗?')) {
             $.ajax({
                 type: "post",
-                url: basePath + "soldOut.action",
+                url: basePath + "BackStage/soldOut.action",
                 data: {"cookId": id},
                 success: function (data) {
                     if (data > "0") {
@@ -470,18 +481,20 @@
         $("#edit_cookRepertory").val("");
         $("#edit_cookPrice").val("");
         $("#edit_cookType").val("");
+        $("#edit_cookDesc").val("");
     }
 
     function saveCook() {
         $.ajax({
             type: "post",
-            url: basePath + "save.action",
+            url: basePath + "BackStage/save.action",
             data: {
                 "cookName": $("#edit_cookName").val(),
                 "cookFlavor": $("#edit_cookFlavor").val(),
                 "cookRepertory": $("#edit_cookRepertory").val(),
                 "cookPrice": $("#edit_cookPrice").val(),
-                "cookType": $("#edit_cookType").val()
+                "cookType": $("#edit_cookType").val(),
+                "cookDesc": $("#edit_cookDesc").val()
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (data) {

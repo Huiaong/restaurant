@@ -8,6 +8,7 @@ public class CookBook {
     private int cookRepertory;     //菜品库存
     private int cookPrice;
     private String cookType;        //菜品菜系
+    private String cookDesc;        //菜品介绍
     private int cookEnableStatus;  //菜品上/下架情况
 
     @Override
@@ -19,6 +20,7 @@ public class CookBook {
                 ", cookRepertory=" + cookRepertory +
                 ", cookPrice=" + cookPrice +
                 ", cookType='" + cookType + '\'' +
+                ", cookDesc='" + cookDesc + '\'' +
                 ", cookEnableStatus=" + cookEnableStatus +
                 '}';
     }
@@ -69,6 +71,14 @@ public class CookBook {
 
     public void setCookType(String cookType) {
         this.cookType = cookType;
+    }
+
+    public String getCookDesc() {
+        return cookDesc;
+    }
+
+    public void setCookDesc(String cookDesc) {
+        this.cookDesc = cookDesc;
     }
 
     public int getCookEnableStatus() {

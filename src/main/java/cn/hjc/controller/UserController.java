@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 @Controller
+@RequestMapping(value = "/user/")
 public class UserController {
 
     @Autowired
@@ -25,6 +26,7 @@ public class UserController {
     }
 
     @RequestMapping(value = "loginOutPut")
+    @ResponseBody
     public void loginOutPut(HttpServletRequest httpServletRequest){
         httpServletRequest.getSession().invalidate();
     }
