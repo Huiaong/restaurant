@@ -10,9 +10,7 @@
 <head>
     <meta charset="UTF-8">
     <title>神奇餐厅</title>
-    <link rel="stylesheet" href="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/css/bootstrap.min.css">
-    <script src="http://cdn.static.runoob.com/libs/jquery/2.1.1/jquery.min.js"></script>
-    <script src="http://cdn.static.runoob.com/libs/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<%=basePath%>static/bootstrap/bootstrap.min.css">
     <style>
         /* Custom Styles */
         ul.nav-tabs {
@@ -112,30 +110,38 @@
                     <hr>
                 </c:if>
                 <h2 id="section-${cookType.index+1}">${typeItem.cookType}</h2>
-                <c:forEach items="${cookDates}" var="dateItem" varStatus="cookNum">
-                    <%--<c:if test="${dateItem.cookType == typeItem.cookType}">--%>
-                    <c:if test="${cookNum.index % 4 == 0}">
-                        <div class="row">
-                    </c:if>
-                    <div class="col-sm-6 col-md-3">
-                        <div class="thumbnail">
-                            <img src="<%=basePath%>static/imgs/kittens.jpg"
-                                 alt="通用的占位符缩略图">
-                            <div class="caption">
-                                <h3>${dateItem.cookName}</h3>
-                                <p>${dateItem.cookType}</p>
-                                <p>
-                                    <a href="#" class="btn btn-primary" role="button">
-                                        加入购物车
-                                    </a>
-                                </p>
+                <c:set var="cookNum" scope="session" value="${0}"/>
+                <c:forEach items="${cookDates}" var="dateItem" varStatus="cookNumber">
+                    <c:set var="flag" value="${cookNumber.last}"/>
+                    <%--<c:forEach items="${cookDates}" var="date">--%>
+                    <c:if test="${dateItem.cookType == typeItem.cookType }">
+                        <c:if test="${cookNum % 4 == 0}">
+                            <div class="row">
+                        </c:if>
+                        <div class="col-sm-6 col-md-3">
+                            <div class="thumbnail">
+                                <img src="<%=basePath%>static/imgs/kittens.jpg"
+                                     alt="通用的占位符缩略图">
+                                <div class="caption">
+                                    <h3>${dateItem.cookName}</h3>
+                                    <p>${dateItem.cookType}</p>
+                                    <p>
+                                        <a href="#" class="btn btn-primary" role="button">
+                                            加入购物车
+                                        </a>
+                                    </p>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <c:if test="${(cookNum.index + 1) % 4 == 0 || cookNum.last}">
+                        <c:if test="${(cookNum + 1) % 4 == 0}">
+                            </div>
+                        </c:if>
+                        <c:set var="cookNum" scope="session" value="${cookNum + 1}"/>
+                    </c:if>
+                    <c:if test="${cookNumber.last}">
                         </div>
                     </c:if>
-                    <%--</c:if>--%>
+                    <%--</c:forEach>--%>
                 </c:forEach>
             </c:forEach>
         </div>
