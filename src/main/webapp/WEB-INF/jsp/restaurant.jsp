@@ -95,10 +95,20 @@
             transform: translateX(-50%) translateY(-50%);
         }
 
+        .row {
+            position: relative;
+        }
+
         .btn-delete {
             position: absolute;
-            right: 30px;
-            top: 50px;
+            right: -35px;
+            top: 10px;
+        }
+
+        .row span {
+            position: absolute;
+            right: 65px;
+            top: 25px;
         }
     </style>
 </head>
@@ -239,19 +249,7 @@
                 </button>
                 <h4 class="modal-title" id="myModalLabel">购物车</h4>
             </div>
-            <div class="modal-body">
-                <c:forEach items="${cartList}" var="cookBook">
-                    <div class="row">
-                        <div class="col-xs-6 col-md-3">
-                            <a href="javascript:void(0);" class="thumbnail">
-                                <img src="<%=basePath%>static/imgs/kittens.jpg" alt="...">
-                            </a>
-                        </div>
-                        <h3>${cookBook.cookName}</h3>
-                        <p>${cookBook.cookDesc}</p>
-                        <button type="button" class="close btn-delete"><span>&times;</span></button>
-                    </div>
-                </c:forEach>
+            <div class="modal-body cart">
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -309,6 +307,7 @@
     var cartId = $("#cartId").val();
     var userId = $("#userId").val();
 
+
     $(function () {
         if (${user==null}) {
             if (${msg != null}) {
@@ -341,12 +340,13 @@
             type: "post",
             url: basePath + "restaurant/getCartList.action",
             data: {
-                "cookId":CookList.toString()
+                "cookId": CookList.toString()
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            success:function (data) {
-                $.each(data,function (i, item) {
-                    console.log(item);
+            success: function (data) {
+                $(".cart").html("");
+                $.each(data, function (i, item) {
+                    $(".cart").append('<div class="row"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="<%=basePath%>static/imgs/kittens.jpg" alt="..."></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span>&times;</span></button></div>');
                 });
             }
         });
