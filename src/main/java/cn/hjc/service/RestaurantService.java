@@ -1,5 +1,6 @@
 package cn.hjc.service;
 
+import cn.hjc.entity.Cart;
 import cn.hjc.entity.CookBook;
 
 import java.util.List;
@@ -19,4 +20,24 @@ public interface RestaurantService {
      * @return
      */
     List<CookBook> getAllCookBook();
+
+    /**
+     * 添加商品到购物车中
+     * @param cart
+     * @return
+     */
+    Long addToCart(Cart cart);
+
+    /**
+     * 获取购物车内商品的CookId
+     * @return
+     */
+    int[] getCart(Cart cart);
+
+    /**
+     * 根据cookId批量查询CookBook
+     * @param cookId
+     * @return
+     */
+    List<CookBook> getCartList(int[] cookId);
 }

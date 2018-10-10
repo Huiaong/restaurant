@@ -4,6 +4,7 @@ import java.util.Date;
 
 public class User {
     private Integer userId;
+    private Integer cartId;
     private String userName;
     private String passWord;
     private String gender;
@@ -19,6 +20,14 @@ public class User {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public Integer getCartId() {
+        return cartId;
+    }
+
+    public void setCartId(Integer cartId) {
+        this.cartId = cartId;
     }
 
     public String getUserName() {
@@ -89,6 +98,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "userId=" + userId +
+                ", cartId=" + cartId +
                 ", userName='" + userName + '\'' +
                 ", passWord='" + passWord + '\'' +
                 ", gender='" + gender + '\'' +

@@ -6,6 +6,7 @@
 
     <resultMap id="UserResultMap" type="cn.hjc.entity.User">
         <id property="userId" column="user_id"/>
+        <result property="cartId" column="cart_id"/>
         <result property="userName" column="username"/>
         <result property="passWord" column="password"/>
         <result property="gender" column="gender"/>

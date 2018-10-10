@@ -254,7 +254,7 @@
                     <div class="modal-body">
                         <form class="form-horizontal" id="user_login_form">
                             <div class="form-group">
-                                <label for="edit_cookName" style="float:left;padding:7px 15px 0 27px;">账号</label>
+                                <label for="edit_userName" style="float:left;padding:7px 15px 0 27px;">账号</label>
                                 <div class="col-sm-10">
                                     <input id="userName_input" type="text" class="form-control" id="edit_userName"
                                            placeholder="账号"
@@ -262,7 +262,7 @@
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookFlavor" style="float:left;padding:7px 15px 0 27px;">密码</label>
+                                <label for="edit_passWord" style="float:left;padding:7px 15px 0 27px;">密码</label>
                                 <div class="col-sm-10">
                                     <input type="password" class="form-control" id="edit_passWord" placeholder="密码"
                                            name="passWord">

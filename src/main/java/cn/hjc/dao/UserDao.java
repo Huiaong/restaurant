@@ -7,4 +7,5 @@ public interface UserDao {
     User login(User user);
 
     User haveUserName(User user);
+
 }

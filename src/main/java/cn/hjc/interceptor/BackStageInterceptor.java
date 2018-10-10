@@ -13,11 +13,11 @@ public class BackStageInterceptor implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse, Object o) throws Exception {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
-        if (user != null){
+        if (user != null) {
             return true;
         }
-        session.setAttribute("msg","您好,您没有登陆，无权操作，请先登录！");
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath()+"/BackStage/backStageManagement.action");
+        session.setAttribute("msg", "您好,您没有登陆，无权操作，请先登录！");
+        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/BackStage/backStageManagement.action");
         return false;
     }
 

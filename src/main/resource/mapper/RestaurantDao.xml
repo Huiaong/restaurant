@@ -34,5 +34,36 @@
         WHERE cook_enable_status > 0
         GROUP BY tb_cook_book.cook_type
     </select>
+
+    <update id="addToCart" parameterType="Cart">
+        UPDATE tb_cart
+        SET cook_id = #{cookId}
+        WHERE user_id = #{userId}
+          and cart_id = #{cartId}
+    </update>
+
+    <select id="getCart" parameterType="Cart" resultType="String">
+        SELECT cook_id
+        FROM tb_cart
+        WHERE cart_id = #{cartId}
+          AND user_id = #{userId}
+    </select>
+
+    <select id="getCartList" parameterType="int" resultType="CookBook" resultMap="cookResultMap">
+        SELECT tb_cook_book.cook_id,
+               tb_cook_book.cook_name,
+               tb_cook_book.cook_flavor,
+               tb_cook_book.cook_repertory,
+               tb_cook_book.cook_price,
+               tb_cook_book.cook_type,
+               tb_cook_book.cook_desc,
+               tb_cook_book.cook_enable_status
+        FROM tb_cook_book
+        WHERE tb_cook_book.cook_enable_status > 0
+                  AND tb_cook_book.cook_id IN
+        <foreach item="cookId" collection="array" open="(" separator="," close=")">
+            #{cookId}
+        </foreach>
+    </select>
 </mapper>
     
