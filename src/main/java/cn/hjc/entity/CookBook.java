@@ -7,23 +7,10 @@ public class CookBook {
     private String cookFlavor;      //菜品口味
     private int cookRepertory;     //菜品库存
     private int cookPrice;
+    private String cookImage;
     private String cookType;        //菜品菜系
     private String cookDesc;        //菜品介绍
     private int cookEnableStatus;  //菜品上/下架情况
-
-    @Override
-    public String toString() {
-        return "CookBook{" +
-                "cookId=" + cookId +
-                ", cookName='" + cookName + '\'' +
-                ", cookFlavor='" + cookFlavor + '\'' +
-                ", cookRepertory=" + cookRepertory +
-                ", cookPrice=" + cookPrice +
-                ", cookType='" + cookType + '\'' +
-                ", cookDesc='" + cookDesc + '\'' +
-                ", cookEnableStatus=" + cookEnableStatus +
-                '}';
-    }
 
     public int getCookId() {
         return cookId;
@@ -65,6 +52,14 @@ public class CookBook {
         this.cookPrice = cookPrice;
     }
 
+    public String getCookImage() {
+        return cookImage;
+    }
+
+    public void setCookImage(String cookImage) {
+        this.cookImage = cookImage;
+    }
+
     public String getCookType() {
         return cookType;
     }
@@ -87,5 +82,20 @@ public class CookBook {
 
     public void setCookEnableStatus(int cookEnableStatus) {
         this.cookEnableStatus = cookEnableStatus;
+    }
+
+    @Override
+    public String toString() {
+        return "CookBook{" +
+                "cookId=" + cookId +
+                ", cookName='" + cookName + '\'' +
+                ", cookFlavor='" + cookFlavor + '\'' +
+                ", cookRepertory=" + cookRepertory +
+                ", cookPrice=" + cookPrice +
+                ", cookImage='" + cookImage + '\'' +
+                ", cookType='" + cookType + '\'' +
+                ", cookDesc='" + cookDesc + '\'' +
+                ", cookEnableStatus=" + cookEnableStatus +
+                '}';
     }
 }

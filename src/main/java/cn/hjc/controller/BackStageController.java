@@ -4,12 +4,15 @@ import cn.hjc.entity.CookBook;
 import cn.hjc.entity.CookConditions;
 import cn.hjc.entity.CookDates;
 import cn.hjc.service.BackStageService;
+import cn.hjc.util.UploadPictureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.List;
 
@@ -107,7 +110,9 @@ public class BackStageController {
      */
     @RequestMapping(value = "update")
     @ResponseBody
-    public Long update(CookBook cookBook) {
+    public Long update(CookBook cookBook, MultipartFile file, HttpServletRequest request) throws IOException {
+        String filePath = UploadPictureUtil.addMutiparFile(file, request);
+        cookBook.setCookImage(filePath);
         Long aLong = backStageService.updateCook(cookBook);
         return aLong;
     }
@@ -131,7 +136,9 @@ public class BackStageController {
      */
     @RequestMapping(value = "save")
     @ResponseBody
-    public Long saveCookBook(CookBook cookBook) {
+    public Long saveCookBook(CookBook cookBook,MultipartFile file,HttpServletRequest request) throws IOException {
+        String filePath = UploadPictureUtil.addMutiparFile(file, request);
+        cookBook.setCookImage(filePath);
         Long aLong = backStageService.saveCook(cookBook);
         return aLong;
     }
@@ -156,6 +163,8 @@ public class BackStageController {
     @RequestMapping(value = "batchPutAway")
     @ResponseBody
     public Long batchPutAway(String cookName){
-        return backStageService.putAwayCookByName(cookName);
+        Long aLong = backStageService.putAwayCookByName(cookName);
+        return aLong;
     }
+
 }

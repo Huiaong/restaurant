@@ -1143,7 +1143,6 @@
     <column id="288" parent="283" name="cook_id">
       <Position>3</Position>
       <DataType>varchar(255)|0s</DataType>
-      <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
     <index id="289" parent="283" name="fk_tb_cart_tb_user">
@@ -1190,91 +1189,103 @@
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="297" parent="284" name="cook_price">
+    <column id="297" parent="284" name="cook_image">
       <Position>5</Position>
-      <DataType>decimal(4)|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="298" parent="284" name="cook_type">
-      <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="299" parent="284" name="cook_desc">
+    <column id="298" parent="284" name="cook_price">
+      <Position>6</Position>
+      <DataType>decimal(4)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="299" parent="284" name="cook_type">
       <Position>7</Position>
       <DataType>varchar(255)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="300" parent="284" name="cook_enable_status">
+    <column id="300" parent="284" name="cook_desc">
       <Position>8</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="301" parent="284" name="cook_enable_status">
+      <Position>9</Position>
       <DataType>int(11)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;1&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="301" parent="284" name="PRIMARY">
+    <key id="302" parent="284" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>cook_id</ColNames>
       <Primary>1</Primary>
     </key>
-    <column id="302" parent="285" name="user_id">
+    <column id="303" parent="285" name="user_id">
       <Position>1</Position>
       <DataType>int(10)|0s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="303" parent="285" name="username">
+    <column id="304" parent="285" name="cart_id">
       <Position>2</Position>
-      <DataType>varchar(20)|0s</DataType>
+      <DataType>int(10)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="304" parent="285" name="password">
+    <column id="305" parent="285" name="username">
       <Position>3</Position>
       <DataType>varchar(20)|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="305" parent="285" name="gender">
+    <column id="306" parent="285" name="password">
       <Position>4</Position>
+      <DataType>varchar(20)|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="307" parent="285" name="gender">
+      <Position>5</Position>
       <DataType>varchar(2)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="306" parent="285" name="address">
-      <Position>5</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="307" parent="285" name="phone">
+    <column id="308" parent="285" name="address">
       <Position>6</Position>
       <DataType>varchar(255)|0s</DataType>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="308" parent="285" name="enable_status">
+    <column id="309" parent="285" name="phone">
       <Position>7</Position>
+      <DataType>varchar(255)|0s</DataType>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <column id="310" parent="285" name="enable_status">
+      <Position>8</Position>
       <Comment>//0:普通用户 1:店铺管理员用户 2:超级管理员用户</Comment>
       <DataType>int(2)|0s</DataType>
       <NotNull>1</NotNull>
       <DefaultExpression>&apos;0&apos;</DefaultExpression>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <column id="309" parent="285" name="create_time">
-      <Position>8</Position>
-      <DataType>datetime|0s</DataType>
-      <NotNull>1</NotNull>
-      <ColumnKind>normal</ColumnKind>
-    </column>
-    <column id="310" parent="285" name="end_edit_time">
+    <column id="311" parent="285" name="create_time">
       <Position>9</Position>
       <DataType>datetime|0s</DataType>
       <NotNull>1</NotNull>
       <ColumnKind>normal</ColumnKind>
     </column>
-    <key id="311" parent="285" name="PRIMARY">
+    <column id="312" parent="285" name="end_edit_time">
+      <Position>10</Position>
+      <DataType>datetime|0s</DataType>
+      <NotNull>1</NotNull>
+      <ColumnKind>normal</ColumnKind>
+    </column>
+    <key id="313" parent="285" name="PRIMARY">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>user_id</ColNames>
       <Primary>1</Primary>

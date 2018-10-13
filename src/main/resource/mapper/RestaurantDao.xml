@@ -9,6 +9,7 @@
         <result property="cookName" column="cook_name"/>
         <result property="cookFlavor" column="cook_flavor"/>
         <result property="cookRepertory" column="cook_repertory"/>
+        <result property="cookImage" column="cook_image"/>
         <result property="cookPrice" column="cook_price"/>
         <result property="cookType" column="cook_type"/>
         <result property="cookDesc" column="cook_desc"/>
@@ -20,6 +21,7 @@
                tb_cook_book.cook_name,
                tb_cook_book.cook_flavor,
                tb_cook_book.cook_repertory,
+               tb_cook_book.cook_image,
                tb_cook_book.cook_price,
                tb_cook_book.cook_type,
                tb_cook_book.cook_desc,
@@ -51,16 +53,17 @@
 
     <select id="getCartList" parameterType="int" resultType="CookBook" resultMap="cookResultMap">
         SELECT tb_cook_book.cook_id,
-               tb_cook_book.cook_name,
-               tb_cook_book.cook_flavor,
-               tb_cook_book.cook_repertory,
-               tb_cook_book.cook_price,
-               tb_cook_book.cook_type,
-               tb_cook_book.cook_desc,
-               tb_cook_book.cook_enable_status
+        tb_cook_book.cook_name,
+        tb_cook_book.cook_flavor,
+        tb_cook_book.cook_repertory,
+        tb_cook_book.cook_price,
+        tb_cook_book.cook_image,
+        tb_cook_book.cook_type,
+        tb_cook_book.cook_desc,
+        tb_cook_book.cook_enable_status
         FROM tb_cook_book
         WHERE tb_cook_book.cook_enable_status > 0
-                  AND tb_cook_book.cook_id IN
+        AND tb_cook_book.cook_id IN
         <foreach item="cookId" collection="array" open="(" separator="," close=")">
             #{cookId}
         </foreach>

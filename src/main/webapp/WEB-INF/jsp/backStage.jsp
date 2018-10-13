@@ -17,8 +17,10 @@
 <head>
     <title>神奇餐厅</title>
 
-    <link href="<%=basePath%>static/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<%=basePath%>static/iconfont/iconfont.css" rel="stylesheet" type="text/css"/>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/css/fileinput.min.css" media="all"
+          rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="wrapper">
@@ -114,6 +116,7 @@
                             <td><strong>价格</strong></td>
                             <td><strong>菜系</strong></td>
                             <td><strong>介绍</strong></td>
+                            <td><strong>图片</strong></td>
                             <td><strong>操作</strong></td>
                         </tr>
                         </thead>
@@ -121,7 +124,7 @@
                         <c:forEach items="${cookDates.rows}" var="bookItem" varStatus="status">
                             <tr>
                                 <c:if test="${bookItem.cookEnableStatus == 0}">
-                                    <td><input type="checkbox"  class="check"/></td>
+                                    <td><input type="checkbox" class="check"/></td>
                                 </c:if>
                                 <td>${status.index+1}</td>
                                 <td>${bookItem.cookName}</td>
@@ -130,6 +133,9 @@
                                 <td>${bookItem.cookPrice}</td>
                                 <td>${bookItem.cookType}</td>
                                 <td>${bookItem.cookDesc}</td>
+                                <td><a name="popover" data-toggle="popover"
+                                       data-content="<img src='<%=basePath%>${bookItem.cookImage}'alt='${bookItem.cookImage}' >">${bookItem.cookImage}</a>
+                                </td>
                                 <td>
                                     <c:if test="${bookItem.cookEnableStatus > 0}">
                                         <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
@@ -230,6 +236,13 @@
                                            name="cookDesc">
                                 </div>
                             </div>
+                            <div class="form-group">
+                                <label for="edit_cookImage" style="float:left;padding:7px 15px 0 27px;">图片</label>
+                                <div class="col-sm-10">
+                                    <input id="edit_cookImage" name="file" type="file" class="file"
+                                           data-show-preview="false" data-show-upload="false">
+                                </div>
+                            </div>
                         </form>
                     </div>
                     <div class="modal-footer">
@@ -280,8 +293,10 @@
         </div>
     </div>
 </div>
-<script type="text/javascript" src="<%=basePath%>static/jquery/jquery-3.2.1.min.js"></script>
-<script type="text/javascript" src="<%=basePath%>static/bootstrap/bootstrap.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/js/bootstrap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/fileinput.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-fileinput/4.4.9/js/locales/zh.js"></script>
 
 <script type="text/javascript">
     var curPath = window.document.location.href;
@@ -306,6 +321,11 @@
         addCheckBoxs.on("click", checkBoxs, function () {
             var flag = $(".check:checked").length == $(".check").length;
             $("#checkAll").prop("checked", flag);
+        });
+        $("a[name = popover]").popover({
+            trigger: 'hover',//鼠标以上时触发弹出提示框
+            html: true, //开启html 为true的话，data-content里就能放html代码了
+            placement: 'top'
         });
     });
 
@@ -332,7 +352,7 @@
                         "cookName": cookName
                     },
                     contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success:function () {
+                    success: function () {
                         window.location.reload();
                     }
                 });
@@ -356,7 +376,7 @@
                         "cookName": cookName
                     },
                     contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success:function () {
+                    success: function () {
                         window.location.reload();
                     }
                 });
@@ -432,12 +452,14 @@
     }
 
     function updateCook() {
-
+        var formData = new FormData($("#edit_cook_form")[0]);
         $.ajax({
             type: "post",
             url: basePath + "BackStage/update.action",
-            data: $("#edit_cook_form").serialize(),
-            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            data: formData,
+            async: false,
+            contentType: false,
+            processData: false,
             success: function (data) {
                 if (data > 0) {
                     alert("菜品信息更新成功！");
@@ -485,18 +507,14 @@
     }
 
     function saveCook() {
+        var formData = new FormData($("#edit_cook_form")[0]);
         $.ajax({
             type: "post",
             url: basePath + "BackStage/save.action",
-            data: {
-                "cookName": $("#edit_cookName").val(),
-                "cookFlavor": $("#edit_cookFlavor").val(),
-                "cookRepertory": $("#edit_cookRepertory").val(),
-                "cookPrice": $("#edit_cookPrice").val(),
-                "cookType": $("#edit_cookType").val(),
-                "cookDesc": $("#edit_cookDesc").val()
-            },
-            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            data: formData,
+            async: false,
+            contentType: false,
+            processData: false,
             success: function (data) {
                 if (data > 0) {
                     alert("菜品信息新增成功！");
