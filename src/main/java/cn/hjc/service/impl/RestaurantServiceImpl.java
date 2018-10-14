@@ -61,13 +61,16 @@ public class RestaurantServiceImpl implements RestaurantService {
     public int[] getCart(Cart cart) {
 
         String cook = restaurantDao.getCart(cart);
-        String[] cookList = cook.split(",");
-        int[] cookArray = new int[cookList.length];
-        for (int i = 0; i < cookList.length; i++) {
-            cookArray[i] = Integer.parseInt(cookList[i]);
-            System.out.println(cookArray[i]);
+        System.out.println("cook:"+cook);
+        int[] cookArray = new int[0];
+        if (cook!=null) {
+            String[] cookList = cook.split(",");
+            cookArray = new int[cookList.length];
+            for (int i = 0; i < cookList.length; i++) {
+                cookArray[i] = Integer.parseInt(cookList[i]);
+                System.out.println(cookArray[i]);
+            }
         }
-
         System.out.println("cookArray:" + cookArray);
         return cookArray;
     }

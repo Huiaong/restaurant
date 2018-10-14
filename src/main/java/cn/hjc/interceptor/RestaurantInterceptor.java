@@ -15,10 +15,9 @@ public class RestaurantInterceptor implements HandlerInterceptor {
         User user = (User) session.getAttribute("user");
         if (user != null) {
             return true;
+        }else {
+            return false;
         }
-        session.setAttribute("msg", "您好,您没有登陆，无权操作，请先登录！");
-        httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/restaurant/welcome.action");
-        return false;
     }
 
     @Override

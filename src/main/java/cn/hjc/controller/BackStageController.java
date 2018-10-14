@@ -61,7 +61,7 @@ public class BackStageController {
     }
 
     /**
-     *
+     * 获取需上架商品列表
      * @param model
      * @param cookConditions
      * @return
@@ -87,7 +87,8 @@ public class BackStageController {
     @RequestMapping(value = "editEnableStatus")
     @ResponseBody
     public Long editEnableStatus(Integer id) {
-        return backStageService.editEnableStatus(id);
+        Long aLong = backStageService.editEnableStatus(id);
+        return aLong;
     }
 
     /**

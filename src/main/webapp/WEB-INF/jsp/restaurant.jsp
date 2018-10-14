@@ -310,10 +310,8 @@
 
     $(function () {
         if (${user==null}) {
-            if (${msg != null}) {
-                alert("${msg}");
-                $("#btn_login").trigger("click");
-            }
+            alert("您还没有登陆，请先登录！");
+            $("#btn_login").trigger("click");
         } else {
             $.ajax({
                 type: "post",

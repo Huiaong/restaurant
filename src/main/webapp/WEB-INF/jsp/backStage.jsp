@@ -316,7 +316,6 @@
     $(function () {
         if (${user==null}) {
             if (${msg != null}) {
-                alert("${msg}");
                 $("#btn_login").trigger("click");
             }
         }else {
