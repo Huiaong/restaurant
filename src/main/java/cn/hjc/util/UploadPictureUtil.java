@@ -17,7 +17,7 @@ public class UploadPictureUtil {
             String suffixName = name.substring(name.lastIndexOf("."));
             String hash = Integer.toHexString(new Random().nextInt());
             String fileName = hash + suffixName;
-            String path = request.getSession().getServletContext().getRealPath("static\\images");
+            String path = request.getSession().getServletContext().getRealPath("static/images");
             File temFile = new File(path, fileName);
             if (!temFile.getParentFile().mkdir()) {
                 temFile.getParentFile().mkdir();
@@ -27,7 +27,7 @@ public class UploadPictureUtil {
             }
             temFile.createNewFile();
             file.transferTo(temFile);
-            return "static\\images\\" + temFile.getName();
+            return "http://localhost:8080/static/images/" + temFile.getName();
         }
     }
 

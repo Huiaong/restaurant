@@ -134,7 +134,7 @@
                                 <td>${bookItem.cookType}</td>
                                 <td>${bookItem.cookDesc}</td>
                                 <td><a name="popover" data-toggle="popover"
-                                       data-content="<img src='<%=basePath%>${bookItem.cookImage}'alt='${bookItem.cookImage}' >">${bookItem.cookImage}</a>
+                                       data-content="<img src='${bookItem.cookImage}'alt='${bookItem.cookImage}' >">${bookItem.cookImage}</a>
                                 </td>
                                 <td>
                                     <c:if test="${bookItem.cookEnableStatus > 0}">
