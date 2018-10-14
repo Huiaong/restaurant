@@ -14,9 +14,14 @@ public class BackStageInterceptor implements HandlerInterceptor {
         HttpSession session = httpServletRequest.getSession();
         User user = (User) session.getAttribute("user");
         if (user != null) {
-            return true;
+            if (user.getEnableStatus() > 1){
+                return true;
+            }else {
+                session.setAttribute("msg", "您好，您的权限不足，无权操作，请更换账号！");
+            }
+        }else {
+            session.setAttribute("msg", "您好,您没有登陆，无权操作，请先登录！");
         }
-        session.setAttribute("msg", "您好,您没有登陆，无权操作，请先登录！");
         httpServletResponse.sendRedirect(httpServletRequest.getContextPath() + "/BackStage/backStageManagement.action");
         return false;
     }

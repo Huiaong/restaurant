@@ -61,7 +61,7 @@
         </div>
         <div class="panel panel-default">
             <div class="panel-body">
-                <form action="list.action" method="post" class="form-inline">
+                <form id="select_form" action="list.action" method="post" class="form-inline">
                     <div class="form-group">
                         <label for="cookName">菜名</label>
                         <input id="cookName" class="form-control" name="cookName" type="text"/>
@@ -84,12 +84,14 @@
                             </c:forEach>
                         </select>
                     </div>
-                    <button type="submit" class="btn btn-primary" onclick="selectbtn()">查询</button>
+                    <button type="submit" class="btn btn-primary">查询</button>
                     <div id="btn_list" style="float:right;">
-                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:1==1}">
+                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:false}">
                             <a href="#" class="btn btn-default" onclick="putAway()">上架</a>
                         </c:if>
-                        <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
+                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus>0:false}">
+                            <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
+                        </c:if>
                         <a href="#" class="btn btn-success" data-toggle="modal"
                            data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
                         <a href="#" class="btn btn-default" onclick="putAwaybtn();">重新上架</a>
@@ -106,7 +108,7 @@
                     <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
-                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:1==2}">
+                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:false}">
                                 <td><input type="checkbox" id="checkAll"></td>
                             </c:if>
                             <td><strong>#</strong></td>
@@ -134,7 +136,10 @@
                                 <td>${bookItem.cookType}</td>
                                 <td>${bookItem.cookDesc}</td>
                                 <td><a name="popover" data-toggle="popover"
-                                       data-content="<img src='${bookItem.cookImage}'alt='${bookItem.cookImage}' >">${bookItem.cookImage}</a>
+                                       data-content="<a href='#' class='thumbnail'>
+                                    <img src='${bookItem.cookImage}' alt='${bookItem.cookImage}'>
+                                    </a>
+                                    ">${bookItem.cookImage}</a>
                                 </td>
                                 <td>
                                     <c:if test="${bookItem.cookEnableStatus > 0}">
@@ -314,6 +319,11 @@
                 alert("${msg}");
                 $("#btn_login").trigger("click");
             }
+        }else {
+            if (${msg != null}) {
+                alert("${msg}");
+                loginOutPut();
+            }
         }
         addCheckAllBox.on("click", checkAllBox, function () {
             $(".check").prop("checked", $("#checkAll").prop("checked"));
@@ -330,12 +340,12 @@
     });
 
     function batchSoldOut() {
-        if ($("#checkAll").length <= 0) {
-            $("#btn_list").prepend('<a href="#" class="btn btn-danger" onclick="SoldOut()">下架</a>')
+        if ($("#btn_SoldOut").length <= 0) {
+            $("#btn_list").prepend('<a href="#" id="btn_SoldOut" class="btn btn-danger" onclick="SoldOut()">下架</a>')
             addCheckAllBox.prepend('<td><input type="checkbox" id="checkAll"></td>');
             addCheckBoxs.prepend("<td><input type='checkbox' class='check'></td>");
         } else {
-            $("#btn_list a:first").remove();
+            $("#btn_SoldOut").remove();
             addCheckAllBox.children("td:first").remove();
             addCheckBoxs.children("td:first-child").remove();
         }
@@ -361,7 +371,11 @@
     }
 
     function putAwaybtn() {
-        $("#form-putAway").submit();
+        if (${cookDates.rows.size()>0&&cookDates.rows.get(0).cookEnableStatus>0}){
+            $("#form-putAway").submit();
+        }else{
+            $("#select_form").submit();
+        }
     }
 
 
