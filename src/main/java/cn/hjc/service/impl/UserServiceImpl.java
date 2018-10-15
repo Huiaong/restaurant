@@ -26,6 +26,9 @@ public class UserServiceImpl implements UserService {
             map.put("enableStatus",login.getEnableStatus());
             map.put("msg","loginSuccess");
             httpServletRequest.getSession().setAttribute("user",login);
+            System.out.println(httpServletRequest.getSession().getAttribute("msg"));
+            httpServletRequest.getSession().setAttribute("msg",null);
+            System.out.println(httpServletRequest.getSession().getAttribute("msg"));
         }
         return map;
     }

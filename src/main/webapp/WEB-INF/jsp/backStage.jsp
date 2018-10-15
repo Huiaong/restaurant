@@ -316,9 +316,10 @@
     $(function () {
         if (${user==null}) {
             if (${msg != null}) {
+                alert("${msg}");
                 $("#btn_login").trigger("click");
             }
-        }else {
+        } else {
             if (${msg != null}) {
                 alert("${msg}");
                 loginOutPut();
@@ -351,49 +352,55 @@
     }
 
     function SoldOut() {
-        if (confirm("确定要下架商品吗")) {
-            $.each($(".check:checked"), function () {
-                var cookName = $(this).parents("tr").find("td:eq(2)").text();
-                $.ajax({
-                    type: "post",
-                    url: basePath + "BackStage/batchSoldOut.action",
-                    data: {
-                        "cookName": cookName
-                    },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success: function () {
-                        window.location.reload();
-                    }
+        if ($(".check:checked").length > 0) {
+            if (confirm("确定要下架商品吗")) {
+                $.each($(".check:checked"), function () {
+                    var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                    $.ajax({
+                        type: "post",
+                        url: basePath + "BackStage/batchSoldOut.action",
+                        data: {
+                            "cookName": cookName
+                        },
+                        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
                 });
-            });
+            }
+        }else {
+            alert("请先勾选想要下架的菜品！");
         }
     }
 
     function putAwaybtn() {
-        if (${cookDates.rows.size()>0&&cookDates.rows.get(0).cookEnableStatus>0}){
+        if (${cookDates.rows.get(0).cookEnableStatus!=0}) {
             $("#form-putAway").submit();
-        }else{
+        } else {
             $("#select_form").submit();
         }
     }
 
 
     function putAway() {
-        if (confirm("确定要上架商品吗")) {
-            $.each($(".check:checked"), function () {
-                var cookName = $(this).parents("tr").find("td:eq(2)").text();
-                $.ajax({
-                    type: "post",
-                    url: basePath + "BackStage/batchPutAway.action",
-                    data: {
-                        "cookName": cookName
-                    },
-                    contentType: "application/x-www-form-urlencoded;charset=utf-8",
-                    success: function () {
-                        window.location.reload();
-                    }
+        if ($(".check:checked").length > 0) {
+            if (confirm("确定要上架商品吗")) {
+                $.each($(".check:checked"), function () {
+                    var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                    $.ajax({
+                        type: "post",
+                        url: basePath + "BackStage/batchPutAway.action",
+                        data: {
+                            "cookName": cookName
+                        },
+                        contentType: "application/x-www-form-urlencoded;charset=utf-8",
+                        success: function () {
+                            window.location.reload();
+                        }
+                    });
                 });
-            });
+            }
         }
     }
 

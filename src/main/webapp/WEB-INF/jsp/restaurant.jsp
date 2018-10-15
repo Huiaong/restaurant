@@ -344,7 +344,7 @@
             success: function (data) {
                 $(".cart").html("");
                 $.each(data, function (i, item) {
-                    $(".cart").append('<div class="row"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="..."></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span>&times;</span></button></div>');
+                    $(".cart").append('<div class="row"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="'+"err:"+item.cookImage+'"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span>&times;</span></button></div>');
                 });
             }
         });
