@@ -7,6 +7,8 @@ import cn.hjc.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -61,24 +63,52 @@ public class RestaurantServiceImpl implements RestaurantService {
     public int[] getCart(Cart cart) {
 
         String cook = restaurantDao.getCart(cart);
-        System.out.println("cook:"+cook);
         int[] cookArray = new int[0];
-        if (cook!=null) {
+        if (cook != null && !"".equals(cook)) {
             String[] cookList = cook.split(",");
             cookArray = new int[cookList.length];
             for (int i = 0; i < cookList.length; i++) {
                 cookArray[i] = Integer.parseInt(cookList[i]);
-                System.out.println(cookArray[i]);
             }
         }
-        System.out.println("cookArray:" + cookArray);
         return cookArray;
     }
 
     @Override
     public List<CookBook> getCartList(int[] cookId) {
-
-        List<CookBook> cartList = restaurantDao.getCartList(cookId);
+        List<CookBook> cartList = null;
+        if (cookId.length>0) {
+            cartList = restaurantDao.getCartList(cookId);
+        }
         return cartList;
     }
+
+    @Override
+    public Long deleteCartListByCookId(Cart cart) {
+
+        System.out.println("=============cart:"+cart.toString());
+
+        int[] cartArray = getCart(cart);
+
+        System.out.println("=============int[] cartArray:"+Arrays.toString(cartArray));
+
+        List<Integer> cartList = new ArrayList<Integer>();
+        for (int i:cartArray){
+            if (i==Integer.parseInt(cart.getCookId()))continue;
+            cartList.add(i);
+        }
+
+        System.out.println("=============List<Integer> cartList:"+cartList.toString());
+
+        System.out.println("=============List<Integer> cartList:"+cartList);
+
+        Integer[] Array = cartList.toArray(new Integer[0]);
+        cart.setCookId(Arrays.toString(Array).replace("[", "").replace("]", "").replace(" ",""));
+
+        System.out.println("=============cart.getCookId:"+cart.getCookId());
+
+        Long aLong = addToCart(cart);
+        return aLong;
+    }
+
 }

@@ -252,8 +252,10 @@
             <div class="modal-body cart">
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
+                <label for="price">合计:</label>
+                <em id="price" class="price"></em>
+                <em>元</em>
+                <button type="button" class="btn btn-primary">提交订单</button>
             </div>
         </div>
     </div>
@@ -329,26 +331,9 @@
                     }
                 }
             });
+
         }
-
     });
-
-    function getCartList() {
-        $.ajax({
-            type: "post",
-            url: basePath + "restaurant/getCartList.action",
-            data: {
-                "cookId": CookList.toString()
-            },
-            contentType: "application/x-www-form-urlencoded;charset=utf-8",
-            success: function (data) {
-                $(".cart").html("");
-                $.each(data, function (i, item) {
-                    $(".cart").append('<div class="row"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="'+"err:"+item.cookImage+'"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span>&times;</span></button></div>');
-                });
-            }
-        });
-    }
 
     function userLogin() {
         $.ajax({
@@ -375,7 +360,23 @@
                 window.location.reload();
             }
         });
-        // window.location.reload();
+    }
+
+    function getCartList() {
+        $.ajax({
+            type: "post",
+            url: basePath + "restaurant/getCartList.action",
+            data: {
+                "cookId": CookList.toString()
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (data) {
+                $(".cart").html("");
+                $.each(data, function (i, item) {
+                    $(".cart").append('<div class="row item' + item.cookId + '"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="' + "err:" + item.cookImage + '"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span onclick="deleteCartList(' + item.cookId + ')">&times;</span></button></div>');
+                });
+            }
+        });
     }
 
     function addToCart(cookId) {
@@ -401,6 +402,32 @@
         });
     }
 
+
+    function deleteCartList(id) {
+        console.log(CookList.toString(), id);
+        var cookIndex = CookList.indexOf(id);
+        CookList.splice(cookIndex, 1);
+        $(".item" + id).remove();
+        $.ajax({
+            type: "post",
+            url: basePath + "restaurant/deleteCartList.action",
+            data: {
+                "cartId": cartId,
+                "userId": userId,
+                "cookId": id
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (date) {
+                if (date > 0) {
+                    $(".count").show();
+                    $(".count li").text(CookList.length);
+                } else {
+                    CookList.splice(cookIndex, 0, id);
+                }
+            }
+        })
+
+    }
 
 </script>
 </body>

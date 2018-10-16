@@ -61,5 +61,11 @@ public class RestaurantController {
         return cartList;
     }
 
+    @RequestMapping(value = "deleteCartList")
+    @ResponseBody
+    public Long deleteCartListByCookId(Cart cart){
+        Long aLong = restaurantService.deleteCartListByCookId(cart);
+        return aLong;
+    }
 
 }

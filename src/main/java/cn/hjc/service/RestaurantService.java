@@ -40,4 +40,11 @@ public interface RestaurantService {
      * @return
      */
     List<CookBook> getCartList(int[] cookId);
+
+    /**
+     * 根据CookId删除购物车内的菜品
+     * @param cart
+     * @return
+     */
+    Long deleteCartListByCookId(Cart cart);
 }

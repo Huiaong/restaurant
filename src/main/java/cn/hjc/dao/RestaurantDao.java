@@ -23,6 +23,7 @@ public interface RestaurantDao {
 
     /**
      * 添加商品到购物车中
+     *
      * @param cart
      * @return
      */
@@ -30,12 +31,14 @@ public interface RestaurantDao {
 
     /**
      * 获取购物车内商品的CookId
+     *
      * @return
      */
     String getCart(Cart cart);
 
     /**
      * 根据cookId批量查询CookBook
+     *
      * @param cookId
      * @return
      */
