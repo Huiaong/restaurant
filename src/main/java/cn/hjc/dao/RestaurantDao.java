@@ -43,4 +43,12 @@ public interface RestaurantDao {
      * @return
      */
     List<CookBook> getCartList(int[] cookId);
+
+    /**
+     * 根据提交的订单，将相应的菜品数量减一
+     * @param cookId
+     * @return
+     */
+    Long submitOrder(int[] cookId);
+
 }

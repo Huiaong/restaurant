@@ -77,7 +77,7 @@ public class RestaurantServiceImpl implements RestaurantService {
     @Override
     public List<CookBook> getCartList(int[] cookId) {
         List<CookBook> cartList = null;
-        if (cookId.length>0) {
+        if (cookId.length > 0) {
             cartList = restaurantDao.getCartList(cookId);
         }
         return cartList;
@@ -85,30 +85,32 @@ public class RestaurantServiceImpl implements RestaurantService {
 
     @Override
     public Long deleteCartListByCookId(Cart cart) {
-
-        System.out.println("=============cart:"+cart.toString());
-
         int[] cartArray = getCart(cart);
-
-        System.out.println("=============int[] cartArray:"+Arrays.toString(cartArray));
-
         List<Integer> cartList = new ArrayList<Integer>();
-        for (int i:cartArray){
-            if (i==Integer.parseInt(cart.getCookId()))continue;
+        String[] array = cart.getCookId().split(",");
+        for (int i : cartArray) {
             cartList.add(i);
         }
-
-        System.out.println("=============List<Integer> cartList:"+cartList.toString());
-
-        System.out.println("=============List<Integer> cartList:"+cartList);
-
+        for (String b : array) {
+            cartList.remove((Integer)Integer.parseInt(b));
+        }
         Integer[] Array = cartList.toArray(new Integer[0]);
-        cart.setCookId(Arrays.toString(Array).replace("[", "").replace("]", "").replace(" ",""));
-
-        System.out.println("=============cart.getCookId:"+cart.getCookId());
-
+        cart.setCookId(Arrays.toString(Array).replace("[", "").replace("]", "").replace(" ", ""));
         Long aLong = addToCart(cart);
         return aLong;
+    }
+
+    @Override
+    public Long submitOrder(Cart cart) {
+        String[] array = cart.getCookId().split(",");
+        int[] cookId = new int[array.length];
+        if (array.length > 0) {
+            for (int i = 0; i < array.length; i++) {
+                cookId[i] = Integer.parseInt(array[i]);
+            }
+        }
+        deleteCartListByCookId(cart);
+        return restaurantDao.submitOrder(cookId);
     }
 
 }

@@ -68,4 +68,12 @@ public class RestaurantController {
         return aLong;
     }
 
+    @RequestMapping(value = "submitOrder")
+    @ResponseBody
+    public Long submitOrder(Model model,Cart cart) {
+        Long aLong = restaurantService.submitOrder(cart);
+        return aLong;
+
+    }
+
 }

@@ -47,4 +47,11 @@ public interface RestaurantService {
      * @return
      */
     Long deleteCartListByCookId(Cart cart);
+
+    /**
+     * 提交订单，即将对应Cook数量减一
+     * @param cart
+     * @return
+     */
+    Long submitOrder(Cart cart);
 }

@@ -68,5 +68,12 @@
             #{cookId}
         </foreach>
     </select>
+
+    <update id="submitOrder" parameterType="int">
+        UPDATE tb_cook_book SET cook_repertory = cook_repertory - 1 WHERE cook_id IN
+        <foreach item="cookId" collection="array" open="(" separator="," close=")">
+            #{cookId}
+        </foreach>
+    </update>
 </mapper>
     

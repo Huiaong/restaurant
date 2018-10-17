@@ -253,9 +253,9 @@
             </div>
             <div class="modal-footer">
                 <label for="price">合计:</label>
-                <em id="price" class="price"></em>
+                <em id="price"></em>
                 <em>元</em>
-                <button type="button" class="btn btn-primary">提交订单</button>
+                <button type="button" class="btn btn-primary" onclick="submitOrder()">提交订单</button>
             </div>
         </div>
     </div>
@@ -308,7 +308,7 @@
     var CookList = new Array();
     var cartId = $("#cartId").val();
     var userId = $("#userId").val();
-
+    var price = 0;
 
     $(function () {
         if (${user==null}) {
@@ -331,7 +331,6 @@
                     }
                 }
             });
-
         }
     });
 
@@ -363,6 +362,7 @@
     }
 
     function getCartList() {
+        price = 0;
         $.ajax({
             type: "post",
             url: basePath + "restaurant/getCartList.action",
@@ -373,8 +373,10 @@
             success: function (data) {
                 $(".cart").html("");
                 $.each(data, function (i, item) {
-                    $(".cart").append('<div class="row item' + item.cookId + '"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="' + "err:" + item.cookImage + '"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span onclick="deleteCartList(' + item.cookId + ')">&times;</span></button></div>');
+                    $(".cart").append('<div class="row item' + item.cookId + '"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="' + "err:" + item.cookImage + '"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span onclick="deleteCartList(' + item.cookId + ',' + item.cookPrice + ')">&times;</span></button></div>');
+                    price = price + item.cookPrice;
                 });
+                $("#price").text(price);
             }
         });
     }
@@ -403,7 +405,7 @@
     }
 
 
-    function deleteCartList(id) {
+    function deleteCartList(id, i) {
         console.log(CookList.toString(), id);
         var cookIndex = CookList.indexOf(id);
         CookList.splice(cookIndex, 1);
@@ -421,12 +423,34 @@
                 if (date > 0) {
                     $(".count").show();
                     $(".count li").text(CookList.length);
+                    price = price - i;
+                    $("#price").text(price);
                 } else {
                     CookList.splice(cookIndex, 0, id);
                 }
             }
         })
+    }
 
+    function submitOrder() {
+        $.ajax({
+            type: "post",
+            url: basePath + "restaurant/submitOrder.action",
+            data: {
+                "cartId": cartId,
+                "userId": userId,
+                "cookId": CookList.toString()
+            },
+            contentType: "application/x-www-form-urlencoded;charset=utf-8",
+            success: function (date) {
+                if (date > 0) {
+                    CookList = [];
+                    window.location.reload();
+                }else {
+                    alert("订单提交失败！");
+                }
+            }
+        });
     }
 
 </script>
