@@ -4,75 +4,73 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hjc.dao.RestaurantDao">
 
-    <resultMap type="cn.hjc.entity.CookBook" id="cookResultMap">
-        <id property="cookId" column="cook_id"/>
-        <result property="cookName" column="cook_name"/>
-        <result property="cookFlavor" column="cook_flavor"/>
-        <result property="cookRepertory" column="cook_repertory"/>
-        <result property="cookImage" column="cook_image"/>
-        <result property="cookPrice" column="cook_price"/>
-        <result property="cookType" column="cook_type"/>
-        <result property="cookDesc" column="cook_desc"/>
-        <result property="cookEnableStatus" column="cook_enable_status"/>
+    <resultMap type="cn.hjc.entity.Product" id="productResultMap">
+        <id property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productFlavor" column="product_flavor"/>
+        <result property="productRepertory" column="product_repertory"/>
+        <result property="productImage" column="product_image"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productType" column="product_type"/>
+        <result property="productDesc" column="product_desc"/>
+        <result property="productEnableStatus" column="product_enable_status"/>
     </resultMap>
 
-    <select id="getAllCookBook" resultType="CookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_id,
-               tb_cook_book.cook_name,
-               tb_cook_book.cook_flavor,
-               tb_cook_book.cook_repertory,
-               tb_cook_book.cook_image,
-               tb_cook_book.cook_price,
-               tb_cook_book.cook_type,
-               tb_cook_book.cook_desc,
-               tb_cook_book.cook_enable_status
-        FROM tb_cook_book
-        WHERE tb_cook_book.cook_enable_status > 0
+    <select id="getAllProduct" resultType="Product" resultMap="productResultMap">
+        SELECT tb_product.product_id,
+               tb_product.product_name,
+               tb_product.product_flavor,
+               tb_product.product_repertory,
+               tb_product.product_image,
+               tb_product.product_price,
+               tb_product.product_type,
+               tb_product.product_desc,
+               tb_product.product_enable_status
+        FROM tb_product
+        WHERE tb_product.product_enable_status > 0
     </select>
 
-    <select id="getCookType" resultType="CookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_type
-        FROM tb_cook_book
-        WHERE cook_enable_status > 0
-        GROUP BY tb_cook_book.cook_type
+    <select id="getProductType" resultType="Product" resultMap="productResultMap">
+        SELECT tb_product.product_type
+        FROM tb_product
+        WHERE product_enable_status > 0
+        GROUP BY tb_product.product_type
     </select>
 
     <update id="addToCart" parameterType="Cart">
         UPDATE tb_cart
-        SET cook_id = #{cookId}
-        WHERE user_id = #{userId}
-          and cart_id = #{cartId}
+        SET product_ids = #{productIds}
+        WHERE customer_id = #{customerId}
     </update>
 
     <select id="getCart" parameterType="Cart" resultType="String">
-        SELECT cook_id
+        SELECT product_ids
         FROM tb_cart
-        WHERE cart_id = #{cartId}
-          AND user_id = #{userId}
+        WHERE customer_id = #{customerId}
     </select>
 
-    <select id="getCartList" parameterType="int" resultType="CookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_id,
-        tb_cook_book.cook_name,
-        tb_cook_book.cook_flavor,
-        tb_cook_book.cook_repertory,
-        tb_cook_book.cook_price,
-        tb_cook_book.cook_image,
-        tb_cook_book.cook_type,
-        tb_cook_book.cook_desc,
-        tb_cook_book.cook_enable_status
-        FROM tb_cook_book
-        WHERE tb_cook_book.cook_enable_status > 0
-        AND tb_cook_book.cook_id IN
-        <foreach item="cookId" collection="array" open="(" separator="," close=")">
-            #{cookId}
+    <select id="getCartList" parameterType="int" resultType="Product" resultMap="productResultMap">
+        SELECT tb_product.product_id,
+        tb_product.product_name,
+        tb_product.product_flavor,
+        tb_product.product_repertory,
+        tb_product.product_price,
+        tb_product.product_image,
+        tb_product.product_type,
+        tb_product.product_desc,
+        tb_product.product_enable_status
+        FROM tb_product
+        WHERE tb_product.product_enable_status > 0
+        AND tb_product.product_id IN
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
         </foreach>
     </select>
 
     <update id="submitOrder" parameterType="int">
-        UPDATE tb_cook_book SET cook_repertory = cook_repertory - 1 WHERE cook_id IN
-        <foreach item="cookId" collection="array" open="(" separator="," close=")">
-            #{cookId}
+        UPDATE tb_product SET product_repertory = product_repertory - 1 WHERE product_id IN
+        <foreach item="productId" collection="array" open="(" separator="," close=")">
+            #{productId}
         </foreach>
     </update>
 </mapper>

@@ -32,18 +32,18 @@
             </div>
             <ul class="nav navbar-nav navbar-right">
                 <li>
-                    <c:if test="${user!=null}">
+                    <c:if test="${admin!=null}">
                         <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                            aria-expanded="true"><span class="iconfont icon-user"></span></a>
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                            <li><a href="#">欢迎您${user.userName}</a></li>
+                            <li><a href="#">欢迎您${admin.adminUserName}</a></li>
                             <li><a href="#">更改密码</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a>
                             </li>
                         </ul>
                     </c:if>
-                    <c:if test="${user==null}">
+                    <c:if test="${admin==null}">
                         <a id="btn_login" href="#" data-toggle="modal"
                            data-target="#userLoginDialog"><span class="iconfont icon-user"></span></a>
                     </c:if>
@@ -63,41 +63,41 @@
             <div class="panel-body">
                 <form id="select_form" action="list.action" method="post" class="form-inline">
                     <div class="form-group">
-                        <label for="cookName">菜名</label>
-                        <input id="cookName" class="form-control" name="cookName" type="text"/>
+                        <label for="productName">菜名</label>
+                        <input id="productName" class="form-control" name="productName" type="text"/>
                     </div>
                     <div class="form-group">
-                        <label for="cookFlavor">口味</label>
-                        <select class="form-control" id="cookFlavor" name="cookFlavor">
+                        <label for="productFlavor">口味</label>
+                        <select class="form-control" id="productFlavor" name="productFlavor">
                             <option></option>
                             <c:forEach items="${flavorList}" var="flavorItem">
-                                <option>${flavorItem.cookFlavor}</option>
+                                <option>${flavorItem.productFlavor}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label for="cookType">菜系</label>
-                        <select id="cookType" class="form-control" name="cookType">
+                        <label for="productType">菜系</label>
+                        <select id="productType" class="form-control" name="productType">
                             <option></option>
                             <c:forEach items="${typeList}" var="typeItem">
-                                <option>${typeItem.cookType}</option>
+                                <option>${typeItem.productType}</option>
                             </c:forEach>
                         </select>
                     </div>
                     <button type="submit" class="btn btn-primary">查询</button>
                     <div id="btn_list" style="float:right;">
-                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:false}">
+                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus==0:false}">
                             <a href="#" class="btn btn-default" onclick="putAway()">上架</a>
                         </c:if>
-                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus>0:false}">
+                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus>0:false}">
                             <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
                         </c:if>
                         <a href="#" class="btn btn-success" data-toggle="modal"
-                           data-target="#cookEditDialog" onclick="addCook()">新增菜品</a>
+                           data-target="#cookEditDialog" onclick="addProduct()">新增菜品</a>
                         <a href="#" class="btn btn-default" onclick="putAwaybtn();">重新上架</a>
                     </div>
                 </form>
-                <form id="form-putAway" action="<%=basePath%>BackStage/putAway.action" method="post"></form>
+                <form id="form-putAway" action="<%=basePath%>backStage/putAwayProduct.action" method="post"></form>
             </div>
         </div>
 
@@ -108,7 +108,7 @@
                     <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
-                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).cookEnableStatus==0:false}">
+                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus==0:false}">
                                 <td><input type="checkbox" id="checkAll"></td>
                             </c:if>
                             <td><strong>#</strong></td>
@@ -125,32 +125,32 @@
                         <tbody>
                         <c:forEach items="${cookDates.rows}" var="bookItem" varStatus="status">
                             <tr>
-                                <c:if test="${bookItem.cookEnableStatus == 0}">
+                                <c:if test="${bookItem.productEnableStatus == 0}">
                                     <td><input type="checkbox" class="check"/></td>
                                 </c:if>
                                 <td>${status.index+1}</td>
-                                <td>${bookItem.cookName}</td>
-                                <td>${bookItem.cookFlavor}</td>
-                                <td>${bookItem.cookRepertory}</td>
-                                <td>${bookItem.cookPrice}</td>
-                                <td>${bookItem.cookType}</td>
-                                <td>${bookItem.cookDesc}</td>
+                                <td>${bookItem.productName}</td>
+                                <td>${bookItem.productFlavor}</td>
+                                <td>${bookItem.productRepertory}</td>
+                                <td>${bookItem.productPrice}</td>
+                                <td>${bookItem.productType}</td>
+                                <td>${bookItem.productDesc}</td>
                                 <td><a name="popover" data-toggle="popover"
                                        data-content="<a href='#' class='thumbnail'>
-                                    <img src='${bookItem.cookImage}' alt='${bookItem.cookImage}'>
+                                    <img src='${bookItem.productImage}' alt='${bookItem.productImage}'>
                                     </a>
-                                    ">${bookItem.cookImage}</a>
+                                    ">${bookItem.productImage}</a>
                                 </td>
                                 <td>
-                                    <c:if test="${bookItem.cookEnableStatus > 0}">
+                                    <c:if test="${bookItem.productEnableStatus > 0}">
                                         <a href="#" id="btn-edit" class="btn btn-primary btn-xs" data-toggle="modal"
-                                           data-target="#cookEditDialog" onclick="editCook(${bookItem.cookId})">修改</a>
+                                           data-target="#cookEditDialog" onclick="editProduct(${bookItem.productId})">修改</a>
                                         <a href="#" id="btn-soldOut" class="btn btn-danger btn-xs"
-                                           onclick="soldOutCook(${bookItem.cookId})">下架</a>
+                                           onclick="soldOutProduct(${bookItem.productId})">下架</a>
                                     </c:if>
-                                    <c:if test="${bookItem.cookEnableStatus == 0}">
+                                    <c:if test="${bookItem.productEnableStatus == 0}">
                                         <a href="#" id="btn-putAway" class="btn btn-info btn-xs"
-                                           onclick="putAwayCook(${bookItem.cookId})">上架</a>
+                                           onclick="putAwayProduct(${bookItem.productId})">上架</a>
                                     </c:if>
                                 </td>
                             </tr>
@@ -165,18 +165,18 @@
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li>
-                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}"
+                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
                         <c:forEach var="i" begin="1" end="${cookDates.pageNum}" step="1">
                             <li>
-                                <a href="?page=${i}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}">${i}</a>
+                                <a href="?page=${i}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}">${i}</a>
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&cookName=${cookConditions.cookName}&cookFlavor=${cookConditions.cookFlavor}&cookType=${cookConditions.cookType}"
+                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -197,54 +197,54 @@
                         <h4 class="modal-title" id="myModalLabel">修改菜品</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" id="edit_cook_form">
-                            <input type="hidden" id="edit_cook_id" name="cookId"/>
+                        <form class="form-horizontal" id="edit_product_form">
+                            <input type="hidden" id="edit_productId" name="productId"/>
                             <div class="form-group">
-                                <label for="edit_cookName" style="float:left;padding:7px 15px 0 27px;">菜名</label>
+                                <label for="edit_productName" style="float:left;padding:7px 15px 0 27px;">菜名</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookName" placeholder="菜名"
-                                           name="cookName">
+                                    <input type="text" class="form-control" id="edit_productName" placeholder="菜名"
+                                           name="productName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookFlavor" style="float:left;padding:7px 15px 0 27px;">口味</label>
+                                <label for="edit_productFlavor" style="float:left;padding:7px 15px 0 27px;">口味</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookFlavor" placeholder="口味"
-                                           name="cookFlavor">
+                                    <input type="text" class="form-control" id="edit_productFlavor" placeholder="口味"
+                                           name="productFlavor">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookRepertory" style="float:left;padding:7px 15px 0 27px;">库存</label>
+                                <label for="edit_productRepertory" style="float:left;padding:7px 15px 0 27px;">库存</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookRepertory" placeholder="库存"
-                                           name="cookRepertory">
+                                    <input type="text" class="form-control" id="edit_productRepertory" placeholder="库存"
+                                           name="productRepertory">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookPrice" style="float:left;padding:7px 15px 0 27px;">价格</label>
+                                <label for="edit_productPrice" style="float:left;padding:7px 15px 0 27px;">价格</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookPrice" placeholder="价格"
-                                           name="cookPrice">
+                                    <input type="text" class="form-control" id="edit_productPrice" placeholder="价格"
+                                           name="productPrice">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookType" style="float:left;padding:7px 15px 0 27px;">菜系</label>
+                                <label for="edit_productType" style="float:left;padding:7px 15px 0 27px;">菜系</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookType" placeholder="菜系"
-                                           name="cookType">
+                                    <input type="text" class="form-control" id="edit_productType" placeholder="菜系"
+                                           name="productType">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookDesc" style="float:left;padding:7px 15px 0 27px;">介绍</label>
+                                <label for="edit_productDesc" style="float:left;padding:7px 15px 0 27px;">介绍</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="edit_cookDesc" placeholder="介绍"
-                                           name="cookDesc">
+                                    <input type="text" class="form-control" id="edit_productDesc" placeholder="介绍"
+                                           name="productDesc">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_cookImage" style="float:left;padding:7px 15px 0 27px;">图片</label>
+                                <label for="edit_productImage" style="float:left;padding:7px 15px 0 27px;">图片</label>
                                 <div class="col-sm-10">
-                                    <input id="edit_cookImage" name="file" type="file" class="file"
+                                    <input id="edit_productImage" name="file" type="file" class="file"
                                            data-show-preview="false" data-show-upload="false">
                                 </div>
                             </div>
@@ -252,7 +252,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
-                        <button type="button" class="btn btn-primary" id="btn_cook_submit" onclick="updateCook()">保存修改
+                        <button type="button" class="btn btn-primary" id="btn_cook_submit" onclick="updateProduct()">保存修改
                         </button>
                     </div>
                 </div>
@@ -270,20 +270,20 @@
                         <h4 class="modal-title" id="myLoginLabel">登陆</h4>
                     </div>
                     <div class="modal-body">
-                        <form class="form-horizontal" id="user_login_form">
+                        <form class="form-horizontal" id="customer_login_form">
                             <div class="form-group">
-                                <label for="edit_userName" style="float:left;padding:7px 15px 0 27px;">账号</label>
+                                <label for="edit_adminUserName" style="float:left;padding:7px 15px 0 27px;">账号</label>
                                 <div class="col-sm-10">
-                                    <input id="userName_input" type="text" class="form-control" id="edit_userName"
+                                    <input id="productUserName_input" type="text" class="form-control" id="edit_adminUserName"
                                            placeholder="账号"
-                                           name="userName">
+                                           name="adminUserName">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label for="edit_passWord" style="float:left;padding:7px 15px 0 27px;">密码</label>
+                                <label for="edit_adminPassWord" style="float:left;padding:7px 15px 0 27px;">密码</label>
                                 <div class="col-sm-10">
-                                    <input type="password" class="form-control" id="edit_passWord" placeholder="密码"
-                                           name="passWord">
+                                    <input type="password" class="form-control" id="edit_adminPassWord" placeholder="密码"
+                                           name="adminPassWord">
                                 </div>
                             </div>
                         </form>
@@ -314,7 +314,7 @@
 
 
     $(function () {
-        if (${user==null}) {
+        if (${admin==null}) {
             if (${msg != null}) {
                 alert("${msg}");
                 $("#btn_login").trigger("click");
@@ -355,12 +355,12 @@
         if ($(".check:checked").length > 0) {
             if (confirm("确定要下架商品吗")) {
                 $.each($(".check:checked"), function () {
-                    var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                    var productName = $(this).parents("tr").find("td:eq(2)").text();
                     $.ajax({
                         type: "post",
-                        url: basePath + "BackStage/batchSoldOut.action",
+                        url: basePath + "backStage/batchSoldOutProduct.action",
                         data: {
-                            "cookName": cookName
+                            "productName": productName
                         },
                         contentType: "application/x-www-form-urlencoded;charset=utf-8",
                         success: function () {
@@ -375,7 +375,7 @@
     }
 
     function putAwaybtn() {
-        if (${cookDates.rows.get(0).cookEnableStatus!=0}) {
+        if (${cookDates.rows.get(0).productEnableStatus!=0}) {
             $("#form-putAway").submit();
         } else {
             $("#select_form").submit();
@@ -387,12 +387,12 @@
         if ($(".check:checked").length > 0) {
             if (confirm("确定要上架商品吗")) {
                 $.each($(".check:checked"), function () {
-                    var cookName = $(this).parents("tr").find("td:eq(2)").text();
+                    var productName = $(this).parents("tr").find("td:eq(2)").text();
                     $.ajax({
                         type: "post",
-                        url: basePath + "BackStage/batchPutAway.action",
+                        url: basePath + "backStage/batchPutAwayProduct.action",
                         data: {
-                            "cookName": cookName
+                            "productName": productName
                         },
                         contentType: "application/x-www-form-urlencoded;charset=utf-8",
                         success: function () {
@@ -407,7 +407,7 @@
     function loginOutPut() {
         $.ajax({
             type: "get",
-            url: basePath + "user/loginOutPut.action",
+            url: basePath + "admin/loginOutPut.action",
             success: function () {
                 window.location.reload();
             }
@@ -419,25 +419,25 @@
     function userLogin() {
         $.ajax({
             type: "post",
-            url: basePath + "user/login.action",
-            data: $("#user_login_form").serialize(),
+            url: basePath + "admin/login.action",
+            data: $("#customer_login_form").serialize(),
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {
                 if (date.msg == "loginSuccess") {
                     alert("登陆成功");
                 } else {
-                    alert("登陆失败");
+                    alert(date.msg);
                 }
                 window.location.reload();
             }
         });
     }
 
-    function putAwayCook(id) {
+    function putAwayProduct(id) {
         if (confirm('确实要重新上架该菜品吗?')) {
             $.ajax({
                 type: "post",
-                url: basePath + "BackStage/editEnableStatus.action",
+                url: basePath + "backStage/editProductEnableStatus.action",
                 data: {"id": id},
                 success: function (date) {
                     if (date > 0) {
@@ -451,31 +451,31 @@
         }
     }
 
-    function editCook(id) {
+    function editProduct(id) {
         $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
-            updateCook();
+            updateProduct();
         });
         $.ajax({
             type: "GET",
-            url: basePath + "BackStage/editCook.action",
+            url: basePath + "backStage/getProduct.action",
             data: {"id": id},
             success: function (date) {
-                $("#edit_cook_id").val(date.cookId);
-                $("#edit_cookName").val(date.cookName);
-                $("#edit_cookFlavor").val(date.cookFlavor);
-                $("#edit_cookRepertory").val(date.cookRepertory);
-                $("#edit_cookPrice").val(date.cookPrice);
-                $("#edit_cookType").val(date.cookType);
-                $("#edit_cookDesc").val(date.cookDesc);
+                $("#edit_productId").val(date.productId);
+                $("#edit_productName").val(date.productName);
+                $("#edit_productFlavor").val(date.productFlavor);
+                $("#edit_productRepertory").val(date.productRepertory);
+                $("#edit_productPrice").val(date.productPrice);
+                $("#edit_productType").val(date.productType);
+                $("#edit_productDesc").val(date.productDesc);
             }
         });
     }
 
-    function updateCook() {
-        var formData = new FormData($("#edit_cook_form")[0]);
+    function updateProduct() {
+        var formData = new FormData($("#edit_product_form")[0]);
         $.ajax({
             type: "post",
-            url: basePath + "BackStage/update.action",
+            url: basePath + "backStage/updateProduct.action",
             data: formData,
             async: false,
             contentType: false,
@@ -494,12 +494,12 @@
         });
     }
 
-    function soldOutCook(id) {
+    function soldOutProduct(id) {
         if (confirm('确实要下架该菜品吗?')) {
             $.ajax({
                 type: "post",
-                url: basePath + "BackStage/soldOut.action",
-                data: {"cookId": id},
+                url: basePath + "backStage/soldOutProduct.action",
+                data: {"productId": id},
                 success: function (data) {
                     if (data > "0") {
                         alert("菜品信息下架成功！");
@@ -512,25 +512,25 @@
         }
     }
 
-    function addCook() {
+    function addProduct() {
         $("#btn_submit").attr('onclick', '').unbind('click').click(function () {
-            saveCook();
+            saveProduct();
         });
         $("#myModalLabel").text("新增菜品");
-        $("#edit_cook_id").val("");
-        $("#edit_cookName").val("");
-        $("#edit_cookFlavor").val("");
-        $("#edit_cookRepertory").val("");
-        $("#edit_cookPrice").val("");
-        $("#edit_cookType").val("");
-        $("#edit_cookDesc").val("");
+        $("#edit_productId").val("");
+        $("#edit_productName").val("");
+        $("#edit_productFlavor").val("");
+        $("#edit_productRepertory").val("");
+        $("#edit_productPrice").val("");
+        $("#edit_productType").val("");
+        $("#edit_productDesc").val("");
     }
 
-    function saveCook() {
-        var formData = new FormData($("#edit_cook_form")[0]);
+    function saveProduct() {
+        var formData = new FormData($("#edit_product_form")[0]);
         $.ajax({
             type: "post",
-            url: basePath + "BackStage/save.action",
+            url: basePath + "backStage/saveProduct.action",
             data: formData,
             async: false,
             contentType: false,

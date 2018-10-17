@@ -1,10 +1,9 @@
 package cn.hjc.service;
 
 
-import cn.hjc.entity.CookBook;
-import cn.hjc.entity.CookConditions;
-import cn.hjc.entity.CookDates;
-import cn.hjc.entity.User;
+import cn.hjc.entity.Product;
+import cn.hjc.queryVo.CookConditions;
+import cn.hjc.queryVo.CookDates;
 
 import java.util.List;
 
@@ -15,73 +14,73 @@ public interface BackStageService {
      * @param cookConditions
      * @return
      */
-    CookDates<CookBook> getCookByCondition(CookConditions cookConditions);
+    CookDates<Product> getProductByCondition(CookConditions cookConditions);
 
     /**
      * 查询cook口味
      * @return
      */
-    List<CookBook> getCookFlavor();
+    List<Product> getProductFlavor();
 
     /**
      * 查询cook菜系
      * @return
      */
-    List<CookBook> getCookType();
+    List<Product> getProductType();
 
     /**
      * 按照cookId查询cookBook
      * @param integer
      * @return
      */
-    CookBook  getCookById(Integer integer);
+    Product getProductById(Integer integer);
 
     /**
      * 按照cookBook更新cookBook信息
-     * @param cookBook
+     * @param product
      * @return
      */
-    Long updateCook(CookBook cookBook);
+    Long updateProduct(Product product);
 
     /**
      * 根据id查询下架菜品
-     * @param integer
+     * @param id
      * @return
      */
-    Long soldOutCookById(Integer integer);
+    Long soldOutProductById(Integer id);
 
     /**
      * 保存菜品
-     * @param cookBook
+     * @param product
      * @return
      */
-    Long saveCook(CookBook cookBook);
+    Long saveProduct(Product product);
 
     /**
      * 根据条件查询可上架商品
      * @param cookConditions
      * @return
      */
-    CookDates<CookBook> getPutAwayCook(CookConditions cookConditions);
+    CookDates<Product> getPutAwayProduct(CookConditions cookConditions);
 
     /**
      * 更改菜品上/下架情况
      * @param id
      * @return
      */
-    Long editEnableStatus(Integer id);
+    Long editProductEnableStatus(Integer id);
 
     /**
      * 根据cookName下架菜品
-     * @param cookName
+     * @param productName
      * @return
      */
-    Long soldOutCookByName(String cookName);
+    Long soldOutProductByName(String productName);
 
     /**
      * 根据cookName上架商品
-     * @param cookName
+     * @param productName
      * @return
      */
-    Long putAwayCookByName(String cookName);
+    Long putAwayProductByName(String productName);
 }

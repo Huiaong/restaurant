@@ -1,4 +1,4 @@
-package cn.hjc.entity;
+package cn.hjc.queryVo;
 
 import java.util.List;
 

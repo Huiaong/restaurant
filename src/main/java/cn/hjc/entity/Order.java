@@ -2,19 +2,19 @@ package cn.hjc.entity;
 
 import java.util.Date;
 
-public class Cart {
+public class Order {
 
-    private Integer cartId;
+    private Integer orderId;
     private Integer customerId;
     private String productIds;
-    private Date endEditTime;
+    private Date createTime;
 
-    public Integer getCartId() {
-        return cartId;
+    public Integer getOrderId() {
+        return orderId;
     }
 
-    public void setCartId(Integer cartId) {
-        this.cartId = cartId;
+    public void setOrderId(Integer orderId) {
+        this.orderId = orderId;
     }
 
     public Integer getCustomerId() {
@@ -33,21 +33,21 @@ public class Cart {
         this.productIds = productIds;
     }
 
-    public Date getEndEditTime() {
-        return endEditTime;
+    public Date getCreateTime() {
+        return createTime;
     }
 
-    public void setEndEditTime(Date endEditTime) {
-        this.endEditTime = endEditTime;
+    public void setCreateTime(Date createTime) {
+        this.createTime = createTime;
     }
 
     @Override
     public String toString() {
-        return "Cart{" +
-                "cartId=" + cartId +
+        return "Order{" +
+                "orderId=" + orderId +
                 ", customerId=" + customerId +
                 ", productIds='" + productIds + '\'' +
-                ", endEditTime=" + endEditTime +
+                ", createTime=" + createTime +
                 '}';
     }
 }

@@ -25,8 +25,8 @@
 
     <mvc:interceptors>
         <mvc:interceptor>
-            <mvc:mapping path="/BackStage/**"/>
-            <mvc:exclude-mapping path="/BackStage/backStageManagement.action"/>
+            <mvc:mapping path="/backStage/**"/>
+            <mvc:exclude-mapping path="/backStage/backStageManagement.action"/>
             <bean id="backStageInterceptor" class="cn.hjc.interceptor.BackStageInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>

@@ -1,10 +1,10 @@
-package cn.hjc.entity;
+package cn.hjc.queryVo;
 
 public class CookConditions {
 
-    private String cookName;
-    private String cookFlavor;
-    private String cookType;
+    private String ProductName;
+    private String ProductFlavor;
+    private String ProductType;
 
     // 当前页码数
     private Integer page = 1;
@@ -13,28 +13,28 @@ public class CookConditions {
     // 每页显示数据条数
     private final Integer rows = 5;
 
-    public String getCookName() {
-        return cookName;
+    public String getProductName() {
+        return ProductName;
     }
 
-    public void setCookName(String cookName) {
-        this.cookName = cookName;
+    public void setProductName(String productName) {
+        ProductName = productName;
     }
 
-    public String getCookFlavor() {
-        return cookFlavor;
+    public String getProductFlavor() {
+        return ProductFlavor;
     }
 
-    public void setCookFlavor(String cookFlavor) {
-        this.cookFlavor = cookFlavor;
+    public void setProductFlavor(String productFlavor) {
+        ProductFlavor = productFlavor;
     }
 
-    public String getCookType() {
-        return cookType;
+    public String getProductType() {
+        return ProductType;
     }
 
-    public void setCookType(String cookType) {
-        this.cookType = cookType;
+    public void setProductType(String productType) {
+        ProductType = productType;
     }
 
     public Integer getPage() {

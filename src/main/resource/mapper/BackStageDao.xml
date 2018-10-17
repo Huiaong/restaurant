@@ -4,93 +4,93 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cn.hjc.dao.BackStageDao">
 
-    <resultMap type="cn.hjc.entity.CookBook" id="cookResultMap">
-        <id property="cookId" column="cook_id"/>
-        <result property="cookName" column="cook_name"/>
-        <result property="cookFlavor" column="cook_flavor"/>
-        <result property="cookRepertory" column="cook_repertory"/>
-        <result property="cookImage" column="cook_image"/>
-        <result property="cookPrice" column="cook_price"/>
-        <result property="cookType" column="cook_type"/>
-        <result property="cookDesc" column="cook_desc"/>
-        <result property="cookEnableStatus" column="cook_enable_status"/>
+    <resultMap type="cn.hjc.entity.Product" id="productResultMap">
+        <id property="productId" column="product_id"/>
+        <result property="productName" column="product_name"/>
+        <result property="productFlavor" column="product_flavor"/>
+        <result property="productRepertory" column="product_repertory"/>
+        <result property="productImage" column="product_image"/>
+        <result property="productPrice" column="product_price"/>
+        <result property="productType" column="product_type"/>
+        <result property="productDesc" column="product_desc"/>
+        <result property="productEnableStatus" column="product_enable_status"/>
     </resultMap>
 
-    <!-- 按照条件查询cookbook -->
-    <select id="getCookByCondition" parameterType="cookConditions" resultType="CookBook" resultMap="cookResultMap">
+    <!-- 按照条件查询productbook -->
+    <select id="getProductByCondition" parameterType="CookConditions" resultType="Product" resultMap="productResultMap">
         SELECT
-        tb_cook_book.cook_id,
-        tb_cook_book.cook_name,
-        tb_cook_book.cook_flavor,
-        tb_cook_book.cook_repertory,
-        tb_cook_book.cook_image,
-        tb_cook_book.cook_price,
-        tb_cook_book.cook_type,
-        tb_cook_book.cook_desc,
-        tb_cook_book.cook_enable_status
+        tb_product.product_id,
+        tb_product.product_name,
+        tb_product.product_flavor,
+        tb_product.product_repertory,
+        tb_product.product_image,
+        tb_product.product_price,
+        tb_product.product_type,
+        tb_product.product_desc,
+        tb_product.product_enable_status
         FROM
-        tb_cook_book
+        tb_product
         <where>
-            tb_cook_book.cook_enable_status > 0
-            <if test="cookName != '' and cookName != null">
-                and tb_cook_book.cook_name LIKE CONCAT('%',#{cookName},'%')
+            tb_product.product_enable_status > 0
+            <if test="productName != '' and productName != null">
+                and tb_product.product_name LIKE CONCAT('%',#{productName},'%')
             </if>
-            <if test="cookFlavor != '' and cookFlavor != null">
-                and tb_cook_book.cook_flavor LIKE CONCAT('%',#{cookFlavor},'%')
+            <if test="productFlavor != '' and productFlavor != null">
+                and tb_product.product_flavor LIKE CONCAT('%',#{productFlavor},'%')
             </if>
-            <if test="cookType != '' and cookType != null">
-                and tb_cook_book.cook_type LIKE CONCAT('%',#{cookType},'%')
+            <if test="productType != '' and productType != null">
+                and tb_product.product_type LIKE CONCAT('%',#{productType},'%')
             </if>
         </where>
         Limit #{start},#{rows}
     </select>
 
-    <!--查询cook口味-->
-    <select id="getCookFlavor" resultType="cookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_flavor
-        FROM tb_cook_book
-        WHERE cook_enable_status > 0
-        GROUP BY tb_cook_book.cook_flavor
+    <!--查询product口味-->
+    <select id="getProductFlavor" resultType="product" resultMap="productResultMap">
+        SELECT tb_product.product_flavor
+        FROM tb_product
+        WHERE product_enable_status > 0
+        GROUP BY tb_product.product_flavor
     </select>
 
-    <!--查询cook菜系-->
-    <select id="getCookType" resultType="cookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_type
-        FROM tb_cook_book
-        WHERE cook_enable_status > 0
-        GROUP BY tb_cook_book.cook_type
+    <!--查询product菜系-->
+    <select id="getProductType" resultType="product" resultMap="productResultMap">
+        SELECT tb_product.product_type
+        FROM tb_product
+        WHERE product_enable_status > 0
+        GROUP BY tb_product.product_type
     </select>
 
     <!--按照id查询菜品-->
-    <select id="getCookById" resultType="CookBook" parameterType="Integer" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_id,
-               tb_cook_book.cook_name,
-               tb_cook_book.cook_flavor,
-               tb_cook_book.cook_repertory,
-               tb_cook_book.cook_image,
-               tb_cook_book.cook_price,
-               tb_cook_book.cook_type,
-               tb_cook_book.cook_desc,
-               tb_cook_book.cook_enable_status
-        FROM tb_cook_book
-        where cook_enable_status > 0
-          and cook_id = #{cookId}
+    <select id="getProductById" resultType="product" parameterType="Integer" resultMap="productResultMap">
+        SELECT tb_product.product_id,
+               tb_product.product_name,
+               tb_product.product_flavor,
+               tb_product.product_repertory,
+               tb_product.product_image,
+               tb_product.product_price,
+               tb_product.product_type,
+               tb_product.product_desc,
+               tb_product.product_enable_status
+        FROM tb_product
+        where product_enable_status > 0
+          and product_id = #{productId}
     </select>
 
     <!--查询符合条件的菜品数量-->
-    <select id="getCookTotal" parameterType="cookConditions" resultType="Integer">
+    <select id="getProductTotal" parameterType="CookConditions" resultType="Integer">
         SELECT COUNT(*)
-        FROM tb_cook_book
+        FROM tb_product
         <where>
-            tb_cook_book.cook_enable_status > 0
-            <if test="cookName != '' and cookName != null">
-                and tb_cook_book.cook_name LIKE CONCAT('%',#{cookName},'%')
+            tb_product.product_enable_status > 0
+            <if test="productName != '' and productName != null">
+                and tb_product.product_name LIKE CONCAT('%',#{productName},'%')
             </if>
-            <if test="cookFlavor != '' and cookFlavor != null">
-                and tb_cook_book.cook_flavor LIKE CONCAT('%',#{cookFlavor},'%')
+            <if test="productFlavor != '' and productFlavor != null">
+                and tb_product.product_flavor LIKE CONCAT('%',#{productFlavor},'%')
             </if>
-            <if test="cookType != '' and cookType != null">
-                and tb_cook_book.cook_type LIKE CONCAT('%',#{cookType},'%')
+            <if test="productType != '' and productType != null">
+                and tb_product.product_type LIKE CONCAT('%',#{productType},'%')
             </if>
         </where>
     </select>
@@ -98,130 +98,130 @@
     <!--查询可上架菜品数量-->
     <select id="getPutAwayTotal" resultType="Integer">
         SELECT COUNT(*)
-        FROM tb_cook_book
-        WHERE cook_enable_status = 0
+        FROM tb_product
+        WHERE product_enable_status = 0
     </select>
 
     <!--根据条件查询可上架菜品-->
-    <select id="getPutAwayCook" parameterType="cookConditions" resultType="CookBook" resultMap="cookResultMap">
-        SELECT tb_cook_book.cook_id,
-               tb_cook_book.cook_name,
-               tb_cook_book.cook_flavor,
-               tb_cook_book.cook_repertory,
-               tb_cook_book.cook_image,
-               tb_cook_book.cook_price,
-               tb_cook_book.cook_type,
-               tb_cook_book.cook_desc,
-               tb_cook_book.cook_enable_status
-        FROM tb_cook_book
-        WHERE cook_enable_status = 0
+    <select id="getPutAwayProduct" parameterType="CookConditions" resultType="product" resultMap="productResultMap">
+        SELECT tb_product.product_id,
+               tb_product.product_name,
+               tb_product.product_flavor,
+               tb_product.product_repertory,
+               tb_product.product_image,
+               tb_product.product_price,
+               tb_product.product_type,
+               tb_product.product_desc,
+               tb_product.product_enable_status
+        FROM tb_product
+        WHERE product_enable_status = 0
         Limit #{start},#{rows}
     </select>
 
     <!--更改菜品上/下架情况-->
-    <update id="editEnableStatus" parameterType="Integer">
-        UPDATE `restaurant`.`tb_cook_book`
-        SET `cook_enable_status` = 1
-        WHERE (`cook_id` = #{id});
+    <update id="editProductEnableStatus" parameterType="Integer">
+        UPDATE `restaurant`.`tb_product`
+        SET `product_enable_status` = 1
+        WHERE (`product_id` = #{id});
     </update>
 
     <!--更新菜品信息-->
-    <update id="updateCook" parameterType="CookBook">
+    <update id="updateProduct" parameterType="product">
         UPDATE
-        `restaurant`.`tb_cook_book`
+        `restaurant`.`tb_product`
         <set>
-            <if test="cookName != null and cookName != ''">
-                cook_name = #{cookName},
+            <if test="productName != null and productName != ''">
+                product_name = #{productName},
             </if>
-            <if test="cookFlavor != null and cookFlavor != ''">
-                cook_flavor = #{cookFlavor},
+            <if test="productFlavor != null and productFlavor != ''">
+                product_flavor = #{productFlavor},
             </if>
-            <if test="cookRepertory != ''">
-                cook_repertory = #{cookRepertory},
+            <if test="productRepertory != ''">
+                product_repertory = #{productRepertory},
             </if>
-            <if test="cookPrice != ''">
-                cook_price = #{cookPrice},
+            <if test="productPrice != ''">
+                product_price = #{productPrice},
             </if>
-            <if test="cookImage != null and cookImage != ''">
-                cook_image = #{cookImage},
+            <if test="productImage != null and productImage != ''">
+                product_image = #{productImage},
             </if>
-            <if test="cookType != null and cookType != ''">
-                cook_type = #{cookType},
+            <if test="productType != null and productType != ''">
+                product_type = #{productType},
             </if>
-            <if test="cookDesc != null and cookDesc != ''">
-                cook_desc = #{cookDesc},
+            <if test="productDesc != null and productDesc != ''">
+                product_desc = #{productDesc},
             </if>
         </set>
-        WHERE `cook_id` = #{cookId};
+        WHERE `product_id` = #{productId};
     </update>
 
     <!--根据id下架菜品-->
-    <update id="soldOutCookById" parameterType="Integer">
+    <update id="soldOutProductById" parameterType="Integer">
         UPDATE
-                `restaurant`.`tb_cook_book`
-        SET cook_enable_status = 0
-        WHERE `cook_id` = #{cookId};
+                `restaurant`.`tb_product`
+        SET product_enable_status = 0
+        WHERE `product_id` = #{productId};
     </update>
 
     <!--根据名称下架菜品-->
-    <update id="soldOutCookByName" parameterType="String">
-        UPDATE tb_cook_book
-        SET cook_enable_status = 0
-        WHERE cook_name = #{cookName}
+    <update id="soldOutProductByName" parameterType="String">
+        UPDATE tb_product
+        SET product_enable_status = 0
+        WHERE product_name = #{productName}
     </update>
 
     <!--更具名称上架菜品-->
-    <update id="putAwayCookByName" parameterType="String">
-        UPDATE tb_cook_book
-        SET cook_enable_status = 1
-        WHERE cook_name = #{cookName}
+    <update id="putAwayProductByName" parameterType="String">
+        UPDATE tb_product
+        SET product_enable_status = 1
+        WHERE product_name = #{productName}
     </update>
 
     <!--新增菜品-->
-    <insert id="saveCook" parameterType="cookBook">
-        insert into tb_cook_book(
-        <if test="cookName !=null and cookName != ''">
-            cook_name,
+    <insert id="saveProduct" parameterType="product">
+        insert into tb_product(
+        <if test="productName !=null and productName != ''">
+            product_name,
         </if>
-        <if test="cookFlavor !=null and cookFlavor != ''">
-            cook_flavor,
+        <if test="productFlavor !=null and productFlavor != ''">
+            product_flavor,
         </if>
-        <if test="cookRepertory != ''">
-            cook_repertory,
+        <if test="productRepertory != ''">
+            product_repertory,
         </if>
-        <if test="cookPrice != ''">
-            cook_price,
+        <if test="productPrice != ''">
+            product_price,
         </if>
-        <if test="cookImage !=null and cookImage != ''">
-            cook_image,
+        <if test="productImage !=null and productImage != ''">
+            product_image,
         </if>
-        <if test="cookType !=null and cookType != ''">
-            cook_type,
+        <if test="productType !=null and productType != ''">
+            product_type,
         </if>
-        <if test="cookDesc !=null and cookDesc != ''">
-            cook_desc
+        <if test="productDesc !=null and productDesc != ''">
+            product_desc
         </if>
         )value (
-        <if test="cookName !=null and cookName != ''">
-            #{cookName},
+        <if test="productName !=null and productName != ''">
+            #{productName},
         </if>
-        <if test="cookFlavor !=null and cookFlavor != ''">
-            #{cookFlavor},
+        <if test="productFlavor !=null and productFlavor != ''">
+            #{productFlavor},
         </if>
-        <if test="cookRepertory != ''">
-            #{cookRepertory},
+        <if test="productRepertory != ''">
+            #{productRepertory},
         </if>
-        <if test="cookPrice != ''">
-            #{cookPrice},
+        <if test="productPrice != ''">
+            #{productPrice},
         </if>
-        <if test="cookImage !=null and cookImage != ''">
-            #{cookImage},
+        <if test="productImage !=null and productImage != ''">
+            #{productImage},
         </if>
-        <if test="cookType !=null and cookType != ''">
-            #{cookType},
+        <if test="productType !=null and productType != ''">
+            #{productType},
         </if>
-        <if test="cookDesc !=null and cookDesc != ''">
-            #{cookDesc}
+        <if test="productDesc !=null and productDesc != ''">
+            #{productDesc}
         </if>
         )
     </insert>

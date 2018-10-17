@@ -2,9 +2,9 @@ package cn.hjc.service.impl;
 
 
 import cn.hjc.dao.BackStageDao;
-import cn.hjc.entity.CookBook;
-import cn.hjc.entity.CookConditions;
-import cn.hjc.entity.CookDates;
+import cn.hjc.entity.Product;
+import cn.hjc.queryVo.CookConditions;
+import cn.hjc.queryVo.CookDates;
 import cn.hjc.service.BackStageService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -23,16 +23,16 @@ public class BackStageServiceImpl implements BackStageService {
      * @param cookConditions
      * @return
      */
-    public CookDates<CookBook> getCookByCondition(CookConditions cookConditions) {
-        if (cookConditions.getCookName() != null && cookConditions.getCookName().length() != 0 ||
-                cookConditions.getCookFlavor() != null && cookConditions.getCookFlavor().length() != 0 ||
-                cookConditions.getCookType() != null && cookConditions.getCookType().length() != 0) {
+    public CookDates<Product> getProductByCondition(CookConditions cookConditions) {
+        if (cookConditions.getProductName() != null && cookConditions.getProductName().length() != 0 ||
+                cookConditions.getProductFlavor() != null && cookConditions.getProductFlavor().length() != 0 ||
+                cookConditions.getProductType() != null && cookConditions.getProductType().length() != 0) {
 
             //计算分页查询从哪条记录开始
             cookConditions.setStart((cookConditions.getPage() - 1) * cookConditions.getRows());
 
             //查询总记录数
-            Integer total = backStageDao.getCookTotal(cookConditions);
+            Integer total = backStageDao.getProductTotal(cookConditions);
 
             //查询总页数
             Integer pageNum = total / cookConditions.getRows();
@@ -41,10 +41,10 @@ public class BackStageServiceImpl implements BackStageService {
             }
 
             //查询每页的数据列表
-            List<CookBook> list = backStageDao.getCookByCondition(cookConditions);
+            List<Product> list = backStageDao.getProductByCondition(cookConditions);
 
             //包装分页数据
-            CookDates<CookBook> cookDates = new CookDates<CookBook>(pageNum, list);
+            CookDates<Product> cookDates = new CookDates<Product>(pageNum, list);
 
             return cookDates;
         }
@@ -55,8 +55,8 @@ public class BackStageServiceImpl implements BackStageService {
      * 查询菜品口味
      * @return
      */
-    public List<CookBook> getCookType() {
-        List<CookBook> cook = backStageDao.getCookType();
+    public List<Product> getProductType() {
+        List<Product> cook = backStageDao.getProductType();
         return cook;
     }
 
@@ -64,9 +64,9 @@ public class BackStageServiceImpl implements BackStageService {
      * 查询菜品菜系
      * @return
      */
-    public List<CookBook> getCookFlavor() {
-        List<CookBook> cook = backStageDao.getCookFlavor();
-        return cook;
+    public List<Product> getProductFlavor() {
+        List<Product> product = backStageDao.getProductFlavor();
+        return product;
     }
 
     /**
@@ -75,19 +75,19 @@ public class BackStageServiceImpl implements BackStageService {
      * @return
      */
     @Override
-    public CookBook getCookById(Integer integer) {
-        CookBook cook = backStageDao.getCookById(integer);
-        return cook;
+    public Product getProductById(Integer integer) {
+        Product product = backStageDao.getProductById(integer);
+        return product;
     }
 
     /**
      * 更新菜品信息
-     * @param cookBook
+     * @param product
      * @return
      */
     @Override
-    public Long updateCook(CookBook cookBook) {
-        Long aLong = backStageDao.updateCook(cookBook);
+    public Long updateProduct(Product product) {
+        Long aLong = backStageDao.updateProduct(product);
         return aLong;
     }
 
@@ -97,19 +97,19 @@ public class BackStageServiceImpl implements BackStageService {
      * @return
      */
     @Override
-    public Long soldOutCookById(Integer integer) {
-        Long aLong = backStageDao.soldOutCookById(integer);
+    public Long soldOutProductById(Integer integer) {
+        Long aLong = backStageDao.soldOutProductById(integer);
         return aLong;
     }
 
     /**
      * 新增菜品
-     * @param cookBook
+     * @param product
      * @return
      */
     @Override
-    public Long saveCook(CookBook cookBook) {
-        Long aLong = backStageDao.saveCook(cookBook);
+    public Long saveProduct(Product product) {
+        Long aLong = backStageDao.saveProduct(product);
         return aLong;
     }
 
@@ -119,7 +119,7 @@ public class BackStageServiceImpl implements BackStageService {
      * @return
      */
     @Override
-    public CookDates<CookBook> getPutAwayCook(CookConditions cookConditions) {
+    public CookDates<Product> getPutAwayProduct(CookConditions cookConditions) {
         //计算分页查询从哪条记录开始
         cookConditions.setStart((cookConditions.getPage() - 1) * cookConditions.getRows());
 
@@ -130,9 +130,9 @@ public class BackStageServiceImpl implements BackStageService {
             pageNum++;
         }
 
-        List<CookBook> putAwayCook = backStageDao.getPutAwayCook(cookConditions);
+        List<Product> putAwayCook = backStageDao.getPutAwayProduct(cookConditions);
 
-        CookDates<CookBook> cookDates = new CookDates<CookBook>(pageNum, putAwayCook);
+        CookDates<Product> cookDates = new CookDates<Product>(pageNum, putAwayCook);
         return cookDates;
     }
 
@@ -142,29 +142,29 @@ public class BackStageServiceImpl implements BackStageService {
      * @return
      */
     @Override
-    public Long editEnableStatus(Integer id) {
-        Long aLong = backStageDao.editEnableStatus(id);
+    public Long editProductEnableStatus(Integer id) {
+        Long aLong = backStageDao.editProductEnableStatus(id);
         return aLong;
     }
 
     /**
      * 根据菜名下架菜品
-     * @param cookName
+     * @param productName
      * @return
      */
     @Override
-    public Long soldOutCookByName(String cookName) {
-        return backStageDao.soldOutCookByName(cookName);
+    public Long soldOutProductByName(String productName) {
+        return backStageDao.soldOutProductByName(productName);
     }
 
     /**
      * 根据菜名上架菜品
-     * @param cookName
+     * @param productName
      * @return
      */
     @Override
-    public Long putAwayCookByName(String cookName) {
-        return backStageDao.putAwayCookByName(cookName);
+    public Long putAwayProductByName(String productName) {
+        return backStageDao.putAwayProductByName(productName);
     }
 
 }

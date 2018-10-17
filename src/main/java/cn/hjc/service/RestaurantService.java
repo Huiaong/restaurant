@@ -1,7 +1,7 @@
 package cn.hjc.service;
 
 import cn.hjc.entity.Cart;
-import cn.hjc.entity.CookBook;
+import cn.hjc.entity.Product;
 
 import java.util.List;
 
@@ -12,14 +12,14 @@ public interface RestaurantService {
      *
      * @return
      */
-    List<CookBook> getCookType();
+    List<Product> getProductType();
 
     /**
      * 获取所有菜品信息
      *
      * @return
      */
-    List<CookBook> getAllCookBook();
+    List<Product> getAllProduct();
 
     /**
      * 添加商品到购物车中
@@ -29,27 +29,27 @@ public interface RestaurantService {
     Long addToCart(Cart cart);
 
     /**
-     * 获取购物车内商品的CookId
+     * 获取购物车内商品的ProductId
      * @return
      */
     int[] getCart(Cart cart);
 
     /**
-     * 根据cookId批量查询CookBook
+     * 根据cookId批量查询ProductBook
      * @param cookId
      * @return
      */
-    List<CookBook> getCartList(int[] cookId);
+    List<Product> getCartList(int[] cookId);
 
     /**
-     * 根据CookId删除购物车内的菜品
+     * 根据ProductId删除购物车内的菜品
      * @param cart
      * @return
      */
-    Long deleteCartListByCookId(Cart cart);
+    Long deleteCartListByProductId(Cart cart);
 
     /**
-     * 提交订单，即将对应Cook数量减一
+     * 提交订单，即将对应Product数量减一
      * @param cart
      * @return
      */

@@ -1,8 +1,8 @@
 package cn.hjc.controller;
 
-import cn.hjc.entity.CookBook;
-import cn.hjc.entity.CookConditions;
-import cn.hjc.entity.CookDates;
+import cn.hjc.entity.Product;
+import cn.hjc.queryVo.CookConditions;
+import cn.hjc.queryVo.CookDates;
 import cn.hjc.service.BackStageService;
 import cn.hjc.util.UploadPictureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "BackStage")
+@RequestMapping(value = "/backStage")
 public class BackStageController {
 
     @Autowired
@@ -28,13 +28,12 @@ public class BackStageController {
      * @param model
      * @return
      */
-    @RequestMapping(value = "backStageManagement")
-    public String bSManagement(Model model){
-        List<CookBook> flavorList = backStageService.getCookFlavor();
-        List<CookBook> typeList = backStageService.getCookType();
+    @RequestMapping(value = "/backStageManagement")
+    public String backStageManagement(Model model){
+        List<Product> flavorList = backStageService.getProductFlavor();
+        List<Product> typeList = backStageService.getProductType();
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
-
         return "backStage";
     }
 
@@ -44,13 +43,13 @@ public class BackStageController {
      * @param cookConditions
      * @return
      */
-    @RequestMapping(value = "list")
+    @RequestMapping(value = "/list")
     public String list(Model model, CookConditions cookConditions) {
 
-        List<CookBook> flavorList = backStageService.getCookFlavor();
-        List<CookBook> typeList = backStageService.getCookType();
+        List<Product> flavorList = backStageService.getProductFlavor();
+        List<Product> typeList = backStageService.getProductType();
 
-        CookDates<CookBook> cookDates = backStageService.getCookByCondition(cookConditions);
+        CookDates<Product> cookDates = backStageService.getProductByCondition(cookConditions);
 
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
@@ -66,12 +65,12 @@ public class BackStageController {
      * @param cookConditions
      * @return
      */
-    @RequestMapping(value = "putAway")
-    public String putAway(Model model, CookConditions cookConditions) {
-        CookDates<CookBook> putAwayCook = backStageService.getPutAwayCook(cookConditions);
+    @RequestMapping(value = "/putAwayProduct")
+    public String putAwayProduct(Model model, CookConditions cookConditions) {
+        CookDates<Product> putAwayCook = backStageService.getPutAwayProduct(cookConditions);
 
-        List<CookBook> flavorList = backStageService.getCookFlavor();
-        List<CookBook> typeList = backStageService.getCookType();
+        List<Product> flavorList = backStageService.getProductFlavor();
+        List<Product> typeList = backStageService.getProductType();
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
         model.addAttribute("cookDates", putAwayCook);
@@ -84,10 +83,10 @@ public class BackStageController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "editEnableStatus")
+    @RequestMapping(value = "/editProductEnableStatus")
     @ResponseBody
-    public Long editEnableStatus(Integer id) {
-        Long aLong = backStageService.editEnableStatus(id);
+    public Long editProductEnableStatus(Integer id) {
+        Long aLong = backStageService.editProductEnableStatus(id);
         return aLong;
     }
 
@@ -96,75 +95,75 @@ public class BackStageController {
      * @param id
      * @return
      */
-    @RequestMapping(value = "editCook")
+    @RequestMapping(value = "/getProduct")
     @ResponseBody
-    public CookBook editCook(Integer id) {
-        CookBook cookBook = backStageService.getCookById(id);
-        return cookBook;
+    public Product getProduct(Integer id) {
+        Product product = backStageService.getProductById(id);
+        return product;
     }
 
     /**
      * 更新菜品信息
-     * @param cookBook
+     * @param product
      * @return
      * @throws IOException
      */
-    @RequestMapping(value = "update")
+    @RequestMapping(value = "/updateProduct")
     @ResponseBody
-    public Long update(CookBook cookBook, MultipartFile file, HttpServletRequest request) throws IOException {
+    public Long updateProduct(Product product, MultipartFile file, HttpServletRequest request) throws IOException {
         String filePath = UploadPictureUtil.addMutiparFile(file, request);
-        cookBook.setCookImage(filePath);
-        Long aLong = backStageService.updateCook(cookBook);
+        product.setProductImage(filePath);
+        Long aLong = backStageService.updateProduct(product);
         return aLong;
     }
 
     /**
      * 根据id下架菜品
-     * @param cookId
+     * @param productId
      * @return
      */
-    @RequestMapping(value = "soldOut")
+    @RequestMapping(value = "/soldOutProduct")
     @ResponseBody
-    public Long soldOut(Integer cookId) {
-        Long aLong = backStageService.soldOutCookById(cookId);
+    public Long soldOutProduct(Integer productId) {
+        Long aLong = backStageService.soldOutProductById(productId);
         return aLong;
     }
 
     /**
      * 新增菜品
-     * @param cookBook
+     * @param product
      * @return
      */
-    @RequestMapping(value = "save")
+    @RequestMapping(value = "/saveProduct")
     @ResponseBody
-    public Long saveCookBook(CookBook cookBook,MultipartFile file,HttpServletRequest request) throws IOException {
+    public Long saveProduct(Product product, MultipartFile file, HttpServletRequest request) throws IOException {
         String filePath = UploadPictureUtil.addMutiparFile(file, request);
-        cookBook.setCookImage(filePath);
-        Long aLong = backStageService.saveCook(cookBook);
+        product.setProductImage(filePath);
+        Long aLong = backStageService.saveProduct(product);
         return aLong;
     }
 
     /**
      * 根据名称下架菜品
-     * @param cookName
+     * @param productName
      * @return
      */
-    @RequestMapping(value = "batchSoldOut")
+    @RequestMapping(value = "/batchSoldOutProduct")
     @ResponseBody
-    public Long batchSoldOut(String cookName){
-        Long aLong = backStageService.soldOutCookByName(cookName);
+    public Long batchSoldOutOffProduct(String productName){
+        Long aLong = backStageService.soldOutProductByName(productName);
         return aLong;
     }
 
     /**
      * 根据名称上架菜品
-     * @param cookName
+     * @param productName
      * @return
      */
-    @RequestMapping(value = "batchPutAway")
+    @RequestMapping(value = "/batchPutAwayProduct")
     @ResponseBody
-    public Long batchPutAway(String cookName){
-        Long aLong = backStageService.putAwayCookByName(cookName);
+    public Long batchPutAwayProduct(String productName){
+        Long aLong = backStageService.putAwayProductByName(productName);
         return aLong;
     }
 

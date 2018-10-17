@@ -121,20 +121,19 @@
         </div>
         <ul class="nav navbar-nav navbar-right">
             <li>
-                <c:if test="${user!=null}">
+                <c:if test="${customer!=null}">
                     <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="true"><span class="iconfont icon-user"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">欢迎您${user.userName}</a></li>
+                        <li><a href="#">欢迎您${customer.customerName}</a></li>
                         <li><a href="#">更改密码</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a>
                         </li>
                     </ul>
-                    <input type="hidden" id="cartId" value="${user.cartId}"/>
-                    <input type="hidden" id="userId" value="${user.userId}"/>
+                    <input type="hidden" id="customerId" value="${customer.customerId}"/>
                 </c:if>
-                <c:if test="${user==null}">
+                <c:if test="${customer==null}">
                     <a id="btn_login" href="#" data-toggle="modal"
                        data-target="#userLoginDialog"><span class="iconfont icon-user"></span></a>
                 </c:if>
@@ -186,46 +185,46 @@
             <ul class="nav nav-tabs nav-stacked" data-spy="affix" data-offset-top="550">
                 <c:forEach items="${typeList}" var="typeItem" varStatus="status">
                     <li <c:if test="${status.index == 0}"> class="active"</c:if>>
-                        <a href="#section-${status.index+1}">${typeItem.cookType}</a>
+                        <a href="#section-${status.index+1}">${typeItem.productType}</a>
                     </li>
                 </c:forEach>
             </ul>
         </div>
         <div class="col-xs-10">
-            <c:forEach items="${typeList}" var="typeItem" varStatus="cookType">
-            <c:if test="${!cookType.first}">
+            <c:forEach items="${typeList}" var="typeItem" varStatus="productType">
+            <c:if test="${!productType.first}">
                 <hr>
             </c:if>
-            <h2 id="section-${cookType.index+1}">${typeItem.cookType}</h2>
-            <c:set var="cookNum" scope="session" value="${0}"/>
-            <c:forEach items="${cookDates}" var="dateItem" varStatus="cookNumber">
-            <c:set var="flag" value="${cookNumber.last}"/>
-            <c:if test="${dateItem.cookType == typeItem.cookType }">
-                <c:if test="${cookNum % 4 == 0}">
+            <h2 id="section-${productType.index+1}">${typeItem.productType}</h2>
+            <c:set var="number" scope="session" value="${0}"/>
+            <c:forEach items="${cookDates}" var="dateItem" varStatus="productNum">
+            <c:set var="flag" value="${productNum.last}"/>
+            <c:if test="${dateItem.productType == typeItem.productType }">
+                <c:if test="${number % 4 == 0}">
                     <div class="row">
                 </c:if>
                 <div class="col-sm-6 col-md-3">
                     <div class="thumbnail">
-                        <img src="${dateItem.cookImage}"
+                        <img src="${dateItem.productImage}"
                              alt="通用的占位符缩略图">
                         <div class="caption">
-                            <h3>${dateItem.cookName}</h3>
-                            <p>${dateItem.cookType}</p>
+                            <h3>${dateItem.productName}</h3>
+                            <p>${dateItem.productType}</p>
                             <p>
                                 <a href="javascript:void(0);" class="btn btn-primary btn_addToCart" role="button"
-                                   onclick="addToCart(${dateItem.cookId})">
+                                   onclick="addToCart(${dateItem.productId})">
                                     加入购物车
                                 </a>
                             </p>
                         </div>
                     </div>
                 </div>
-                <c:if test="${(cookNum + 1) % 4 == 0}">
+                <c:if test="${(number + 1) % 4 == 0}">
                     </div>
                 </c:if>
-                <c:set var="cookNum" scope="session" value="${cookNum + 1}"/>
+                <c:set var="number" scope="session" value="${number + 1}"/>
             </c:if>
-            <c:if test="${cookNumber.last && cookNum % 4 != 0}">
+            <c:if test="${productNum.last && number % 4 != 0}">
         </div>
         </c:if>
         </c:forEach>
@@ -272,20 +271,20 @@
                 <h4 class="modal-title" id="myLoginLabel">登陆</h4>
             </div>
             <div class="modal-body">
-                <form class="form-horizontal" id="user_login_form">
+                <form class="form-horizontal" id="customer_login_form">
                     <div class="form-group">
                         <label for="edit_userName" style="float:left;padding:7px 15px 0 27px;">账号</label>
                         <div class="col-sm-10">
                             <input id="userName_input" type="text" class="form-control" id="edit_userName"
                                    placeholder="账号"
-                                   name="userName">
+                                   name="customerUserName">
                         </div>
                     </div>
                     <div class="form-group">
                         <label for="edit_passWord" style="float:left;padding:7px 15px 0 27px;">密码</label>
                         <div class="col-sm-10">
                             <input type="password" class="form-control" id="edit_passWord" placeholder="密码"
-                                   name="passWord">
+                                   name="customerPassWord">
                         </div>
                     </div>
                 </form>
@@ -306,12 +305,11 @@
     var pathName = window.document.location.pathname;
     var basePath = curPath.substring(0, curPath.indexOf(pathName)) + "/";
     var CookList = new Array();
-    var cartId = $("#cartId").val();
-    var userId = $("#userId").val();
+    var customerId = $("#customerId").val();
     var price = 0;
 
     $(function () {
-        if (${user==null}) {
+        if (${customer==null}) {
             alert("您还没有登陆，请先登录！");
             $("#btn_login").trigger("click");
         } else {
@@ -319,8 +317,7 @@
                 type: "post",
                 url: basePath + "restaurant/getCart.action",
                 data: {
-                    "cartId": cartId,
-                    "userId": userId
+                    "customerId": customerId
                 },
                 contentType: "application/x-www-form-urlencoded;charset=utf-8",
                 success: function (data) {
@@ -337,14 +334,14 @@
     function userLogin() {
         $.ajax({
             type: "post",
-            url: basePath + "user/login.action",
-            data: $("#user_login_form").serialize(),
+            url: basePath + "customer/login.action",
+            data: $("#customer_login_form").serialize(),
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {
                 if (date.msg == "loginSuccess") {
                     alert("登陆成功");
                 } else {
-                    alert("登陆失败");
+                    alert(date.msg);
                 }
                 window.location.reload();
             }
@@ -354,7 +351,7 @@
     function loginOutPut() {
         $.ajax({
             type: "get",
-            url: basePath + "user/loginOutPut.action",
+            url: basePath + "customer/loginOutPut.action",
             success: function () {
                 window.location.reload();
             }
@@ -367,29 +364,28 @@
             type: "post",
             url: basePath + "restaurant/getCartList.action",
             data: {
-                "cookId": CookList.toString()
+                "productIds": CookList.toString()
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (data) {
                 $(".cart").html("");
                 $.each(data, function (i, item) {
-                    $(".cart").append('<div class="row item' + item.cookId + '"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.cookImage + '" alt="' + "err:" + item.cookImage + '"></a></div><h3>' + item.cookName + '</h3><p>' + item.cookDesc + '</p><span>' + item.cookPrice + '元</span><button type="button" class="close btn-delete"><span onclick="deleteCartList(' + item.cookId + ',' + item.cookPrice + ')">&times;</span></button></div>');
-                    price = price + item.cookPrice;
+                    $(".cart").append('<div class="row item' + item.productId + '"><div class="col-xs-6 col-md-3"><a href="javascript:void(0);" class="thumbnail"><img src="' + item.productImage + '" alt="' + "err:" + item.productImage + '"></a></div><h3>' + item.productName + '</h3><p>' + item.productDesc + '</p><span>' + item.productPrice + '元</span><button type="button" class="close btn-delete"><span onclick="deleteCartList(' + item.productId + ',' + item.productPrice + ')">&times;</span></button></div>');
+                    price = price + item.productPrice;
                 });
                 $("#price").text(price);
             }
         });
     }
 
-    function addToCart(cookId) {
-        CookList[CookList.length] = cookId;
+    function addToCart(productId) {
+        CookList[CookList.length] = productId;
         $.ajax({
             type: "post",
             url: basePath + "restaurant/addToCart.action",
             data: {
-                "cartId": cartId,
-                "userId": userId,
-                "cookId": CookList.toString()
+                "customerId": customerId,
+                "productIds": CookList.toString()
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {
@@ -414,9 +410,8 @@
             type: "post",
             url: basePath + "restaurant/deleteCartList.action",
             data: {
-                "cartId": cartId,
-                "userId": userId,
-                "cookId": id
+                "customerId": customerId,
+                "productIds": id
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {
@@ -437,9 +432,8 @@
             type: "post",
             url: basePath + "restaurant/submitOrder.action",
             data: {
-                "cartId": cartId,
-                "userId": userId,
-                "cookId": CookList.toString()
+                "customerId": customerId,
+                "productIds": CookList.toString()
             },
             contentType: "application/x-www-form-urlencoded;charset=utf-8",
             success: function (date) {

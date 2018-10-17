@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hjc.dao.AdminDao">
+
+    <resultMap id="AdminResultMap" type="cn.hjc.entity.Admin">
+        <id property="adminId" column="admin_id"/>
+        <result property="adminUserName" column="admin_username"/>
+        <result property="adminPassWord" column="admin_password"/>
+        <result property="adminEnableStatus" column="admin_enable_status"/>
+        <result property="createTime" column="create_time"/>
+        <result property="endEditTime" column="end_edit_time"/>
+    </resultMap>
+
+    <select id="adminLogin" parameterType="admin" resultType="admin" resultMap="AdminResultMap">
+        SELECT *
+        FROM tb_admin
+        WHERE admin_username = #{adminUserName}
+          AND admin_password = #{adminPassWord}
+    </select>
+
+</mapper>
+    
