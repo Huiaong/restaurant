@@ -73,5 +73,10 @@
             #{productId}
         </foreach>
     </update>
+
+    <insert id="addOrder" parameterType="Order">
+        INSERT INTO `restaurant`.`tb_order` (`customer_id`, `product_ids`, `create_time`)
+        VALUES ( #{customerId}, #{productIds}, #{createTime});
+    </insert>
 </mapper>
     

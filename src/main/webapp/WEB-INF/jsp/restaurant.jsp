@@ -428,6 +428,7 @@
     }
 
     function submitOrder() {
+        console.log(CookList.toString());
         $.ajax({
             type: "post",
             url: basePath + "restaurant/submitOrder.action",

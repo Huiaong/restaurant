@@ -29,7 +29,7 @@ public class RestaurantController {
 
     @RequestMapping(value = "/addToCart")
     @ResponseBody
-    public Long index(Cart cart) {
+    public Long addToCart(Cart cart) {
         Long aLong = restaurantService.addToCart(cart);
         return aLong;
     }
@@ -57,10 +57,9 @@ public class RestaurantController {
 
     @RequestMapping(value = "/submitOrder")
     @ResponseBody
-    public Long submitOrder(Model model,Cart cart) {
+    public Long submitOrder(Cart cart) {
         Long aLong = restaurantService.submitOrder(cart);
         return aLong;
-
     }
 
 }

@@ -1,6 +1,7 @@
 package cn.hjc.dao;
 
 import cn.hjc.entity.Cart;
+import cn.hjc.entity.Order;
 import cn.hjc.entity.Product;
 
 import java.util.List;
@@ -51,4 +52,10 @@ public interface RestaurantDao {
      */
     Long submitOrder(int[] productIds);
 
+    /**
+     * 添加订单
+     * @param order
+     * @return
+     */
+    Long addOrder(Order order);
 }

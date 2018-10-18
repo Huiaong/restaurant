@@ -2,13 +2,16 @@ package cn.hjc.service.impl;
 
 import cn.hjc.dao.RestaurantDao;
 import cn.hjc.entity.Cart;
+import cn.hjc.entity.Order;
 import cn.hjc.entity.Product;
 import cn.hjc.service.RestaurantService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -92,7 +95,7 @@ public class RestaurantServiceImpl implements RestaurantService {
             cartList.add(i);
         }
         for (String b : array) {
-            cartList.remove((Integer)Integer.parseInt(b));
+            cartList.remove((Integer) Integer.parseInt(b));
         }
         Integer[] Array = cartList.toArray(new Integer[0]);
         cart.setProductIds(Arrays.toString(Array).replace("[", "").replace("]", "").replace(" ", ""));
@@ -101,17 +104,32 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
+    @Transactional(rollbackFor = Exception.class)
     public Long submitOrder(Cart cart) {
-        String[] array = cart.getProductIds().split(",");
+        String productIdsStr = cart.getProductIds();
+        String[] array = productIdsStr.split(",");
         int[] productIds = new int[array.length];
         if (array.length > 0) {
             for (int i = 0; i < array.length; i++) {
                 productIds[i] = Integer.parseInt(array[i]);
             }
         }
-        deleteCartListByProductId(cart);
+        Long cLong = deleteCartListByProductId(cart);
+        //删除购物车内的商品
         Long aLong = restaurantDao.submitOrder(productIds);
-        return aLong;
+        //商品列表的商品减一
+
+        Order order = new Order();
+        order.setCustomerId(cart.getCustomerId());
+        order.setProductIds(productIdsStr);
+        order.setCreateTime(new Date());
+        Long bLong = restaurantDao.addOrder(order);
+        //添加订单
+        if (aLong > 0 && bLong > 0 && cLong > 0) {
+            return 1L;
+        } else {
+            return 0L;
+        }
     }
 
 }
