@@ -2,8 +2,8 @@ package cn.hjc.service;
 
 
 import cn.hjc.entity.Product;
-import cn.hjc.queryVo.CookConditions;
-import cn.hjc.queryVo.CookDates;
+import cn.hjc.queryVo.ProductConditions;
+import cn.hjc.queryVo.ProductDates;
 
 import java.util.List;
 
@@ -11,10 +11,10 @@ public interface BackStageService {
 
     /**
      * 按照条件查询cookBook
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
-    CookDates<Product> getProductByCondition(CookConditions cookConditions);
+    ProductDates<Product> getProductByCondition(ProductConditions productConditions);
 
     /**
      * 查询cook口味
@@ -58,10 +58,10 @@ public interface BackStageService {
 
     /**
      * 根据条件查询可上架商品
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
-    CookDates<Product> getPutAwayProduct(CookConditions cookConditions);
+    ProductDates<Product> getPutAwayProduct(ProductConditions productConditions);
 
     /**
      * 更改菜品上/下架情况

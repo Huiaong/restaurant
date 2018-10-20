@@ -1,6 +1,6 @@
 package cn.hjc.queryVo;
 
-public class CookConditions {
+public class ProductConditions {
 
     private String ProductName;
     private String ProductFlavor;

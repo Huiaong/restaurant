@@ -17,7 +17,7 @@
     </resultMap>
 
     <!-- 按照条件查询productbook -->
-    <select id="getProductByCondition" parameterType="CookConditions" resultType="Product" resultMap="productResultMap">
+    <select id="getProductByCondition" parameterType="ProductConditions" resultType="Product" resultMap="productResultMap">
         SELECT
         tb_product.product_id,
         tb_product.product_name,
@@ -78,7 +78,7 @@
     </select>
 
     <!--查询符合条件的菜品数量-->
-    <select id="getProductTotal" parameterType="CookConditions" resultType="Integer">
+    <select id="getProductTotal" parameterType="ProductConditions" resultType="Integer">
         SELECT COUNT(*)
         FROM tb_product
         <where>
@@ -103,7 +103,7 @@
     </select>
 
     <!--根据条件查询可上架菜品-->
-    <select id="getPutAwayProduct" parameterType="CookConditions" resultType="product" resultMap="productResultMap">
+    <select id="getPutAwayProduct" parameterType="ProductConditions" resultType="product" resultMap="productResultMap">
         SELECT tb_product.product_id,
                tb_product.product_name,
                tb_product.product_flavor,

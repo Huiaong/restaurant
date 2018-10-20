@@ -86,10 +86,10 @@
                     </div>
                     <button type="submit" class="btn btn-primary">查询</button>
                     <div id="btn_list" style="float:right;">
-                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus==0:false}">
+                        <c:if test="${productDates.rows.size()>0?productDates.rows.get(0).productEnableStatus==0:false}">
                             <a href="#" class="btn btn-default" onclick="putAway()">上架</a>
                         </c:if>
-                        <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus>0:false}">
+                        <c:if test="${productDates.rows.size()>0?productDates.rows.get(0).productEnableStatus>0:false}">
                             <a href="#" class="btn btn-danger" onclick="batchSoldOut()">批量下架</a>
                         </c:if>
                         <a href="#" class="btn btn-success" data-toggle="modal"
@@ -108,7 +108,7 @@
                     <table id="table_cookList" class="table table-bordered table-striped table-condensed">
                         <thead>
                         <tr>
-                            <c:if test="${cookDates.rows.size()>0?cookDates.rows.get(0).productEnableStatus==0:false}">
+                            <c:if test="${productDates.rows.size()>0?productDates.rows.get(0).productEnableStatus==0:false}">
                                 <td><input type="checkbox" id="checkAll"></td>
                             </c:if>
                             <td><strong>#</strong></td>
@@ -123,7 +123,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${cookDates.rows}" var="bookItem" varStatus="status">
+                        <c:forEach items="${productDates.rows}" var="bookItem" varStatus="status">
                             <tr>
                                 <c:if test="${bookItem.productEnableStatus == 0}">
                                     <td><input type="checkbox" class="check"/></td>
@@ -160,23 +160,23 @@
                 </div>
             </div>
         </div>
-        <c:if test="${cookDates.pageNum>0}">
+        <c:if test="${productDates.pageNum>0}">
             <div class="col-md-12 text-center">
                 <nav aria-label="Page navigation">
                     <ul class="pagination">
                         <li>
-                            <a href="?page=${cookConditions.page-1==0?1:cookConditions.page-1}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}"
+                            <a href="?page=${productConditions.page-1==0?1:productConditions.page-1}&productName=${productConditions.productName}&productFlavor=${productConditions.productFlavor}&productType=${productConditions.productType}"
                                aria-label="Previous">
                                 <span aria-hidden="true">&laquo;</span>
                             </a>
                         </li>
-                        <c:forEach var="i" begin="1" end="${cookDates.pageNum}" step="1">
+                        <c:forEach var="i" begin="1" end="${productDates.pageNum}" step="1">
                             <li>
-                                <a href="?page=${i}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}">${i}</a>
+                                <a href="?page=${i}&productName=${productConditions.productName}&productFlavor=${productConditions.productFlavor}&productType=${productConditions.productType}">${i}</a>
                             </li>
                         </c:forEach>
                         <li>
-                            <a href="?page=${cookConditions.page+1>cookDates.pageNum?cookDates.pageNum:cookConditions.page+1}&productName=${cookConditions.productName}&productFlavor=${cookConditions.productFlavor}&productType=${cookConditions.productType}"
+                            <a href="?page=${productConditions.page+1>productDates.pageNum?productDates.pageNum:productConditions.page+1}&productName=${productConditions.productName}&productFlavor=${productConditions.productFlavor}&productType=${productConditions.productType}"
                                aria-label="Next">
                                 <span aria-hidden="true">&raquo;</span>
                             </a>
@@ -375,7 +375,7 @@
     }
 
     function putAwaybtn() {
-        if (${cookDates.rows.get(0).productEnableStatus!=0}) {
+        if (${productDates.rows.get(0).productEnableStatus!=0}) {
             $("#form-putAway").submit();
         } else {
             $("#select_form").submit();

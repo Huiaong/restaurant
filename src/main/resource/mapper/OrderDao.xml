@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="cn.hjc.dao.OrderDao">
+
+    <resultMap id="orderResultMap" type="cn.hjc.entity.Order">
+        <id property="orderId" column="order_id"/>
+        <result property="customerId" column="customer_id"/>
+        <result property="productIds" column="product_ids"/>
+        <result property="createTime" column="create_time"/>
+    </resultMap>
+
+    <select id="getMyOrderByConditions" parameterType="orderConditions" resultType="order" resultMap="orderResultMap">
+        SELECT
+        `order_id`,
+        `customer_id`,
+        `product_ids`,
+        `create_time`
+        FROM
+        `restaurant`.`tb_order`
+        WHERE customer_id = #{customer.customerId}
+        <if test="date != null and date != ''">
+            AND DATE_FORMAT(tb_order.create_time,'%Y%m%d') = #{date}
+        </if>
+        <if test="time != null and time !=''">
+            AND tb_order.create_time BETWEEN #{timeHorizon.minTime} AND #{timeHorizon.maxTime}
+        </if>
+        ORDER BY tb_order.create_time DESC
+        Limit #{start},#{rows}
+    </select>
+
+    <select id="getTotalByConditions" parameterType="orderConditions" resultType="Integer">
+        SELECT COUNT(*)
+        FROM `tb_order`
+        WHERE 1=1
+        <if test="date != null and date != ''">
+            AND DATE_FORMAT(tb_order.create_time,'%Y%m%d') = #{date}
+        </if>
+        <if test="time != null and time !=''">
+            AND tb_order.create_time BETWEEN #{timeHorizon.minTime} AND #{timeHorizon.maxTime}
+        </if>
+    </select>
+
+</mapper>
+    

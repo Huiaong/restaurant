@@ -125,13 +125,17 @@
                     <a id="btn_login" href="#" class="dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
                        aria-expanded="true"><span class="iconfont icon-user"></span></a>
                     <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
-                        <li><a href="#">欢迎您${customer.customerName}</a></li>
+                        <li><a href="#">欢迎您<strong>${customer.customerName}</strong></a></li>
+                        <li role="separator" class="divider"></li>
+                        <li><a href="#" onclick="myOrder()">我的订单</a></li>
+                        <li role="separator" class="divider"></li>
                         <li><a href="#">更改密码</a></li>
                         <li role="separator" class="divider"></li>
                         <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a>
                         </li>
                     </ul>
-                    <input type="hidden" id="customerId" value="${customer.customerId}"/>
+                    <form id="myOrder" action="<%=basePath%>order/myOrder.action" method="post"></form>
+                    <input type="hidden" id="customerId" name="customerId" value="${customer.customerId}"/>
                 </c:if>
                 <c:if test="${customer==null}">
                     <a id="btn_login" href="#" data-toggle="modal"
@@ -197,7 +201,7 @@
             </c:if>
             <h2 id="section-${productType.index+1}">${typeItem.productType}</h2>
             <c:set var="number" scope="session" value="${0}"/>
-            <c:forEach items="${cookDates}" var="dateItem" varStatus="productNum">
+            <c:forEach items="${productDates}" var="dateItem" varStatus="productNum">
             <c:set var="flag" value="${productNum.last}"/>
             <c:if test="${dateItem.productType == typeItem.productType }">
                 <c:if test="${number % 4 == 0}">
@@ -441,11 +445,15 @@
                 if (date > 0) {
                     CookList = [];
                     window.location.reload();
-                }else {
+                } else {
                     alert("订单提交失败！");
                 }
             }
         });
+    }
+
+    function myOrder() {
+        $("#myOrder").submit();
     }
 
 </script>

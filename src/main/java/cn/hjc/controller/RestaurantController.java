@@ -21,9 +21,9 @@ public class RestaurantController {
     @RequestMapping(value = "/welcome")
     public String welcome(Model model) {
         List<Product> typeList = restaurantService.getProductType();
-        List<Product> cookDates = restaurantService.getAllProduct();
+        List<Product> productDates = restaurantService.getAllProduct();
         model.addAttribute("typeList", typeList);
-        model.addAttribute("cookDates", cookDates);
+        model.addAttribute("productDates", productDates);
         return "restaurant";
     }
 
@@ -61,5 +61,6 @@ public class RestaurantController {
         Long aLong = restaurantService.submitOrder(cart);
         return aLong;
     }
+
 
 }

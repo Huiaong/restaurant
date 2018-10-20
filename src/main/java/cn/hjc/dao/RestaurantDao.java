@@ -1,6 +1,7 @@
 package cn.hjc.dao;
 
 import cn.hjc.entity.Cart;
+import cn.hjc.entity.Customer;
 import cn.hjc.entity.Order;
 import cn.hjc.entity.Product;
 
@@ -58,4 +59,6 @@ public interface RestaurantDao {
      * @return
      */
     Long addOrder(Order order);
+
+
 }

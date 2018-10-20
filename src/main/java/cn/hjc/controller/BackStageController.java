@@ -1,8 +1,8 @@
 package cn.hjc.controller;
 
 import cn.hjc.entity.Product;
-import cn.hjc.queryVo.CookConditions;
-import cn.hjc.queryVo.CookDates;
+import cn.hjc.queryVo.ProductConditions;
+import cn.hjc.queryVo.ProductDates;
 import cn.hjc.service.BackStageService;
 import cn.hjc.util.UploadPictureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,41 +40,41 @@ public class BackStageController {
     /**
      * 菜品管理主菜单
      * @param model
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
     @RequestMapping(value = "/list")
-    public String list(Model model, CookConditions cookConditions) {
+    public String list(Model model, ProductConditions productConditions) {
 
         List<Product> flavorList = backStageService.getProductFlavor();
         List<Product> typeList = backStageService.getProductType();
 
-        CookDates<Product> cookDates = backStageService.getProductByCondition(cookConditions);
+        ProductDates<Product> productDates = backStageService.getProductByCondition(productConditions);
 
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
-        model.addAttribute("cookDates", cookDates);
+        model.addAttribute("cookDates", productDates);
 
-        model.addAttribute("cookConditions", cookConditions);
+        model.addAttribute("cookConditions", productConditions);
         return "backStage";
     }
 
     /**
      * 获取需上架商品列表
      * @param model
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
     @RequestMapping(value = "/putAwayProduct")
-    public String putAwayProduct(Model model, CookConditions cookConditions) {
-        CookDates<Product> putAwayCook = backStageService.getPutAwayProduct(cookConditions);
+    public String putAwayProduct(Model model, ProductConditions productConditions) {
+        ProductDates<Product> putAwayCook = backStageService.getPutAwayProduct(productConditions);
 
         List<Product> flavorList = backStageService.getProductFlavor();
         List<Product> typeList = backStageService.getProductType();
         model.addAttribute("typeList", typeList);
         model.addAttribute("flavorList", flavorList);
         model.addAttribute("cookDates", putAwayCook);
-        model.addAttribute("cookConditions", cookConditions);
+        model.addAttribute("cookConditions", productConditions);
         return "backStage";
     }
 

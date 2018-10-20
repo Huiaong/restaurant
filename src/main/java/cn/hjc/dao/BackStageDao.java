@@ -2,7 +2,7 @@ package cn.hjc.dao;
 
 
 import cn.hjc.entity.Product;
-import cn.hjc.queryVo.CookConditions;
+import cn.hjc.queryVo.ProductConditions;
 
 import java.util.List;
 
@@ -10,10 +10,10 @@ public interface BackStageDao {
 
     /**
      * 按照条件查询cookBook
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
-    List<Product> getProductByCondition(CookConditions cookConditions);
+    List<Product> getProductByCondition(ProductConditions productConditions);
 
     /**
      * 查询cook口味
@@ -50,10 +50,10 @@ public interface BackStageDao {
 
     /**
      * 查询符合条件的cookBook数量
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
-    Integer getProductTotal(CookConditions cookConditions);
+    Integer getProductTotal(ProductConditions productConditions);
 
     /**
      * 查询可上架的菜品的数量
@@ -70,10 +70,10 @@ public interface BackStageDao {
 
     /**
      * 按条件查询可上架菜品
-     * @param cookConditions
+     * @param productConditions
      * @return
      */
-    List<Product> getPutAwayProduct(CookConditions cookConditions);
+    List<Product> getPutAwayProduct(ProductConditions productConditions);
 
     /**
      * 更改菜品上/下架情况

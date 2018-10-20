@@ -52,7 +52,7 @@ public class RestaurantServiceImpl implements RestaurantService {
      */
     @Override
     public Long addToCart(Cart cart) {
-
+        cart.setEndEditTime(new Date());
         Long aLong = restaurantDao.addToCart(cart);
         return aLong;
     }
@@ -77,6 +77,12 @@ public class RestaurantServiceImpl implements RestaurantService {
         return productArray;
     }
 
+    /**
+     * 获取购物车内商品列表
+     *
+     * @param productIds
+     * @return
+     */
     @Override
     public List<Product> getCartList(int[] productIds) {
         List<Product> cartList = null;
