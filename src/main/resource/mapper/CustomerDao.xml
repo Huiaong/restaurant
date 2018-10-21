@@ -27,10 +27,33 @@
           AND customer_password = #{customerPassWord}
     </select>
 
+    <select id="checkCustomerUserName" parameterType="Customer" resultType="Customer" resultMap="CustomerResultMap">
+        SELECT *
+        FROM tb_customer
+        WHERE customer_username = #{customerUserName}
+    </select>
+
+    <select id="getCustomerTotal" resultType="int">
+        SELECT COUNT(*)
+        FROM tb_customer
+    </select>
+
     <update id="updatePassWord" parameterType="Customer">
         UPDATE tb_customer
         SET customer_password = #{customerPassWord}
         WHERE customer_username = #{customerUserName}
     </update>
+
+    <insert id="registerCustomer" parameterType="Customer">
+        INSERT INTO tb_customer (customer_username, customer_password, customer_name, customer_gender, customer_address)
+        VALUE (#{customerUserName}, #{customerPassWord}, #{customerName}, #{customerGender}, #{customerAddress})
+    </insert>
+
+    <insert id="registerCart" parameterType="Cart">
+        INSERT INTO tb_cart (customer_id, end_edit_time)
+        VALUE (#{customerId}, #{endEditTime})
+    </insert>
+
+
 </mapper>
     

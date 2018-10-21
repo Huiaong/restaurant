@@ -294,6 +294,7 @@
                 </form>
             </div>
             <div class="modal-footer">
+                <a class="btn btn-primary" href="<%=basePath%>customer/register.action">注册</a>
                 <button type="button" class="btn btn-default" data-dismiss="modal">关闭</button>
                 <button type="button" class="btn btn-primary" id="btn_user_submit" onclick="userLogin()">登陆
                 </button>

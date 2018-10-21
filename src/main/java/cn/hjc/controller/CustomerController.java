@@ -57,4 +57,26 @@ public class CustomerController {
             return "changePassWord";
         }
     }
+
+    @RequestMapping(value = "/register")
+    public String register(){
+        return "register";
+    }
+
+    @RequestMapping(value = "/registerCustomer")
+    public String registerCustomer(Customer customer){
+        Long aLong = customerService.registerCustomer(customer);
+        if (aLong > 0){
+            return "redirect:/restaurant/welcome.action";
+        }else {
+            return "register";
+        }
+    }
+
+    @RequestMapping(value = "/checkCustomerUserName")
+    @ResponseBody
+    public Long checkCustomerUserName(Customer customer){
+        Long aLong = customerService.checkCustomerUserName(customer);
+        return aLong;
+    }
 }

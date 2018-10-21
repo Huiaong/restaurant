@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2018-10-21 13:22:21
+Date: 2018-10-21 17:29:25
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -45,8 +45,9 @@ CREATE TABLE `tb_cart` (
   `product_ids` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci DEFAULT NULL,
   `end_edit_time` datetime NOT NULL,
   PRIMARY KEY (`cart_id`),
-  KEY `fk_tb_cart_tb_user` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  KEY `fk_cart_customer` (`customer_id`),
+  CONSTRAINT `fk_cart_customer` FOREIGN KEY (`customer_id`) REFERENCES `tb_customer` (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of tb_cart
@@ -58,6 +59,12 @@ INSERT INTO `tb_cart` VALUES ('4', '4', null, '2018-10-17 21:58:40');
 INSERT INTO `tb_cart` VALUES ('5', '5', null, '2018-09-13 22:06:29');
 INSERT INTO `tb_cart` VALUES ('6', '6', null, '2018-10-18 22:03:51');
 INSERT INTO `tb_cart` VALUES ('7', '7', null, '2018-10-20 22:06:40');
+INSERT INTO `tb_cart` VALUES ('8', '8', null, '2018-10-21 17:08:41');
+INSERT INTO `tb_cart` VALUES ('9', '9', null, '2018-10-21 17:27:31');
+INSERT INTO `tb_cart` VALUES ('10', '10', null, '2018-10-21 17:27:43');
+INSERT INTO `tb_cart` VALUES ('11', '11', null, '2018-10-21 17:27:49');
+INSERT INTO `tb_cart` VALUES ('12', '12', null, '2018-10-21 17:27:58');
+INSERT INTO `tb_cart` VALUES ('13', '13', null, '2018-10-21 17:28:21');
 
 -- ----------------------------
 -- Table structure for tb_customer
@@ -70,9 +77,8 @@ CREATE TABLE `tb_customer` (
   `customer_name` varchar(255) NOT NULL,
   `customer_gender` varchar(255) DEFAULT NULL,
   `customer_address` varchar(255) DEFAULT NULL,
-  PRIMARY KEY (`customer_id`),
-  CONSTRAINT `fk_customer_cart` FOREIGN KEY (`customer_id`) REFERENCES `tb_cart` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+  PRIMARY KEY (`customer_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of tb_customer
@@ -82,6 +88,14 @@ INSERT INTO `tb_customer` VALUES ('2', 'vip', '666666', '小薇', '女', '江西
 INSERT INTO `tb_customer` VALUES ('3', 'low', '123456', '张泉', '男', '江苏苏州');
 INSERT INTO `tb_customer` VALUES ('4', 'cle', '123456', '张', '男', '江苏苏州');
 INSERT INTO `tb_customer` VALUES ('5', 'svip', '123456', '张强', '男', '江苏苏州');
+INSERT INTO `tb_customer` VALUES ('6', 'ASer', '123456', '阿瑟', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('7', 'Alei', '123456', '阿嘞', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('8', 'Apo', '123456', '阿坡', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('9', 'Ase', '123456', '安瑟', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('10', 'Aji', '123456', '阿鸡', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('11', 'Ahi', '123456', '阿海', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('12', 'Ake', '123456', '阿科', '男', '北京四合院');
+INSERT INTO `tb_customer` VALUES ('13', 'Agi', '123456', '阿吉', '男', '北京四合院');
 
 -- ----------------------------
 -- Table structure for tb_order

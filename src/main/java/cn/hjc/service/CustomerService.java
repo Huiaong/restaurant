@@ -12,4 +12,8 @@ public interface CustomerService {
     Long checkPassWord(Customer customer);
 
     Long updatePassWord(Customer customer);
+
+    Long checkCustomerUserName(Customer customer);
+
+    Long registerCustomer(Customer customer);
 }
