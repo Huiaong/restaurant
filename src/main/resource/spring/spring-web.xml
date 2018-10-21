@@ -26,13 +26,20 @@
     <mvc:interceptors>
         <mvc:interceptor>
             <mvc:mapping path="/backStage/**"/>
+            <mvc:mapping path="/admin/**"/>
             <mvc:exclude-mapping path="/backStage/backStageManagement.action"/>
+            <mvc:exclude-mapping path="/admin/login.action"/>
             <bean id="backStageInterceptor" class="cn.hjc.interceptor.BackStageInterceptor"/>
         </mvc:interceptor>
         <mvc:interceptor>
             <mvc:mapping path="/restaurant/**"/>
             <mvc:mapping path="/order/**"/>
+            <mvc:mapping path="/customer/**"/>
             <mvc:exclude-mapping path="/restaurant/welcome.action"/>
+            <mvc:exclude-mapping path="/customer/login.action"/>
+            <mvc:exclude-mapping path="/customer/register.action"/>
+            <mvc:exclude-mapping path="/customer/registerCustomer.action"/>
+            <mvc:exclude-mapping path="/customer/checkCustomerUserName.action"/>
             <bean id="restaurantInterceptor" class="cn.hjc.interceptor.RestaurantInterceptor"/>
         </mvc:interceptor>
     </mvc:interceptors>

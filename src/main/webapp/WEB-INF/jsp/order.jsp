@@ -27,7 +27,7 @@
                         <ul class="dropdown-menu" aria-labelledby="dropdownMenu1">
                             <li><a href="#">欢迎您<em>${customer.customerName}</em></a></li>
                             <li role="separator" class="divider"></li>
-                            <li><a href="#">更改密码</a></li>
+                            <li><a href="<%=basePath%>customer/changePassWord.action">更改密码</a></li>
                             <li role="separator" class="divider"></li>
                             <li><a href="#" onclick="loginOutPut()"><span class="iconfont icon-logout"></span>退出</a>
                             </li>
