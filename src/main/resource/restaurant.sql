@@ -10,7 +10,7 @@ Target Server Type    : MYSQL
 Target Server Version : 80012
 File Encoding         : 65001
 
-Date: 2018-10-20 18:15:20
+Date: 2018-10-21 13:22:21
 */
 
 SET FOREIGN_KEY_CHECKS=0;
@@ -52,7 +52,7 @@ CREATE TABLE `tb_cart` (
 -- Records of tb_cart
 -- ----------------------------
 INSERT INTO `tb_cart` VALUES ('1', '1', '', '0000-00-00 00:00:00');
-INSERT INTO `tb_cart` VALUES ('2', '2', null, '2018-10-17 21:57:45');
+INSERT INTO `tb_cart` VALUES ('2', '2', '', '2018-10-17 21:57:45');
 INSERT INTO `tb_cart` VALUES ('3', '3', null, '2018-10-12 22:04:11');
 INSERT INTO `tb_cart` VALUES ('4', '4', null, '2018-10-17 21:58:40');
 INSERT INTO `tb_cart` VALUES ('5', '5', null, '2018-09-13 22:06:29');
@@ -78,7 +78,7 @@ CREATE TABLE `tb_customer` (
 -- Records of tb_customer
 -- ----------------------------
 INSERT INTO `tb_customer` VALUES ('1', 'Huiaong', '666666ddh', 'Huiaong', '男', '江西九江');
-INSERT INTO `tb_customer` VALUES ('2', 'vip', '123456', '小薇', '女', '江西九江');
+INSERT INTO `tb_customer` VALUES ('2', 'vip', '666666', '小薇', '女', '江西九江');
 INSERT INTO `tb_customer` VALUES ('3', 'low', '123456', '张泉', '男', '江苏苏州');
 INSERT INTO `tb_customer` VALUES ('4', 'cle', '123456', '张', '男', '江苏苏州');
 INSERT INTO `tb_customer` VALUES ('5', 'svip', '123456', '张强', '男', '江苏苏州');
@@ -95,7 +95,7 @@ CREATE TABLE `tb_order` (
   PRIMARY KEY (`order_id`),
   KEY `fk_order_customer` (`customer_id`),
   CONSTRAINT `fk_order_customer` FOREIGN KEY (`customer_id`) REFERENCES `tb_customer` (`customer_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- ----------------------------
 -- Records of tb_order
@@ -121,6 +121,7 @@ INSERT INTO `tb_order` VALUES ('18', '1', '13,12,11,7,8', '2018-10-20 17:06:04')
 INSERT INTO `tb_order` VALUES ('19', '1', '9,10,17,16,15', '2018-10-20 17:06:11');
 INSERT INTO `tb_order` VALUES ('20', '1', '21,20,18,22', '2018-10-20 17:06:17');
 INSERT INTO `tb_order` VALUES ('21', '1', '26,25,24,29,28', '2018-10-20 17:06:23');
+INSERT INTO `tb_order` VALUES ('22', '2', '4,3,2,31', '2018-10-21 13:07:13');
 
 -- ----------------------------
 -- Table structure for tb_product
@@ -143,9 +144,9 @@ CREATE TABLE `tb_product` (
 -- Records of tb_product
 -- ----------------------------
 INSERT INTO `tb_product` VALUES ('1', '家常干锅排骨', '香辣味', '9997', 'http://localhost:8080/static/images/1c495c89.jpg', '138', '川菜', '', '1');
-INSERT INTO `tb_product` VALUES ('2', '宫保鸡丁', '香辣味', '9996', 'http://localhost:8080/static/images/9480e76f.jpg', '138', '川菜', '', '1');
-INSERT INTO `tb_product` VALUES ('3', '蚂蚁上树', '家常味', '9991', 'http://localhost:8080/static/images/b41be9c6.jpg', '138', '川菜', '有点辣', '1');
-INSERT INTO `tb_product` VALUES ('4', '家常口水鸡', '香辣味', '9996', 'http://localhost:8080/static/images/d487012c.jpg', '138', '川菜', '', '1');
+INSERT INTO `tb_product` VALUES ('2', '宫保鸡丁', '香辣味', '9995', 'http://localhost:8080/static/images/9480e76f.jpg', '138', '川菜', '', '1');
+INSERT INTO `tb_product` VALUES ('3', '蚂蚁上树', '家常味', '9990', 'http://localhost:8080/static/images/b41be9c6.jpg', '138', '川菜', '有点辣', '1');
+INSERT INTO `tb_product` VALUES ('4', '家常口水鸡', '香辣味', '9995', 'http://localhost:8080/static/images/d487012c.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('5', '水煮鱼', '香辣味', '9998', 'http://localhost:8080/static/images/99428189.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('6', '麻婆豆腐炒肉', '家常味', '9992', 'http://localhost:8080/static/images/e0d99a54.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('7', '四喜丸子', '咸鲜味', '9997', 'http://localhost:8080/static/images/d878c72a.jpg', '138', '鲁菜', '', '1');
@@ -172,7 +173,7 @@ INSERT INTO `tb_product` VALUES ('27', '香菇面筋', '咸鲜味', '9998', 'htt
 INSERT INTO `tb_product` VALUES ('28', '南京咸水鸭胸', '咸鲜味', '9997', 'http://localhost:8080/static/images/68f2b86b.jpg', '138', '苏菜', '', '1');
 INSERT INTO `tb_product` VALUES ('29', '无锡酱排骨', '酱香味', '9998', 'http://localhost:8080/static/images/ca46e7b.jpg', '138', '苏菜', '', '1');
 INSERT INTO `tb_product` VALUES ('30', '青团子', '甜味', '9999', 'http://localhost:8080/static/images/331673bf.jpg', '138', '苏菜', '', '1');
-INSERT INTO `tb_product` VALUES ('31', '东坡肉', '咸甜味', '9992', 'http://localhost:8080/static/images/25897754.jpg', '138', '川菜', '', '1');
+INSERT INTO `tb_product` VALUES ('31', '东坡肉', '咸甜味', '9991', 'http://localhost:8080/static/images/25897754.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('32', '葱花炒蛋', '咸鲜味', '9997', 'http://localhost:8080/static/images/5552d706.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('33', '懒人版无辣酸菜鱼', '咸鲜味', '9989', 'http://localhost:8080/static/images/a2fb6c2b.jpg', '138', '川菜', '', '1');
 INSERT INTO `tb_product` VALUES ('34', '千贝边炖豆腐', '香辣味', '9993', 'http://localhost:8080/static/images/822c50c1.jpg', '138', '川菜', '', '1');

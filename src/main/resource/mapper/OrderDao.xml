@@ -33,7 +33,7 @@
     <select id="getTotalByConditions" parameterType="orderConditions" resultType="Integer">
         SELECT COUNT(*)
         FROM `tb_order`
-        WHERE 1=1
+        WHERE customer_id = #{customer.customerId}
         <if test="date != null and date != ''">
             AND DATE_FORMAT(tb_order.create_time,'%Y%m%d') = #{date}
         </if>

@@ -14,10 +14,8 @@
 </head>
 <body>
 <div>
-
     <nav class="navbar navbar-default" style="margin-bottom: 0">
         <div class="container-fluid">
-
             <div class="navbar-header">
                 <a class="navbar-brand" href="<%=basePath%>restaurant/welcome.action">神奇餐厅</a>
             </div>
@@ -71,7 +69,6 @@
                 </form>
             </div>
         </div>
-
         <div class="row">
             <div class="col-md-12">
                 <div class="panel panel-default">
@@ -141,7 +138,6 @@
                 </nav>
             </div>
         </c:if>
-
     </div>
 </div>
 <script src="https://cdn.jsdelivr.net/npm/jquery@1.12.4/dist/jquery.min.js"></script>

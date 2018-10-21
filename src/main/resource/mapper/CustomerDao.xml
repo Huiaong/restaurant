@@ -20,5 +20,17 @@
           AND customer_password = #{customerPassWord}
     </select>
 
+    <select id="checkPassWord" parameterType="Customer" resultType="Customer" resultMap="CustomerResultMap">
+        SELECT *
+        FROM tb_customer
+        WHERE customer_username = #{customerUserName}
+          AND customer_password = #{customerPassWord}
+    </select>
+
+    <update id="updatePassWord" parameterType="Customer">
+        UPDATE tb_customer
+        SET customer_password = #{customerPassWord}
+        WHERE customer_username = #{customerUserName}
+    </update>
 </mapper>
     

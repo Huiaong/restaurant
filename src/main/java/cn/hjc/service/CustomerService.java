@@ -9,4 +9,7 @@ public interface CustomerService {
 
     Map<String,Object> customerLogin(Customer customer, HttpServletRequest httpServletRequest);
 
+    Long checkPassWord(Customer customer);
+
+    Long updatePassWord(Customer customer);
 }

@@ -29,4 +29,22 @@ public class CustomerServiceImpl implements CustomerService {
         }
         return map;
     }
+
+    @Override
+    public Long checkPassWord(Customer customer) {
+        Customer customer1 = customerDao.checkPassWord(customer);
+        if (customer1!=null){
+            System.out.println("passWord true");
+            return 1L;
+        }else {
+            System.out.println("passWord err");
+            return -1L;
+        }
+    }
+
+    @Override
+    public Long updatePassWord(Customer customer) {
+        Long aLong = customerDao.updatePassWord(customer);
+        return aLong;
+    }
 }
